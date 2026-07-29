@@ -2,784 +2,1111 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Moonlight Suite - Executive Pitch</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moonlight - Digital Innovation Capability</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --bg-primary: #0b0f19;
-            --bg-card: rgba(23, 32, 51, 0.85);
-            --accent-blue: #3b82f6;
-            --accent-cyan: #06b6d4;
-            --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-            --border-color: rgba(255, 255, 255, 0.12);
+            --bg-color: #050507; 
+            --text-main: #fcfcfd;
+            --text-muted: #8b8b99;
+            --accent: #C58B59; 
+            --accent-dim: rgba(197, 139, 89, 0.2);
+            
+            /* Dynamic Lighting Variables controlled by JS */
+            --shadow-x: 0px;
+            --shadow-y: 10px;
+            --moon-x: 50vw;
+            --moon-y: 50vh;
         }
 
         * {
+            cursor: none !important; /* Hide default cursor */
             box-sizing: border-box;
+        }
+
+        body, html {
             margin: 0;
             padding: 0;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html, body {
-            background-color: var(--bg-primary);
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--bg-color);
             color: var(--text-main);
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden; 
+            /* Dynamic background glow tracking the moon */
+            background-image: radial-gradient(circle at var(--moon-x) var(--moon-y), rgba(197, 139, 89, 0.05) 0%, var(--bg-color) 50%);
+        }
+
+        /* Cinematic Grain Overlay */
+        .grain {
             position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.01;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 10px;
+        #cursor-dot {
+            position: fixed;
+            top: 0; left: 0;
+            width: 6px; height: 6px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 99999;
         }
 
-        /* Presentation Container */
-        .deck-container {
+        #cursor-ring {
+            position: fixed;
+            top: 0; left: 0;
+            width: 36px; height: 36px;
+            border: 1px solid rgba(197, 139, 89, 0.4);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 99998;
+            transition: width 0.2s, height 0.2s, border-color 0.2s;
+        }
+
+        .text-display {
+            /* Reduced max size for safety */
+            font-size: clamp(2rem, 4vw, 4rem); 
+            font-weight: 200;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+        }
+
+        .text-headline {
+            /* Reduced max size and increased scalability */
+            font-size: clamp(1.5rem, 2.8vw, 3rem); 
+            font-weight: 200;
+            letter-spacing: -0.02em;
+            color: var(--text-main);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .text-body {
+            font-size: clamp(0.9rem, 1.2vw, 1.5rem); 
+            font-weight: 300;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Dynamic Lighting Classes */
+        .dynamic-light-text {
+            /* Casts a shadow away from the moon */
+            text-shadow: var(--shadow-x) var(--shadow-y) 20px rgba(0,0,0,0.9),
+                         0 0 30px rgba(255,255,255,0.05);
+            transition: text-shadow 0.1s ease-out;
+        }
+
+        .accent-text {
+            color: var(--accent);
+            font-weight: 400;
+        }
+
+        .subtle-box {
+            border: 1px solid rgba(197, 139, 89, 0.05);
+            background: rgba(255,255,255,0.01);
+            border-radius: 8px;
+            padding: 2rem;
+            /* Dynamic box shadow */
+            box-shadow: var(--shadow-x) var(--shadow-y) 30px rgba(0,0,0,0.5), inset 0 0 15px rgba(255,255,255,0.02);
+            transition: border-color 0.5s ease, box-shadow 0.1s ease-out;
+            backdrop-filter: blur(10px);
+        }
+
+        #presentation {
+            position: relative;
             width: 100%;
-            max-width: 1100px;
             height: 100%;
-            max-height: 850px;
-            position: relative;
-            background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.15), transparent 50%),
-                        radial-gradient(circle at bottom right, rgba(6, 182, 212, 0.15), transparent 50%),
-                        #0b0f19;
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            overflow: hidden;
+            z-index: 10;
         }
 
-        /* Slide Body Container */
-        .slides-wrapper {
-            position: relative;
-            flex: 1;
-            width: 100%;
-            overflow: hidden;
-        }
-
-        /* Slide Styles */
         .slide {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            padding: 24px 20px;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
+            justify-content: center;
+            align-items: center;
+            /* MASSIVE SAFETY MARGINS */
+            padding: 6rem clamp(3rem, 12vw, 15rem); 
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            transform: translateX(30px);
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
+            pointer-events: none;
         }
 
         .slide.active {
-            opacity: 1;
             visibility: visible;
-            transform: translateX(0);
+            pointer-events: auto;
         }
 
-        /* Header Components */
-        .slide-header {
-            margin-bottom: 20px;
-            flex-shrink: 0;
+        .fragment {
+            opacity: 0;
+            filter: blur(10px); 
+            transform: translateY(20px);
         }
 
-        .tag {
-            display: inline-block;
-            background: rgba(59, 130, 246, 0.15);
-            color: var(--accent-cyan);
-            border: 1px solid rgba(6, 182, 212, 0.3);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
+        /* Elements */
+        .flow-arrow {
+            color: var(--accent);
+            font-weight: 200;
+            margin: 0.5rem 0;
+            font-size: 1.2rem;
+            opacity: 0.5;
         }
 
-        .slide-title {
-            font-size: 1.6rem;
-            font-weight: 800;
-            margin-top: 8px;
-            line-height: 1.25;
-            background: linear-gradient(to right, #ffffff, #cbd5e1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        /* Methodology connector lines (Chapter 5) */
+        .connector-line {
+            width: 1px;
+            height: 28px;
+            margin: 4px auto;
+            background: linear-gradient(to bottom, var(--accent), rgba(197, 139, 89, 0.05));
+            transform-origin: top;
         }
 
-        /* Responsive Layout Grids */
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 14px;
+        #methodology-frame {
+            border: 1px solid transparent;
+        }
+
+        .moonlight-frame-label span {
+            background: var(--bg-color);
+        }
+
+        /* Translation Toggle */
+        html:not([lang="es"]) .lang-es { display: none !important; }
+        html[lang="es"] .lang-en { display: none !important; }
+
+        #ui-layer {
+            position: fixed;
+            bottom: 2rem;
+            left: 0;
             width: 100%;
-        }
-
-        .grid-3 {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 14px;
-            width: 100%;
-        }
-
-        .full-width-card {
-            grid-column: 1 / -1;
-        }
-
-        @media (min-width: 768px) {
-            body { padding: 20px; }
-            .slide { padding: 35px 45px; }
-            .slide-title { font-size: 2.1rem; }
-            .grid-2 { grid-template-columns: 1fr 1fr; gap: 18px; }
-            .grid-3 { grid-template-columns: repeat(3, 1fr); gap: 18px; }
-            .tag { font-size: 0.85rem; padding: 6px 14px; }
-        }
-
-        /* Cards */
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 18px;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-        }
-
-        .card h3 {
-            color: #fff;
-            font-size: 1.05rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .card p {
-            color: var(--text-muted);
-            font-size: 0.88rem;
-            line-height: 1.5;
-        }
-
-        /* Metrics & Stats */
-        .stat-box {
-            text-align: center;
-            padding: 20px 15px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-        }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 800;
-            line-height: 1;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .stat-label {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-top: 10px;
-            line-height: 1.4;
-        }
-
-        /* Title Slide Specifics */
-        .title-slide {
-            text-align: center;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .title-slide h1 {
-            font-size: 2.6rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            margin: 15px 0 10px 0;
-            line-height: 1.1;
-        }
-
-        .title-slide h1 span {
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .title-slide p {
-            font-size: 1rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin-bottom: 24px;
-            line-height: 1.5;
-        }
-
-        .author-box {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            background: rgba(255, 255, 255, 0.04);
-            padding: 8px 16px;
-            border-radius: 20px;
-            border: 1px solid var(--border-color);
-        }
-
-        @media (min-width: 768px) {
-            .title-slide h1 { font-size: 3.8rem; }
-            .title-slide p { font-size: 1.2rem; }
-        }
-
-        /* Comparison Graphic */
-        .compare-group {
-            margin-bottom: 16px;
-        }
-
-        .compare-group:last-child {
-            margin-bottom: 0;
-        }
-
-        .compare-title {
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 6px;
-        }
-
-        .compare-bar {
-            margin-bottom: 6px;
-        }
-
-        .compare-label {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 4px;
-            font-size: 0.8rem;
-        }
-
-        .bar-bg {
-            background: rgba(255, 255, 255, 0.08);
-            height: 10px;
-            border-radius: 6px;
-            overflow: hidden;
-        }
-
-        .bar-fill {
-            height: 100%;
-            border-radius: 6px;
-        }
-
-        /* Role Allocation Progress Bars */
-        .role-box {
-            margin-top: 10px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 14px;
-        }
-
-        .role-header {
+            padding: 0 3rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-weight: 700;
-            font-size: 0.95rem;
-            margin-bottom: 6px;
-        }
-
-        .role-bar-bg {
-            background: rgba(255, 255, 255, 0.08);
-            height: 10px;
-            border-radius: 5px;
-            overflow: hidden;
-            margin-bottom: 8px;
-        }
-
-        .role-bar-fill {
-            height: 100%;
-            border-radius: 5px;
-            background: var(--accent-gradient);
-        }
-
-        /* Acquisition Modal / Section */
-        .acquisition-container {
-            display: none;
-            margin-top: 15px;
-            animation: fadeIn 0.3s ease-in-out forwards;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .toggle-btn {
-            background: rgba(59, 130, 246, 0.2);
-            border: 1px solid var(--accent-blue);
-            color: #ffffff;
-            padding: 10px 18px;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 10px;
-            display: inline-block;
-        }
-
-        .toggle-btn:hover {
-            background: var(--accent-blue);
-        }
-
-        /* Controls Footer */
-        .controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 20px;
-            background: rgba(11, 15, 25, 0.95);
-            border-top: 1px solid var(--border-color);
             z-index: 100;
-            flex-shrink: 0;
+            pointer-events: none;
         }
 
-        .nav-btn {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid var(--border-color);
-            color: #ffffff;
-            padding: 12px 20px;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            cursor: pointer;
-            touch-action: manipulation;
-            user-select: none;
-            -webkit-user-select: none;
-            transition: background 0.2s, transform 0.1s, opacity 0.2s;
-            min-width: 90px;
-            text-align: center;
-        }
-
-        .nav-btn:active:not(:disabled) {
-            background: var(--accent-blue);
-            transform: scale(0.96);
-        }
-
-        .nav-btn:disabled {
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .progress-dots {
-            display: flex;
-            gap: 6px;
-            align-items: center;
-        }
-
-        .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .dot.active {
-            background: var(--accent-cyan);
-            width: 20px;
-            border-radius: 4px;
-        }
-
-        .swipe-hint {
-            display: block;
-            text-align: center;
+        #langToggle {
+            pointer-events: auto;
             font-size: 0.75rem;
+            font-weight: 400;
             color: var(--text-muted);
-            margin-top: 6px;
+            letter-spacing: 0.2em;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        #langToggle:hover {
+            color: var(--accent);
+            border-color: var(--accent-dim);
         }
 
-        @media (min-width: 768px) {
-            .swipe-hint { display: none; }
+        #the-moon {
+            position: fixed;
+            z-index: 90;
+            /* Filter to give a warm glow without distorting the colored image */
+            filter: drop-shadow(0 0 20px rgba(197, 139, 89, 0.4));
+            pointer-events: none;
+            /* We let GSAP handle the transform, but add will-change for performance */
+            will-change: transform, width, height, top, left;
         }
     </style>
 </head>
 <body>
 
-    <div class="deck-container">
+    <!-- Premium Custom Cursor -->
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
 
-        <div class="slides-wrapper" id="slidesWrapper">
+    <div class="grain"></div>
 
-            <!-- SLIDE 1: PORTADA -->
-            <div class="slide title-slide active">
-                <span class="tag">Propuesta Ejecutiva</span>
-                <h1>Suite <span>Moonlight</span></h1>
-                <p>Estandarización, Automatización y QA/QC Avanzado para el Flujo de Trabajo BIM en WSP.</p>
-                <div class="author-box">
-                    Desarrollado por: <strong>Raúl Máximo González Luna</strong><br>
-                    <span style="font-size: 0.75rem; color: #6b7280;">BIM / MEP Model Manager</span>
+    <!-- The actual moving moon image. Positioning is handled entirely by GSAP -->
+    <img id="the-moon" src="https://img.icons8.com/color/96/moon-satellite.png" alt="Moonlight Logo">
+
+    <div id="ui-layer">
+        <button id="langToggle" aria-label="Toggle Language">
+            <span class="lang-en">ESPAÑOL</span>
+            <span class="lang-es">ENGLISH</span>
+        </button>
+        <div id="progress" class="text-xs font-light text-[#8b8b99] tracking-widest">01 / 11</div>
+    </div>
+
+    <div id="presentation">
+        
+        <!-- PANTALLA 01: Executive Opening -->
+        <section class="slide" id="ch1">
+            <div class="flex flex-col items-center text-center max-w-4xl relative w-full h-full justify-center">
+                
+                <div class="fragment absolute flex flex-col items-center w-full" data-hide-prev="true">
+                    <!-- Placeholder div for the moon to align perfectly on Slide 1 -->
+                    <div class="flex items-center justify-center gap-6 mb-8" style="line-height: 1;">
+                        <div id="moon-placeholder-start" class="w-16 h-16 md:w-20 md:h-20 shrink-0 flex items-center justify-center"></div>
+                        <h1 class="text-display dynamic-light-text m-0" style="line-height: 1;">Moonlight</h1>
+                    </div>
+                </div>
+                
+                <!-- Sequential statements in the SAME slide -->
+                <div class="fragment absolute w-full" data-hide-prev="true">
+                    <p class="text-headline dynamic-light-text leading-tight">
+                        <span class="lang-en">Tools solve problems;<br><span class="auto-reveal opacity-0 inline-block mt-4 text-[#C58B59]">innovation creates them.</span></span>
+                        <span class="lang-es">Las herramientas resuelven problemas;<br><span class="auto-reveal opacity-0 inline-block mt-4 text-[#C58B59]">la innovación las crea.</span></span>
+                    </p>
+                </div>
+                
+            </div>
+        </section>
+
+        <!-- PANTALLA 02: A New Field -->
+        <section class="slide" id="ch2">
+            <h2 class="text-headline fragment max-w-3xl dynamic-light-text">
+                <span class="lang-en">There is an unexplored field of innovation within our engineering teams.</span>
+                <span class="lang-es">Existe un campo de innovación inexplorado dentro de nuestros equipos de ingeniería.</span>
+            </h2>
+            
+            <div class="flex flex-col md:flex-row w-full max-w-5xl justify-between mt-16 gap-12">
+                <div class="fragment flex-1 flex flex-col items-center text-center">
+                    <h3 class="text-body text-white mb-6 border-b border-[rgba(255,255,255,0.1)] pb-4 w-full tracking-widest uppercase text-sm">
+                        <span class="lang-en">Standardization</span>
+                        <span class="lang-es">Estandarización</span>
+                    </h3>
+                    <p class="text-body text-sm"><span class="lang-en">Transforming individual knowledge into collective rules.</span><span class="lang-es">Transformar conocimiento individual en reglas colectivas.</span></p>
+                </div>
+                
+                <div class="fragment flex-1 flex flex-col items-center text-center">
+                    <h3 class="text-body text-white mb-6 border-b border-[rgba(255,255,255,0.1)] pb-4 w-full tracking-widest uppercase text-sm">
+                        <span class="lang-en">Automation</span>
+                        <span class="lang-es">Automatización</span>
+                    </h3>
+                    <p class="text-body text-sm"><span class="lang-en">Replacing manual repetition with intelligent logic.</span><span class="lang-es">Reemplazar repetición manual con lógica inteligente.</span></p>
+                </div>
+
+                <div class="fragment flex-1 flex flex-col items-center text-center">
+                    <h3 class="text-body text-white mb-6 border-b border-[rgba(255,255,255,0.1)] pb-4 w-full tracking-widest uppercase text-sm">
+                        <span class="lang-en">Internal Dev</span>
+                        <span class="lang-es">Desarrollo Interno</span>
+                    </h3>
+                    <p class="text-body text-sm"><span class="lang-en">Building specific solutions for our exact workflows.</span><span class="lang-es">Construir soluciones específicas para nuestros flujos.</span></p>
                 </div>
             </div>
 
-            <!-- SLIDE 2: PUNTO DE FRICCIÓN -->
-            <div class="slide">
-                <div class="slide-header">
-                    <span class="tag">Problemática Operativa</span>
-                    <h2 class="slide-title">Puntos de Fricción en el Modelado</h2>
+            <div class="fragment mt-24 w-full text-center">
+                <p class="text-headline accent-text dynamic-light-text" style="font-size: clamp(1.2rem, 2vw, 1.8rem); margin-bottom: 0;">
+                    <span class="lang-en">We are not fixing a weakness. We are discovering an opportunity.</span>
+                    <span class="lang-es">No estamos corrigiendo una debilidad. Estamos descubriendo una oportunidad.</span>
+                </p>
+            </div>
+        </section>
+
+        <!-- PANTALLA 03: The First Spark -->
+        <section class="slide" id="ch3">
+            <h2 class="text-headline fragment max-w-4xl dynamic-light-text">
+                <span class="lang-en">Every innovation practice starts with a single observation.</span>
+                <span class="lang-es">Toda práctica de innovación comienza con una sola observación.</span>
+            </h2>
+            
+            <div class="flex w-full max-w-4xl justify-center items-center mt-12 h-48 relative">
+                <div class="fragment absolute left-0 text-right pr-8 border-r border-[rgba(197,139,89,0.3)] w-1/2">
+                    <p class="text-body text-sm mb-2 text-[#8b8b99] uppercase tracking-widest">
+                        <span class="lang-en">The Request</span><span class="lang-es">La Solicitud</span>
+                    </p>
+                    <p class="text-body text-white">
+                        <span class="lang-en">"We need a script to translate parameters."</span>
+                        <span class="lang-es">"Necesitamos un script para traducir parámetros."</span>
+                    </p>
                 </div>
-                <div class="grid-3">
-                    <div class="card">
-                        <h3>⚠️ Tareas Mecánicas</h3>
-                        <p>Horas gastadas en procesos repetitivos como colocación manual de soportería, configuración de filtros de visualización y edición parámetro por parámetro.</p>
+                
+                <div class="fragment absolute right-0 text-left pl-8 w-1/2">
+                    <p class="text-body text-sm mb-2 accent-text uppercase tracking-widest">
+                        <span class="lang-en">The Opportunity</span><span class="lang-es">La Oportunidad</span>
+                    </p>
+                    <p class="text-display text-white dynamic-light-text" style="font-size: clamp(1.5rem, 2.5vw, 2rem);">
+                        <span class="lang-en">Translator</span><span class="lang-es">Translator</span>
+                    </p>
+                    <p class="text-body text-sm mt-2">
+                        <span class="lang-en">A fully integrated tool born from an internal need.</span>
+                        <span class="lang-es">Una herramienta integrada nacida de una necesidad interna.</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="fragment mt-16 max-w-4xl text-center">
+                <p class="text-body">
+                    <span class="lang-en">It was a natural consequence of looking closely at how we work.</span>
+                    <span class="lang-es">Fue la consecuencia natural de observar de cerca cómo trabajamos.</span>
+                </p>
+            </div>
+        </section>
+
+        <!-- PANTALLA 04: The Pattern -->
+        <section class="slide" id="ch4">
+            <h2 class="text-headline fragment dynamic-light-text">
+                <span class="lang-en">One idea led to another.</span>
+                <span class="lang-es">Una idea condujo a la siguiente.</span>
+            </h2>
+            
+            <div class="flex flex-wrap justify-center gap-6 w-full max-w-4xl mt-12">
+                <div class="fragment subtle-box text-center opacity-70" style="width: 10.5rem;">
+                    <p class="text-body text-white font-medium">Translator</p>
+                    <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
+                        <span class="lang-en">Streamlines workflow</span><span class="lang-es">Agiliza flujo de trabajo</span>
+                    </p>
+                </div>
+                <div class="fragment subtle-box text-center opacity-80" style="width: 10.5rem;">
+                    <p class="text-body text-white font-medium">NecstinList</p>
+                </div>
+                <div class="fragment subtle-box text-center opacity-90" style="width: 10.5rem;">
+                    <p class="text-body text-white font-medium">Quantification</p>
+                    <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
+                        <span class="lang-en">Standardizes a process</span><span class="lang-es">Estandariza un proceso</span>
+                    </p>
+                </div>
+                <div class="fragment subtle-box text-center" style="width: 10.5rem;">
+                    <p class="text-body text-white font-medium">Clash Detection</p>
+                    <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
+                        <span class="lang-en">Streamlines workflow</span><span class="lang-es">Agiliza flujo de trabajo</span>
+                    </p>
+                </div>
+                <div class="fragment subtle-box text-center" style="width: 10.5rem;">
+                    <p class="text-body text-white font-medium">Support Placement</p>
+                    <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
+                        <span class="lang-en">Streamlines workflow</span><span class="lang-es">Agiliza flujo de trabajo</span>
+                    </p>
+                </div>
+                <div class="fragment subtle-box text-center" style="width: 10.5rem;">
+                    <p class="text-body text-white font-medium">Parameter Resort</p>
+                    <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
+                        <span class="lang-en">Streamlines workflow</span><span class="lang-es">Agiliza flujo de trabajo</span>
+                    </p>
+                </div>
+                <div class="fragment subtle-box text-center dynamic-light-box border-[rgba(197,139,89,0.3)]" style="width: 10.5rem;">
+                    <p class="text-body accent-text font-medium">DataLens</p>
+                    <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
+                        <span class="lang-en">Streamlines coordination</span><span class="lang-es">Agiliza coordinación</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Growing ecosystem: a flex-wrap chip row so any number of tools (odd or even)
+                 self-arranges centered, with no fixed grid to outgrow -->
+            <div class="fragment text-center mt-10 w-full max-w-3xl">
+                <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] opacity-60 mb-4">
+                    <span class="lang-en">And the ecosystem keeps growing</span>
+                    <span class="lang-es">Y el ecosistema sigue creciendo</span>
+                </p>
+                <div class="flex flex-wrap justify-center gap-3">
+                    <span class="subtle-box text-[0.7rem] text-[#8b8b99] tracking-widest uppercase" style="padding: 0.6rem 1.1rem;">Renamer</span>
+                    <span class="subtle-box text-[0.7rem] text-[#8b8b99] tracking-widest uppercase" style="padding: 0.6rem 1.1rem;">NotifyUI</span>
+                    <span class="subtle-box text-[0.7rem] text-[#8b8b99] tracking-widest uppercase" style="padding: 0.6rem 1.1rem;">Easy Worksets</span>
+                    <span class="subtle-box text-[0.7rem] text-[#8b8b99] tracking-widest uppercase" style="padding: 0.6rem 1.1rem;">Bookmarks</span>
+                    <span class="subtle-box text-[0.7rem] text-[#8b8b99] tracking-widest uppercase" style="padding: 0.6rem 1.1rem;">Param Setter</span>
+                    <span class="subtle-box text-[0.7rem] text-[#8b8b99] tracking-widest uppercase" style="padding: 0.6rem 1.1rem;">Doc Tracker</span>
+                    <span class="subtle-box text-[0.7rem] text-[#8b8b99] tracking-widest uppercase" style="padding: 0.6rem 1.1rem;">Autosaver</span>
+                    <!-- Para agregar más herramientas: copia un <span> de estos dentro de este mismo
+                         contenedor flex-wrap. Al ser flex-wrap + justify-center, se reacomodan solas
+                         sin importar si el total es par o impar. -->
+                </div>
+            </div>
+
+            <div class="fragment text-center mt-20">
+                <p class="text-headline" style="font-size: clamp(1.4rem, 2.5vw, 1.8rem); margin-bottom:0;">
+                    <span class="lang-en">But this is not a list of software projects.</span>
+                    <span class="lang-es">Pero esto no es una lista de proyectos de software.</span>
+                </p>
+            </div>
+        </section>
+
+        <!-- PANTALLA 04B: Sustained Time Savings -->
+        <section class="slide" id="ch4b">
+            <h2 class="text-headline fragment dynamic-light-text">
+                <span class="lang-en">Sustained Time Savings</span>
+                <span class="lang-es">Ahorro de Tiempo Sostenido</span>
+            </h2>
+
+            <div class="flex flex-col w-full max-w-3xl gap-5 mt-10">
+                <div class="fragment subtle-box flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                    <p class="text-body text-white font-medium">
+                        <span class="lang-en">Support Placement</span><span class="lang-es">Colocación de Soportería</span>
+                    </p>
+                    <div class="flex items-center gap-4 text-sm">
+                        <span class="text-[#8b8b99] line-through"><span class="lang-en">1 Hour</span><span class="lang-es">1 Hora</span></span>
+                        <span class="flow-arrow" style="margin:0;">→</span>
+                        <span class="accent-text font-medium"><span class="lang-en">5 Minutes</span><span class="lang-es">5 Minutos</span></span>
                     </div>
-                    <div class="card">
-                        <h3>📉 Dependencia de la Curva de Aprendizaje</h3>
-                        <p>Variabilidad en la estructuración de datos y tablas complejas según la experiencia individual de cada modelador.</p>
+                </div>
+
+                <div class="fragment subtle-box flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                    <p class="text-body text-white font-medium">
+                        <span class="lang-en">Quantification &amp; Data Extraction</span><span class="lang-es">Cuantificación y Extracción de Datos</span>
+                    </p>
+                    <div class="flex items-center gap-4 text-sm">
+                        <span class="text-[#8b8b99] line-through"><span class="lang-en">1 Hour</span><span class="lang-es">1 Hora</span></span>
+                        <span class="flow-arrow" style="margin:0;">→</span>
+                        <span class="accent-text font-medium"><span class="lang-en">5 Seconds</span><span class="lang-es">5 Segundos</span></span>
                     </div>
-                    <div class="card">
-                        <h3>⏱️ Cuellos de Botella Técnicos</h3>
-                        <p>Interrupciones constantes para resolver inconsistencias o configuración de datos antes de entregables clave.</p>
+                </div>
+
+                <div class="fragment subtle-box flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                    <p class="text-body text-white font-medium">
+                        <span class="lang-en">Parameter Data Reorganization</span><span class="lang-es">Reorganización de Datos en Parámetros</span>
+                    </p>
+                    <div class="flex items-center gap-4 text-sm">
+                        <span class="text-[#8b8b99] line-through"><span class="lang-en">1 Hour</span><span class="lang-es">1 Hora</span></span>
+                        <span class="flow-arrow" style="margin:0;">→</span>
+                        <span class="accent-text font-medium"><span class="lang-en">1 Minute</span><span class="lang-es">1 Minuto</span></span>
                     </div>
                 </div>
             </div>
 
-            <!-- SLIDE 3: LA SOLUCIÓN / ECOSISTEMA MOONLIGHT -->
-            <div class="slide">
-                <div class="slide-header">
-                    <span class="tag">Ecosistema Moonlight</span>
-                    <h2 class="slide-title">Módulos Desarrollados y Expansión</h2>
-                </div>
-                <div class="grid-2">
-                    <div class="card">
-                        <h3>⚡ Soportería & Visualización Rápida</h3>
-                        <p>Inserción automatizada de elementos de soporte MEP y herramientas para ajustar vistas al vuelo sin cambiar de entorno.</p>
-                    </div>
-                    <div class="card">
-                        <h3>📊 Cuantificación e Inferencia</h3>
-                        <p>Extrae métricas exactas e infiere componentes no modelados (conectores y accesorios), garantizando datos limpios.</p>
-                    </div>
-                    <div class="card">
-                        <h3>🔍 Detección de Colisiones</h3>
-                        <p>Módulo ágil para revisar e identificar interferencias directamente dentro del espacio de modelado.</p>
-                    </div>
-                    <div class="card">
-                        <h3>🔬 Moonlight Data Lens</h3>
-                        <p>Auditoría de modelos y comparación de versiones para control estricto de cambios e historial del proyecto.</p>
-                    </div>
-                    <div class="card">
-                        <h3>⚙️ Reorganización de Datos</h3>
-                        <p>Modificación masiva, reemplazo y reordenamiento de parámetros de familias de forma automatizada y estructurada.</p>
-                    </div>
-                    <div class="card">
-                        <h3>🛡️ Reducción de Riesgos Diarios</h3>
-                        <p>Utilidades operativas como autoguardado configurado, sincronización de emergencia y rastreo seguro de documentos.</p>
-                    </div>
-                    <div class="card full-width-card" style="border-color: rgba(6, 182, 212, 0.4);">
-                        <h3 style="color: var(--accent-cyan);">🚀 Expansión y Nuevos Desarrollos Multidisciplinarios</h3>
-                        <p>Capacidad para diseñar y desarrollar herramientas a medida adaptadas a otros sistemas (<strong>HVAC, PCI, Plomería, Eléctrico, etc.</strong>), extendiendo la automatización más allá de Revit mediante utilidades independientes según las necesidades corporativas.</p>
-                    </div>
-                </div>
+            <div class="fragment text-center mt-16">
+                <p class="text-display accent-text dynamic-light-text" style="font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 0.5rem;">+85%</p>
+                <p class="text-body text-white mb-2">
+                    <span class="lang-en">Expected cumulative time savings</span>
+                    <span class="lang-es">Ahorro de tiempo esperado acumulado</span>
+                </p>
+                <p class="text-body text-sm max-w-xl mx-auto">
+                    <span class="lang-en">A constant release of operational capacity to focus resources on design quality and coordination.</span>
+                    <span class="lang-es">Liberación constante de capacidad operativa para enfocar los recursos en la calidad del diseño y coordinación.</span>
+                </p>
             </div>
+        </section>
 
-            <!-- SLIDE 4: VALOR QA/QC Y ADAPTABILIDAD -->
-            <div class="slide">
-                <div class="slide-header">
-                    <span class="tag">Aseguramiento de Calidad</span>
-                    <h2 class="slide-title">Control de Estándares y Agilidad</h2>
-                </div>
-                <div class="grid-2">
-                    <div class="card">
-                        <h3 style="color:var(--accent-cyan);">Estandarización Homogénea</h3>
-                        <p style="margin-top:6px;">Al encapsular las reglas de negocio en código, los entregables mantienen la misma calidad técnica y precisión de un nivel Senior, reduciendo la dependencia del conocimiento individual.</p>
+        <!-- PANTALLA 05: The Real Asset -->
+        <section class="slide" id="ch5">
+            <h2 class="text-headline fragment fast-fragment max-w-4xl dynamic-light-text mb-16">
+                <span class="lang-en">Different needs.<br><span class="accent-text">The exact same thinking process.</span></span>
+                <span class="lang-es">Diferentes necesidades.<br><span class="accent-text">El mismo proceso de pensamiento.</span></span>
+            </h2>
+            
+            <div class="relative">
+                <div id="methodology-frame" class="flex flex-col items-center justify-center rounded-2xl px-10 md:px-16 py-8">
+                    <div class="fragment step-item text-center opacity-40">
+                        <p class="text-body text-white tracking-widest uppercase text-sm"><span class="lang-en">Observe</span><span class="lang-es">Observar</span></p>
                     </div>
-                    <div class="card">
-                        <h3>Impacto Directo en la Operación</h3>
-                        <ul style="color: var(--text-muted); padding-left: 18px; font-size: 0.85rem; line-height: 1.7; margin-top: 6px;">
-                            <li>Estandarización al 100% en nomenclatura y parámetros.</li>
-                            <li>Cero tiempo perdido en configuración manual de tablas.</li>
-                            <li>Inferencia automática de conectores y piezas menores.</li>
-                        </ul>
+                    <div class="fragment step-item text-center opacity-60">
+                        <div class="connector-line" aria-hidden="true"></div>
+                        <p class="text-body text-white tracking-widest uppercase text-sm"><span class="lang-en">Understand</span><span class="lang-es">Comprender</span></p>
                     </div>
-                    <div class="card full-width-card" style="border-color: rgba(59, 130, 246, 0.4);">
-                        <h3 style="color: var(--accent-blue);">🔄 Mínima Curva de Adaptación ante Cambios de Proceso</h3>
-                        <p style="margin-top:4px;">Si la empresa requiere modificar la dinámica o estándar de algún proceso, el esfuerzo de implementación es mínimo: <strong>el rediseño se realiza una sola vez en el código</strong>. Todo el equipo adopta el nuevo flujo de forma inmediata sin necesidad de reentrenamientos manuales o largas capacitaciones.</p>
+                    <div class="fragment step-item text-center opacity-80">
+                        <div class="connector-line" aria-hidden="true"></div>
+                        <p class="text-body text-white tracking-widest uppercase text-sm"><span class="lang-en">Design</span><span class="lang-es">Diseñar</span></p>
                     </div>
-                </div>
-            </div>
-
-            <!-- SLIDE 5: EFICIENCIA Y AHORRO ACUMULADO DE TIEMPO -->
-            <div class="slide">
-                <div class="slide-header">
-                    <span class="tag">Optimización Operativa</span>
-                    <h2 class="slide-title">Ahorro de Tiempo Sostenido</h2>
-                </div>
-                <div class="grid-2">
-                    <div class="card">
-                        <div class="compare-group">
-                            <div class="compare-title">Colocación de Soportería</div>
-                            <div class="compare-label">
-                                <span style="color:var(--text-muted);">Tradicional</span>
-                                <span style="color:#f87171;">1 Hora</span>
-                            </div>
-                            <div class="bar-bg"><div class="bar-fill" style="width: 100%; background: #f87171;"></div></div>
-                            <div class="compare-label" style="margin-top: 4px;">
-                                <span style="color:var(--accent-cyan);">Con Moonlight</span>
-                                <span style="color:#10b981;">5 Minutos</span>
-                            </div>
-                            <div class="bar-bg"><div class="bar-fill" style="width: 8%; background: #10b981;"></div></div>
-                        </div>
-
-                        <div class="compare-group" style="margin-top:14px;">
-                            <div class="compare-title">Cuantificación y Extracción de Datos</div>
-                            <div class="compare-label">
-                                <span style="color:var(--text-muted);">Tradicional</span>
-                                <span style="color:#f87171;">1 Hora</span>
-                            </div>
-                            <div class="bar-bg"><div class="bar-fill" style="width: 100%; background: #f87171;"></div></div>
-                            <div class="compare-label" style="margin-top: 4px;">
-                                <span style="color:var(--accent-cyan);">Con Extracción Automática</span>
-                                <span style="color:#10b981;">5 Segundos</span>
-                            </div>
-                            <div class="bar-bg"><div class="bar-fill" style="width: 3%; background: #10b981;"></div></div>
-                        </div>
-
-                        <div class="compare-group" style="margin-top:14px;">
-                            <div class="compare-title">Reorganización de Datos en Parámetros</div>
-                            <div class="compare-label">
-                                <span style="color:var(--text-muted);">Tradicional</span>
-                                <span style="color:#f87171;">1 Hora</span>
-                            </div>
-                            <div class="bar-bg"><div class="bar-fill" style="width: 100%; background: #f87171;"></div></div>
-                            <div class="compare-label" style="margin-top: 4px;">
-                                <span style="color:var(--accent-cyan);">Con Reorganización Automatizada</span>
-                                <span style="color:#10b981;">1 Minuto</span>
-                            </div>
-                            <div class="bar-bg"><div class="bar-fill" style="width: 4%; background: #10b981;"></div></div>
-                        </div>
+                    <div class="fragment step-item text-center opacity-90">
+                        <div class="connector-line" aria-hidden="true"></div>
+                        <p class="text-body text-white tracking-widest uppercase text-sm"><span class="lang-en">Develop</span><span class="lang-es">Desarrollar</span></p>
                     </div>
-
-                    <div class="card" style="justify-content: center;">
-                        <div class="stat-box">
-                            <div class="stat-number">+85%</div>
-                            <div class="stat-label">
-                                <strong>Ahorro de tiempo esperado acumulado</strong><br>
-                                Liberación constante de capacidad operativa para enfocar los recursos en la calidad del diseño y coordinación.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SLIDE 6: PROPUESTA DE VALOR, ROL Y EVOLUCIÓN -->
-            <div class="slide">
-                <div class="slide-header">
-                    <span class="tag">Estrategia Futura</span>
-                    <h2 class="slide-title">Propuesta de Rol y Evolución</h2>
-                </div>
-                <div class="grid-2">
-                    <div class="card full-width-card">
-                        <h3>💡 El Valor Principal: Conocimiento y Continuidad</h3>
-                        <p style="margin-top:4px;">
-                            Más allá de una herramienta existente, la verdadera ventaja estratégica radica en <strong>mi experiencia técnica en diseño/modelado y la capacidad de desarrollo continuo</strong> para crear, adaptar y expandir soluciones que mantengan a la empresa con un valor diferenciador frente a la competencia.
+                    <div class="fragment step-item text-center">
+                        <div class="connector-line" aria-hidden="true"></div>
+                        <p class="text-display accent-text dynamic-light-text" style="font-size: clamp(1.5rem, 3vw, 2.5rem);">
+                            <span class="lang-en">Implement</span><span class="lang-es">Implementar</span>
                         </p>
                     </div>
-
-                    <div class="card full-width-card">
-                        <h3>🔄 Ajuste de Funciones y Distribución del Rol</h3>
-                        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:10px;">
-                            Continuar con las labores principales de proyectos e incorporar formalmente la función de innovación tecnológica:
-                        </p>
-
-                        <div class="role-box">
-                            <div class="role-header">
-                                <span>Diseño en Sistemas Especiales</span>
-                                <span style="color:var(--accent-blue);">70%</span>
-                            </div>
-                            <div class="role-bar-bg">
-                                <div class="role-bar-fill" style="width: 70%;"></div>
-                            </div>
-                            <p style="font-size:0.8rem;">Garantizar la continuidad, responsabilidad y coordinación en proyectos asignados.</p>
-                        </div>
-
-                        <div class="role-box" style="margin-top:10px;">
-                            <div class="role-header">
-                                <span>Desarrollo y Estandarización BIM</span>
-                                <span style="color:var(--accent-cyan);">30%</span>
-                            </div>
-                            <div class="role-bar-bg">
-                                <div class="role-bar-fill" style="width: 30%; background: linear-gradient(135deg, #06b6d4 0%, #10b981 100%);"></div>
-                            </div>
-                            <p style="font-size:0.8rem;">Nueva función formal: desarrollo y estandarización de herramientas para el equipo BIM.</p>
-                        </div>
-
-                        <div style="text-align: center; margin-top: 10px;">
-                            <button class="toggle-btn" id="toggleAcquisitionBtn">Ver Opciones de Ajuste / Adquisición ▾</button>
-                        </div>
-
-                        <div class="acquisition-container" id="acquisitionSection">
-                            <div class="grid-2" style="margin-top:10px;">
-                                <div class="card" style="border-color: var(--accent-blue); background: rgba(15, 23, 42, 0.9);">
-                                    <span style="color:var(--accent-blue); font-size:0.7rem; font-weight:bold; text-transform:uppercase;">Esquema Sugerido</span>
-                                    <h4 style="color:#fff; margin:4px 0;">Ajuste Salarial por Desarrollo Continuo</h4>
-                                    <p style="font-size:0.8rem;">Aumento salarial enfocado en asumir la función formal de I+D, mantenimiento, creación de nuevos módulos y soporte de estándares.</p>
-                                </div>
-                                <div class="card" style="background: rgba(15, 23, 42, 0.9);">
-                                    <span style="color:var(--accent-cyan); font-size:0.7rem; font-weight:bold; text-transform:uppercase;">Opción Complementaria</span>
-                                    <h4 style="color:#fff; margin:4px 0;">Cesión / Licencia de Activos Existentes</h4>
-                                    <p style="font-size:0.8rem;">Transferencia de derechos de uso interno de la suite actual mediante pago único o bonos por hitos desarrollados.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                </div>
+                <div class="fragment moonlight-frame-label absolute left-1/2 -translate-x-1/2 -bottom-5" data-hide-prev="false">
+                    <span class="text-sm tracking-[0.3em] uppercase accent-text px-4">Moonlight</span>
                 </div>
             </div>
-
-        </div>
-
-        <!-- CONTROLES ADAPTATIVOS -->
-        <div class="controls">
-            <button class="nav-btn" id="prevBtn">Anterior</button>
-            <div>
-                <div class="progress-dots" id="dotsContainer"></div>
-                <span class="swipe-hint">Desliza para navegar</span>
+            
+            <div class="fragment fast-fragment text-center mt-16 max-w-3xl">
+                <p class="text-body text-white">
+                    <span class="lang-en">The true value is not in writing code, but in deeply understanding engineering workflows to augment our team's potential.</span>
+                    <span class="lang-es">El verdadero valor no está en escribir código, sino en comprender los flujos de ingeniería para potenciar la capacidad del equipo.</span>
+                </p>
             </div>
-            <button class="nav-btn" id="nextBtn">Siguiente</button>
-        </div>
+        </section>
 
+        <!-- PANTALLA 06: Formalizing Innovation -->
+        <section class="slide" id="ch6">
+            <div class="fragment text-center mb-16 w-full" data-hide-prev="true">
+                <h2 class="text-headline dynamic-light-text" style="margin-bottom: 1rem; max-width: 900px; margin-left:auto; margin-right:auto;">
+                    <span class="lang-en">This practice already exists and generates value.<br>The opportunity is to formalize its growth.</span>
+                    <span class="lang-es">Esta práctica ya existe y genera valor.<br>La oportunidad es formalizar su crecimiento.</span>
+                </h2>
+            </div>
+            
+            <div class="flex flex-col md:flex-row w-full max-w-5xl gap-12 mt-12">
+                <div class="fragment flex-1 subtle-box flex flex-col justify-center">
+                    <p class="text-body text-white text-xs uppercase tracking-widest mb-4 opacity-50">
+                        <span class="lang-en">Current State</span><span class="lang-es">Estado Actual</span>
+                    </p>
+                    <p class="text-body text-white font-medium mb-2">
+                        <span class="lang-en">Organic Initiatives</span><span class="lang-es">Iniciativas Orgánicas</span>
+                    </p>
+                    <p class="text-body text-sm">
+                        <span class="lang-en">Value creation depends on individual bandwidth and localized projects.</span>
+                        <span class="lang-es">La creación de valor depende de la disponibilidad individual y proyectos locales.</span>
+                    </p>
+                </div>
+
+                <div class="fragment flex-1 subtle-box dynamic-light-box border-[rgba(197,139,89,0.3)] flex flex-col justify-center">
+                    <p class="text-body accent-text text-xs uppercase tracking-widest mb-4">
+                        <span class="lang-en">The Vision</span><span class="lang-es">La Visión</span>
+                    </p>
+                    <p class="text-body text-white font-medium mb-2">
+                        <span class="lang-en">Strategic Innovation</span><span class="lang-es">Innovación Estratégica</span>
+                    </p>
+                    <p class="text-body text-sm text-white">
+                        <span class="lang-en">A dedicated focus accelerating continuous improvement across the organization.</span>
+                        <span class="lang-es">Un enfoque dedicado acelerando la mejora continua en toda la organización.</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PANTALLA 09: Integration Models -->
+        <section class="slide" id="ch6b">
+            <h2 class="text-headline fragment max-w-3xl dynamic-light-text">
+                <span class="lang-en">There is more than one way to integrate this capability.</span>
+                <span class="lang-es">Existe más de una forma de integrar esta capacidad.</span>
+            </h2>
+
+            <div class="flex flex-col md:flex-row w-full max-w-5xl gap-8 mt-12 items-stretch">
+                <div class="fragment flex-1 subtle-box flex flex-col">
+                    <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mb-3">
+                        <span class="lang-en">Model 01</span><span class="lang-es">Modelo 01</span>
+                    </p>
+                    <p class="text-body text-white font-medium mb-3">
+                        <span class="lang-en">Hybrid Role</span><span class="lang-es">Rol Híbrido</span>
+                    </p>
+                    <p class="text-body text-sm mb-4">
+                        <span class="lang-en">Continue contributing as a Special Systems Designer while dedicating part of the schedule to BIM innovation and process improvement.</span>
+                        <span class="lang-es">Continuar aportando como Diseñador de Sistemas Especiales, dedicando parte del tiempo a innovación BIM y mejora de procesos.</span>
+                    </p>
+                    <ul class="text-body text-sm mb-6 space-y-1">
+                        <li><span class="accent-text">·</span> <span class="lang-en">Low organizational disruption</span><span class="lang-es">Baja disrupción organizacional</span></li>
+                        <li><span class="accent-text">·</span> <span class="lang-en">Immediate implementation</span><span class="lang-es">Implementación inmediata</span></li>
+                        <li><span class="accent-text">·</span> <span class="lang-en">Preserves technical expertise</span><span class="lang-es">Preserva la experiencia técnica</span></li>
+                        <li><span class="accent-text">·</span> <span class="lang-en">Allows a gradual transition</span><span class="lang-es">Permite una transición gradual</span></li>
+                    </ul>
+                    <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-auto pt-4 border-t border-[rgba(255,255,255,0.05)]">
+                        <span class="lang-en">Integration level — Low change</span><span class="lang-es">Nivel de integración — Cambio bajo</span>
+                    </p>
+                </div>
+
+                <div class="fragment flex-1 subtle-box flex flex-col">
+                    <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mb-3">
+                        <span class="lang-en">Model 02</span><span class="lang-es">Modelo 02</span>
+                    </p>
+                    <p class="text-body text-white font-medium mb-3">
+                        <span class="lang-en">BIM Innovation Role</span><span class="lang-es">Rol de Innovación BIM</span>
+                    </p>
+                    <p class="text-body text-sm mb-4">
+                        <span class="lang-en">Integrate into the BIM team with responsibilities focused on coordination, process improvement, and internal solution development.</span>
+                        <span class="lang-es">Integrarse al equipo BIM con responsabilidades enfocadas en coordinación, mejora de procesos y desarrollo de soluciones internas.</span>
+                    </p>
+                    <ul class="text-body text-sm mb-6 space-y-1">
+                        <li><span class="accent-text">·</span> <span class="lang-en">Greater organizational impact</span><span class="lang-es">Mayor impacto organizacional</span></li>
+                        <li><span class="accent-text">·</span> <span class="lang-en">Direct connection with BIM strategy</span><span class="lang-es">Conexión directa con la estrategia BIM</span></li>
+                        <li><span class="accent-text">·</span> <span class="lang-en">Continuous improvement</span><span class="lang-es">Mejora continua</span></li>
+                        <li><span class="accent-text">·</span> <span class="lang-en">Broader collaboration</span><span class="lang-es">Colaboración más amplia</span></li>
+                    </ul>
+                    <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-auto pt-4 border-t border-[rgba(255,255,255,0.05)]">
+                        <span class="lang-en">Integration level — Medium change</span><span class="lang-es">Nivel de integración — Cambio medio</span>
+                    </p>
+                </div>
+
+                <div class="fragment flex-1 subtle-box dynamic-light-box border-[rgba(197,139,89,0.3)] flex flex-col">
+                    <p class="text-[0.65rem] tracking-widest uppercase accent-text mb-3">
+                        <span class="lang-en">Model 03</span><span class="lang-es">Modelo 03</span>
+                    </p>
+                    <p class="text-body text-white font-medium mb-3">
+                        <span class="lang-en">Dedicated Capability</span><span class="lang-es">Capacidad Dedicada</span>
+                    </p>
+                    <p class="text-body text-sm mb-4">
+                        <span class="lang-en">Establish a specialized internal capability focused on BIM development, automation, and digital process transformation.</span>
+                        <span class="lang-es">Establecer una capacidad interna especializada enfocada en desarrollo BIM, automatización y transformación de procesos digitales.</span>
+                    </p>
+                    <ul class="text-body text-sm mb-6 space-y-1">
+                        <li><span class="accent-text">·</span> <span class="lang-en">Continuous innovation</span><span class="lang-es">Innovación continua</span></li>
+                        <li><span class="accent-text">·</span> <span class="lang-en">Long-term scalability</span><span class="lang-es">Escalabilidad a largo plazo</span></li>
+                        <li><span class="accent-text">·</span> <span class="lang-en">Cross-project impact</span><span class="lang-es">Impacto transversal entre proyectos</span></li>
+                        <li><span class="accent-text">·</span> <span class="lang-en">Strategic development</span><span class="lang-es">Desarrollo estratégico</span></li>
+                    </ul>
+                    <p class="text-[0.65rem] tracking-widest uppercase accent-text mt-auto pt-4 border-t border-[rgba(197,139,89,0.15)]">
+                        <span class="lang-en">Integration level — High change</span><span class="lang-es">Nivel de integración — Cambio alto</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PANTALLA 07: The Future Impact -->
+        <section class="slide" id="ch7">
+            <h2 class="text-headline fragment max-w-4xl dynamic-light-text">
+                <span class="lang-en">A dedicated digital process development role enables:</span>
+                <span class="lang-es">Un rol dedicado al desarrollo de procesos digitales permite:</span>
+            </h2>
+            
+            <div class="flex flex-col w-full max-w-4xl gap-6 mt-12">
+                <div class="fragment flex items-center justify-start border-b border-[rgba(255,255,255,0.05)] pb-6">
+                    <span class="text-display accent-text mr-8 opacity-50" style="font-size: 2rem;">01</span>
+                    <p class="text-body text-white text-xl">
+                        <span class="lang-en">Faster, tailored innovation directly aligned with BIM strategies.</span>
+                        <span class="lang-es">Innovación rápida y a medida alineada con las estrategias BIM.</span>
+                    </p>
+                </div>
+                
+                <div class="fragment flex items-center justify-start border-b border-[rgba(255,255,255,0.05)] pb-6">
+                    <span class="text-display accent-text mr-8 opacity-50" style="font-size: 2rem;">02</span>
+                    <p class="text-body text-white text-xl">
+                        <span class="lang-en">Transformation of personal expertise into reusable, scalable assets.</span>
+                        <span class="lang-es">Transformación del conocimiento personal en activos escalables y reutilizables.</span>
+                    </p>
+                </div>
+
+                <div class="fragment flex items-center justify-start pb-6">
+                    <span class="text-display accent-text mr-8 opacity-50" style="font-size: 2rem;">03</span>
+                    <p class="text-body text-white text-xl">
+                        <span class="lang-en">Continuous evolution of internal standards.</span>
+                        <span class="lang-es">Evolución continua de los estándares internos.</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PANTALLA 08: Closing Statement -->
+        <section class="slide" id="ch8">
+            <div class="flex flex-col items-center text-center justify-center h-full w-full relative">
+                
+                <div class="fragment absolute top-1/2 -translate-y-1/2 w-full text-center pointer-events-none" data-hide-prev="true">
+                    <h1 class="text-display text-[#8b8b99]" style="font-size: clamp(1.8rem, 3.5vw, 3rem);">
+                        <span class="lang-en">The tools are not the proposal.</span>
+                        <span class="lang-es">Las herramientas no son la propuesta.</span>
+                    </h1>
+                </div>
+                
+                <div class="fragment absolute top-1/2 -translate-y-1/2 w-full text-center pointer-events-none" data-hide-prev="true">
+                    <h1 class="text-display text-white dynamic-light-text" style="font-size: clamp(2rem, 4vw, 3.5rem);">
+                        <span class="lang-en">The innovation practice behind them is.</span>
+                        <span class="lang-es">La práctica de innovación detrás de ellas lo es.</span>
+                    </h1>
+                </div>
+
+                <div class="fragment absolute top-1/2 -translate-y-1/2 w-full text-center pointer-events-none" data-hide-prev="true">
+                    <p class="text-headline mb-4" style="font-size: clamp(1.5rem, 2.5vw, 2.2rem);">
+                        <span class="lang-en">The question is not what we have built so far.</span>
+                        <span class="lang-es">La pregunta no es qué hemos construido hasta ahora.</span>
+                    </p>
+                    <p class="text-headline accent-text dynamic-light-text" style="font-size: clamp(1.5rem, 2.5vw, 2.2rem);">
+                        <span class="lang-en">The question is what we will build next.</span>
+                        <span class="lang-es">La pregunta es qué construiremos a continuación.</span>
+                    </p>
+                </div>
+
+                <!-- Final Logo Placeholder -->
+                <div class="fragment absolute top-1/2 -translate-y-1/2 w-full flex justify-center pointer-events-none" data-hide-prev="true">
+                     <div class="flex items-center justify-center gap-6">
+                        <div id="moon-placeholder-end" class="w-16 h-16 md:w-20 md:h-20 shrink-0"></div>
+                        <h1 class="text-display dynamic-light-text m-0">Moonlight</h1>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            let currentSlide = 0;
-            const slides = document.querySelectorAll('.slide');
-            const dotsContainer = document.getElementById('dotsContainer');
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            const wrapper = document.getElementById('slidesWrapper');
-            const toggleAcquisitionBtn = document.getElementById('toggleAcquisitionBtn');
-            const acquisitionSection = document.getElementById('acquisitionSection');
-
-            // Toggle acquisition options
-            if (toggleAcquisitionBtn && acquisitionSection) {
-                toggleAcquisitionBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    if (acquisitionSection.style.display === 'block') {
-                        acquisitionSection.style.display = 'none';
-                        toggleAcquisitionBtn.innerText = 'Ver Opciones de Ajuste / Adquisición ▾';
-                    } else {
-                        acquisitionSection.style.display = 'block';
-                        toggleAcquisitionBtn.innerText = 'Ocultar Opciones ▴';
-                    }
-                });
-            }
-
-            // Build indicator dots with click support
-            slides.forEach((_, index) => {
-                const dot = document.createElement('div');
-                dot.classList.add('dot');
-                if (index === 0) dot.classList.add('active');
-                dot.addEventListener('click', () => showSlide(index));
-                dotsContainer.appendChild(dot);
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // --- Language Toggle Logic ---
+            const langToggle = document.getElementById('langToggle');
+            const htmlTag = document.documentElement;
+            
+            langToggle.addEventListener('click', () => {
+                const currentLang = htmlTag.getAttribute('lang');
+                htmlTag.setAttribute('lang', currentLang === 'en' ? 'es' : 'en');
             });
 
-            const dots = document.querySelectorAll('.dot');
+            // --- Premium Custom Cursor Logic ---
+            const cursorDot = document.getElementById('cursor-dot');
+            const cursorRing = document.getElementById('cursor-ring');
+            
+            // GSAP quickTo for highly performant, smooth cursor following
+            const xDotTo = gsap.quickTo(cursorDot, "x", {duration: 0.1, ease: "power3"});
+            const yDotTo = gsap.quickTo(cursorDot, "y", {duration: 0.1, ease: "power3"});
+            
+            const xRingTo = gsap.quickTo(cursorRing, "x", {duration: 0.3, ease: "power3"});
+            const yRingTo = gsap.quickTo(cursorRing, "y", {duration: 0.3, ease: "power3"});
 
-            function showSlide(index) {
-                if (index < 0) index = 0;
-                if (index >= slides.length) index = slides.length - 1;
+            // --- Easter Egg: Dynamic Moon Lighting Logic ---
+            const moonImg = document.getElementById('the-moon');
+            const placeholderStart = document.getElementById('moon-placeholder-start');
+            const placeholderEnd = document.getElementById('moon-placeholder-end');
+            
+            let moonCenterX = window.innerWidth / 2;
+            let moonCenterY = window.innerHeight / 2;
 
-                currentSlide = index;
+            // Start hidden — it will fade in AFTER the "Moonlight" text on slide 1
+            gsap.set(moonImg, { opacity: 0 });
 
-                slides.forEach((slide, idx) => {
-                    slide.classList.toggle('active', idx === currentSlide);
+            // Web fonts loading late can shift text layout after we've already
+            // measured the placeholder position, making the logo look misaligned.
+            // Recalculate (silently, no animation) once fonts are actually ready.
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(() => {
+                    updateMoonPosition(false);
                 });
-
-                dots.forEach((dot, idx) => {
-                    dot.classList.toggle('active', idx === currentSlide);
-                });
-
-                prevBtn.disabled = currentSlide === 0;
-                nextBtn.disabled = currentSlide === slides.length - 1;
-
-                prevBtn.style.opacity = currentSlide === 0 ? '0.3' : '1';
-                nextBtn.style.opacity = currentSlide === slides.length - 1 ? '0.3' : '1';
             }
 
-            // Universal navigation handlers
-            function handlePrev(e) {
-                if (e) { e.preventDefault(); e.stopPropagation(); }
-                if (currentSlide > 0) showSlide(currentSlide - 1);
-            }
+            function updateMoonPosition(animate = true) {
+                let targetRect = null;
+                let targetWidth = 60;
+                let targetHeight = 60;
 
-            function handleNext(e) {
-                if (e) { e.preventDefault(); e.stopPropagation(); }
-                if (currentSlide < slides.length - 1) showSlide(currentSlide + 1);
-            }
+                // Determine target location based on slide and fragment state
+                if (currentSlideIndex === 0 && currentFragmentIndex <= 0) {
+                    targetRect = placeholderStart.getBoundingClientRect();
+                } else if (currentSlideIndex === slides.length - 1 && currentFragmentIndex === slides[currentSlideIndex].querySelectorAll('.fragment').length - 1) {
+                    // Only go to final placeholder on the very last fragment of the last slide
+                    targetRect = placeholderEnd.getBoundingClientRect();
+                }
 
-            // Click & Touch events
-            prevBtn.addEventListener('click', handlePrev);
-            nextBtn.addEventListener('click', handleNext);
-
-            // Touch Swipe Logic
-            let touchStartX = 0;
-            let touchEndX = 0;
-            let touchStartY = 0;
-            let touchEndY = 0;
-
-            wrapper.addEventListener('touchstart', (e) => {
-                touchStartX = e.changedTouches[0].screenX;
-                touchStartY = e.changedTouches[0].screenY;
-            }, { passive: true });
-
-            wrapper.addEventListener('touchend', (e) => {
-                touchEndX = e.changedTouches[0].screenX;
-                touchEndY = e.changedTouches[0].screenY;
-                handleSwipe();
-            }, { passive: true });
-
-            function handleSwipe() {
-                const diffX = touchEndX - touchStartX;
-                const diffY = touchEndY - touchStartY;
-
-                if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 40) {
-                    if (diffX < 0) {
-                        handleNext();
+                if (targetRect && targetRect.width > 0) {
+                    // Position aligned with title
+                    if(animate) {
+                        gsap.to(moonImg, { 
+                            x: targetRect.left, y: targetRect.top, 
+                            width: targetRect.width, height: targetRect.height, 
+                            duration: 1.5, ease: 'power3.inOut' 
+                        });
                     } else {
-                        handlePrev();
+                        gsap.set(moonImg, { x: targetRect.left, y: targetRect.top, width: targetRect.width, height: targetRect.height });
                     }
+                    moonCenterX = targetRect.left + (targetRect.width/2);
+                    moonCenterY = targetRect.top + (targetRect.height/2);
+                } else {
+                    // Default top-left position
+                    const padding = window.innerWidth < 768 ? 20 : 50;
+                    const destX = padding;
+                    const destY = padding;
+                    
+                    if(animate) {
+                        gsap.to(moonImg, { 
+                            x: destX, y: destY, 
+                            width: targetWidth, height: targetHeight, 
+                            duration: 1.5, ease: 'power3.inOut' 
+                        });
+                    } else {
+                        gsap.set(moonImg, { x: destX, y: destY, width: targetWidth, height: targetHeight });
+                    }
+                    moonCenterX = destX + (targetWidth/2);
+                    moonCenterY = destY + (targetHeight/2);
+                }
+                
+                // Update global glow center
+                document.documentElement.style.setProperty('--moon-x', `${moonCenterX}px`);
+                document.documentElement.style.setProperty('--moon-y', `${moonCenterY}px`);
+            }
+
+            // Global Mouse Move Event
+            window.addEventListener('mousemove', (e) => {
+                const mouseX = e.clientX;
+                const mouseY = e.clientY;
+                
+                // Move cursors
+                xDotTo(mouseX);
+                yDotTo(mouseY);
+                xRingTo(mouseX);
+                yRingTo(mouseY);
+                
+                // Expand ring slightly when moving fast (simulated)
+                cursorRing.style.width = '42px';
+                cursorRing.style.height = '42px';
+                clearTimeout(window.cursorTimeout);
+                window.cursorTimeout = setTimeout(() => {
+                    cursorRing.style.width = '36px';
+                    cursorRing.style.height = '36px';
+                }, 150);
+
+                // --- Calculate Dynamic Lighting (Shadows cast AWAY from moon) ---
+                const dx = mouseX - moonCenterX;
+                const dy = mouseY - moonCenterY;
+                const dist = Math.sqrt(dx*dx + dy*dy);
+                
+                // The further the mouse, the stronger the shadow, capped at max offset
+                const maxShadowOffset = 25; 
+                const intensity = Math.min(dist / 600, 1); 
+                
+                const shadowX = (dx / dist) * maxShadowOffset * intensity;
+                const shadowY = (dy / dist) * maxShadowOffset * intensity;
+                
+                // Update CSS variables for all dynamic-light elements
+                document.documentElement.style.setProperty('--shadow-x', `${shadowX}px`);
+                document.documentElement.style.setProperty('--shadow-y', `${shadowY}px`);
+            });
+
+            // Handle Resizing
+            window.addEventListener('resize', () => {
+                updateMoonPosition(false);
+            });
+
+
+            // --- Presentation Engine Logic ---
+            const slides = document.querySelectorAll('.slide');
+            const progress = document.getElementById('progress');
+            let currentSlideIndex = 0;
+            let currentFragmentIndex = -1;
+            let isAnimating = false;
+
+            slides.forEach((slide) => {
+                const fragments = Array.from(slide.querySelectorAll('.fragment'));
+                slide.dataset.fragmentsCount = fragments.length;
+                gsap.set(fragments, { opacity: 0, y: 30, filter: "blur(15px)" });
+            });
+
+            // Connector lines "draw" themselves in (scale) rather than drift up like text
+            gsap.set(document.querySelectorAll('.connector-line'), { opacity: 0, scaleY: 0, y: 0, filter: "none" });
+
+            // Initialize first slide (instantly set moon pos without animation)
+            setTimeout(() => {
+                updateMoonPosition(false);
+                goToSlide(0);
+            }, 100);
+
+            // Controls
+            window.addEventListener('keydown', (e) => {
+                if (isAnimating) return;
+                if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+                    e.preventDefault();
+                    nextAction();
+                } else if (e.key === 'ArrowLeft' || e.key === 'Backspace') {
+                    e.preventDefault();
+                    prevAction();
+                }
+            });
+
+            function nextAction() {
+                const currentSlide = slides[currentSlideIndex];
+                const fragments = Array.from(currentSlide.querySelectorAll('.fragment'));
+                
+                if (currentFragmentIndex < fragments.length - 1) {
+                    currentFragmentIndex++;
+                    revealFragment(currentSlide, fragments, currentFragmentIndex);
+                } else if (currentSlideIndex < slides.length - 1) {
+                    transitionSlide(currentSlideIndex, currentSlideIndex + 1);
                 }
             }
 
-            // Keyboard navigation
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowRight' || e.key === 'Space') handleNext();
-                if (e.key === 'ArrowLeft') handlePrev();
-            });
+            function prevAction() {
+                if (isAnimating) return;
+                if (currentSlideIndex > 0) {
+                    transitionSlide(currentSlideIndex, currentSlideIndex - 1, true);
+                }
+            }
 
-            // Initial render
-            showSlide(0);
+            function revealFragment(slide, fragments, index) {
+                isAnimating = true;
+                const target = fragments[index];
+                const isIntroReveal = (currentSlideIndex === 0 && index === 0);
+
+                // Mover la luna de forma simultánea a la transición de textos,
+                // EXCEPTO en la entrada inicial: ahí el texto "Moonlight" entra
+                // primero y el logo aparece después, con su propia transición.
+                if (!isIntroReveal) {
+                    updateMoonPosition(true);
+                }
+
+                const tl = gsap.timeline({ onComplete: () => {
+                    isAnimating = false;
+                }});
+
+                // Check for data-hide-prev flag (clears screen of previous fragments)
+                if (target.dataset.hidePrev === "true" && index > 0) {
+                    const previousFragments = fragments.slice(0, index);
+                    tl.to(previousFragments, { 
+                        opacity: 0, 
+                        y: -20, 
+                        filter: "blur(15px)",
+                        duration: 0.8, 
+                        ease: "power2.inOut",
+                        stagger: 0.05
+                    }, 0);
+                }
+
+                if (target.classList.contains('step-item')) {
+                    // Methodology word: reveals quickly and draws its connector
+                    // line to the previous step in the same click.
+                    tl.to(target, {
+                        opacity: 1,
+                        y: 0,
+                        filter: "blur(0px)",
+                        duration: 0.6,
+                        ease: "power2.out"
+                    }, 0);
+                    const connector = target.querySelector('.connector-line');
+                    if (connector) {
+                        tl.to(connector, {
+                            opacity: 1,
+                            scaleY: 1,
+                            duration: 0.5,
+                            ease: "power2.out"
+                        }, 0);
+                    }
+                } else if (target.classList.contains('moonlight-frame-label')) {
+                    // Final step: enclose the whole sequence to read as "the Moonlight methodology"
+                    tl.to(target, {
+                        opacity: 1,
+                        y: 0,
+                        filter: "blur(0px)",
+                        duration: 0.6,
+                        ease: "power3.out"
+                    }, 0);
+                    tl.to('#methodology-frame', {
+                        borderColor: "rgba(197, 139, 89, 0.35)",
+                        boxShadow: "0 0 40px rgba(197, 139, 89, 0.08)",
+                        duration: 0.7,
+                        ease: "power2.out"
+                    }, 0);
+                } else if (target.classList.contains('fast-fragment')) {
+                    // Shortened timing for this slide's headline / closing line
+                    tl.to(target, {
+                        opacity: 1,
+                        y: 0,
+                        filter: "blur(0px)",
+                        duration: 0.8,
+                        ease: "power2.out"
+                    }, target.dataset.hidePrev === "true" ? 0.3 : 0);
+                } else {
+                    tl.to(target, {
+                        opacity: 1,
+                        y: 0,
+                        filter: "blur(0px)",
+                        duration: 1.5,
+                        ease: "power3.out"
+                    }, target.dataset.hidePrev === "true" ? 0.5 : 0);
+                }
+
+                // Entrance sequence for slide 1: once "Moonlight" has appeared,
+                // fade + pop the logo in at its placeholder position.
+                if (isIntroReveal) {
+                    tl.call(() => {
+                        updateMoonPosition(false);
+                        gsap.fromTo(moonImg,
+                            { opacity: 0, scale: 0.6 },
+                            { opacity: 1, scale: 1, duration: 1, ease: "power3.out" }
+                        );
+                    }, null, 0.9);
+                }
+
+                // Auto-reveal inner elements (for sentences split in two parts like slide 1)
+                const autoReveals = target.querySelectorAll('.auto-reveal');
+                if(autoReveals.length > 0) {
+                    gsap.fromTo(autoReveals, 
+                        { opacity: 0, filter: "blur(10px)", y: 15 },
+                        { opacity: 1, filter: "blur(0px)", y: 0, duration: 1.5, ease: "power3.out", stagger: 0.8 },
+                        target.dataset.hidePrev === "true" ? 1.5 : 1.5 
+                    );
+                }
+            }
+
+            function transitionSlide(fromIndex, toIndex, reverse = false) {
+                isAnimating = true;
+                const fromSlide = slides[fromIndex];
+                const toSlide = slides[toIndex];
+                
+                const tl = gsap.timeline({
+                    onComplete: () => {
+                        fromSlide.classList.remove('active');
+                        toSlide.classList.add('active');
+                        currentSlideIndex = toIndex;
+                        updateProgress();
+                        
+                        const toFragments = Array.from(toSlide.querySelectorAll('.fragment'));
+                        if (reverse) {
+                            gsap.set(toFragments, { opacity: 1, y: 0, filter: "blur(0px)" });
+                            toFragments.forEach((frag, idx) => {
+                                if(frag.dataset.hidePrev === "true") {
+                                    const prevToHide = toFragments.slice(0, idx);
+                                    gsap.set(prevToHide, { opacity: 0 });
+                                }
+                                const autoReveals = frag.querySelectorAll('.auto-reveal');
+                                if (autoReveals.length > 0) {
+                                    gsap.set(autoReveals, { opacity: 1, filter: "blur(0px)", y: 0 });
+                                }
+                            });
+                            currentFragmentIndex = toFragments.length - 1;
+                        } else {
+                            gsap.set(toFragments, { opacity: 0, y: 30, filter: "blur(15px)" });
+                            currentFragmentIndex = -1;
+                            nextAction(); 
+                        }
+                        
+                        updateMoonPosition(true); // Animate moon to new slide state
+                        isAnimating = false;
+                    }
+                });
+
+                // Cinematic crossfade
+                tl.to(fromSlide, {
+                    opacity: 0,
+                    scale: reverse ? 0.98 : 1.02,
+                    filter: "blur(20px)",
+                    duration: 1.2,
+                    ease: "power2.inOut"
+                }, 0);
+
+                gsap.set(toSlide, { opacity: 0, scale: reverse ? 1.02 : 0.98, filter: "blur(20px)" });
+                toSlide.classList.add('active');
+
+                tl.to(toSlide, {
+                    opacity: 1,
+                    scale: 1,
+                    filter: "blur(0px)",
+                    duration: 1.2,
+                    ease: "power2.inOut"
+                }, 0.2);
+            }
+
+            function goToSlide(index) {
+                slides.forEach((s, i) => {
+                    if (i === index) {
+                        s.classList.add('active');
+                        gsap.set(s, { opacity: 1, scale: 1, filter: "blur(0px)" });
+                    } else {
+                        s.classList.remove('active');
+                        gsap.set(s, { opacity: 0 });
+                    }
+                });
+                updateProgress();
+                nextAction(); 
+            }
+
+            function updateProgress() {
+                const num = (currentSlideIndex + 1).toString().padStart(2, '0');
+                const total = slides.length.toString().padStart(2, '0');
+                progress.innerText = `${num} / ${total}`;
+                
+                // Hide UI elements on first and last slide for maximum visual silence
+                if (currentSlideIndex === 0 || currentSlideIndex === slides.length - 1) {
+                    gsap.to('#ui-layer', { opacity: 0, duration: 1, pointerEvents: "none" });
+                } else {
+                    gsap.to('#ui-layer', { opacity: 1, duration: 1, pointerEvents: "auto" });
+                }
+            }
         });
     </script>
 </body>
