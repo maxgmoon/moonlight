@@ -14,7 +14,7 @@
 
     <style>
         :root {
-            --bg-color: #050507; 
+            --bg-color: #15151a; 
             --text-main: #fcfcfd;
             --text-muted: #8b8b99;
             --accent: #C58B59; 
@@ -28,7 +28,7 @@
         }
 
         * {
-            cursor: none !important; /* Hide default cursor */
+            cursor: none !important; 
             box-sizing: border-box;
         }
 
@@ -41,11 +41,9 @@
             color: var(--text-main);
             font-family: 'Inter', sans-serif;
             overflow: hidden; 
-            /* Dynamic background glow tracking the moon */
-            background-image: radial-gradient(circle at var(--moon-x) var(--moon-y), rgba(197, 139, 89, 0.05) 0%, var(--bg-color) 50%);
+            background-image: radial-gradient(circle at var(--moon-x) var(--moon-y), rgba(197, 139, 89, 0.05) 15%, var(--bg-color) 50%);
         }
 
-        /* Cinematic Grain Overlay */
         .grain {
             position: fixed;
             top: 0;
@@ -82,7 +80,6 @@
         }
 
         .text-display {
-            /* Reduced max size for safety */
             font-size: clamp(2rem, 4vw, 4rem); 
             font-weight: 200;
             letter-spacing: -0.03em;
@@ -90,7 +87,6 @@
         }
 
         .text-headline {
-            /* Reduced max size and increased scalability */
             font-size: clamp(1.5rem, 2.8vw, 3rem); 
             font-weight: 200;
             letter-spacing: -0.02em;
@@ -106,10 +102,8 @@
             line-height: 1.6;
         }
 
-        /* Dynamic Lighting Classes */
         .dynamic-light-text {
-            /* Casts a shadow away from the moon */
-            text-shadow: var(--shadow-x) var(--shadow-y) 20px rgba(0,0,0,0.9),
+            text-shadow: var(--shadow-x) var(--shadow-y) 30px rgba(0,0,0,0.9),
                          0 0 30px rgba(255,255,255,0.05);
             transition: text-shadow 0.1s ease-out;
         }
@@ -124,7 +118,6 @@
             background: rgba(255,255,255,0.01);
             border-radius: 8px;
             padding: 2rem;
-            /* Dynamic box shadow */
             box-shadow: var(--shadow-x) var(--shadow-y) 30px rgba(0,0,0,0.5), inset 0 0 15px rgba(255,255,255,0.02);
             transition: border-color 0.5s ease, box-shadow 0.1s ease-out;
             backdrop-filter: blur(10px);
@@ -147,7 +140,6 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            /* MASSIVE SAFETY MARGINS */
             padding: 6rem clamp(3rem, 12vw, 15rem); 
             opacity: 0;
             visibility: hidden;
@@ -165,7 +157,6 @@
             transform: translateY(20px);
         }
 
-        /* Elements */
         .flow-arrow {
             color: var(--accent);
             font-weight: 200;
@@ -174,12 +165,12 @@
             opacity: 0.5;
         }
 
-        /* Methodology connector lines (Chapter 5) */
         .connector-line {
-            width: 1px;
+            width: 2px;
             height: 28px;
             margin: 4px auto;
-            background: linear-gradient(to bottom, var(--accent), rgba(197, 139, 89, 0.05));
+            background: rgba(197,139,89,0.3);
+            border-radius: 999px;
             transform-origin: top;
         }
 
@@ -187,11 +178,11 @@
             border: 1px solid transparent;
         }
 
-        .moonlight-frame-label span {
-            background: var(--bg-color);
+        .moonlight-frame-label {
+            bottom: -8px;
+            transform: translate(-50%, 50%);
         }
 
-        /* Translation Toggle */
         html:not([lang="es"]) .lang-es { display: none !important; }
         html[lang="es"] .lang-en { display: none !important; }
 
@@ -226,26 +217,40 @@
             border-color: var(--accent-dim);
         }
 
+        /* Estilos para los nuevos botones de navegación */
+        .nav-btn {
+            pointer-events: auto;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+            transition: all 0.3s ease;
+            opacity: 0.5;
+        }
+
+        .nav-btn:hover {
+            color: var(--accent);
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
         #the-moon {
             position: fixed;
             z-index: 90;
-            /* Filter to give a warm glow without distorting the colored image */
-            filter: drop-shadow(0 0 20px rgba(197, 139, 89, 0.4));
+            filter: drop-shadow(0 0 50px rgba(197, 139, 89, 0.4));
             pointer-events: none;
-            /* We let GSAP handle the transform, but add will-change for performance */
-            will-change: transform, width, height, top, left;
+            will-change: transform, width, height, top, right;
         }
     </style>
 </head>
 <body>
 
-    <!-- Premium Custom Cursor -->
     <div id="cursor-dot"></div>
     <div id="cursor-ring"></div>
-
     <div class="grain"></div>
-
-    <!-- The actual moving moon image. Positioning is handled entirely by GSAP -->
     <img id="the-moon" src="https://img.icons8.com/color/96/moon-satellite.png" alt="Moonlight Logo">
 
     <div id="ui-layer">
@@ -253,7 +258,20 @@
             <span class="lang-en">ESPAÑOL</span>
             <span class="lang-es">ENGLISH</span>
         </button>
-        <div id="progress" class="text-xs font-light text-[#8b8b99] tracking-widest">01 / 11</div>
+        
+        <!-- Agrupación del contador y botones de navegación -->
+        <div class="flex items-center gap-4">
+            <button id="btn-prev" class="nav-btn" aria-label="Previous Slide">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            
+            <!-- Agregué pointer-events-auto al contador por si acaso interactúa con la zona -->
+            <div id="progress" class="text-xs font-light text-[#8b8b99] tracking-widest pointer-events-auto">01 / 11</div>
+            
+            <button id="btn-next" class="nav-btn" aria-label="Next Slide">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+        </div>
     </div>
 
     <div id="presentation">
@@ -261,23 +279,19 @@
         <!-- PANTALLA 01: Executive Opening -->
         <section class="slide" id="ch1">
             <div class="flex flex-col items-center text-center max-w-4xl relative w-full h-full justify-center">
-                
-                <div class="fragment absolute flex flex-col items-center w-full" data-hide-prev="true">
-                    <!-- Placeholder div for the moon to align perfectly on Slide 1 -->
-                    <div class="flex items-center justify-center gap-6 mb-8" style="line-height: 1;">
+                <div class="fragment absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center w-full" data-hide-prev="true">
+                    <div class="flex items-center justify-center gap-6" style="line-height: 1;">
                         <div id="moon-placeholder-start" class="w-16 h-16 md:w-20 md:h-20 shrink-0 flex items-center justify-center"></div>
                         <h1 class="text-display dynamic-light-text m-0" style="line-height: 1;">Moonlight</h1>
                     </div>
                 </div>
                 
-                <!-- Sequential statements in the SAME slide -->
-                <div class="fragment absolute w-full" data-hide-prev="true">
+                <div class="fragment absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full" data-hide-prev="true">
                     <p class="text-headline dynamic-light-text leading-tight">
                         <span class="lang-en">Tools solve problems;<br><span class="auto-reveal opacity-0 inline-block mt-4 text-[#C58B59]">innovation creates them.</span></span>
                         <span class="lang-es">Las herramientas resuelven problemas;<br><span class="auto-reveal opacity-0 inline-block mt-4 text-[#C58B59]">la innovación las crea.</span></span>
                     </p>
                 </div>
-                
             </div>
         </section>
 
@@ -329,8 +343,8 @@
                 <span class="lang-es">Toda práctica de innovación comienza con una sola observación.</span>
             </h2>
             
-            <div class="flex w-full max-w-4xl justify-center items-center mt-12 h-48 relative">
-                <div class="fragment absolute left-0 text-right pr-8 border-r border-[rgba(197,139,89,0.3)] w-1/2">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-10 w-full max-w-4xl mt-12">
+                <div class="fragment text-right md:pr-8 md:border-r border-[rgba(197,139,89,0.3)]">
                     <p class="text-body text-sm mb-2 text-[#8b8b99] uppercase tracking-widest">
                         <span class="lang-en">The Request</span><span class="lang-es">La Solicitud</span>
                     </p>
@@ -339,8 +353,8 @@
                         <span class="lang-es">"Necesitamos un script para traducir parámetros."</span>
                     </p>
                 </div>
-                
-                <div class="fragment absolute right-0 text-left pl-8 w-1/2">
+
+                <div class="fragment text-left md:pl-1">
                     <p class="text-body text-sm mb-2 accent-text uppercase tracking-widest">
                         <span class="lang-en">The Opportunity</span><span class="lang-es">La Oportunidad</span>
                     </p>
@@ -351,6 +365,64 @@
                         <span class="lang-en">A fully integrated tool born from an internal need.</span>
                         <span class="lang-es">Una herramienta integrada nacida de una necesidad interna.</span>
                     </p>
+                </div>
+
+                <div class="fragment text-right md:pr-8 md:border-r border-[rgba(197,139,89,0.3)]">
+                    <p class="text-[0.65rem] mb-3 text-[#8b8b99] uppercase tracking-widest">
+                        <span class="lang-en">Traditional Flow</span><span class="lang-es">Flujo Tradicional</span>
+                    </p>
+                    <div class="flex flex-col items-end gap-1">
+                        <p class="text-body text-xs text-[#8b8b99]"><span class="lang-en">Edit Revit text element</span><span class="lang-es">Editar text element Revit</span></p>
+                        <span class="flow-arrow" style="margin: 0;">↓</span>
+                        <p class="text-body text-xs text-[#8b8b99]"><span class="lang-en">Copy</span><span class="lang-es">Copiar</span></p>
+                        <span class="flow-arrow" style="margin: 0;">↓</span>
+                        <p class="text-body text-xs text-[#8b8b99]"><span class="lang-en">Open browser translator</span><span class="lang-es">Abrir traductor en navegador</span></p>
+                        <span class="flow-arrow" style="margin: 0;">↓</span>
+                        <p class="text-body text-xs text-[#8b8b99]"><span class="lang-en">Paste text</span><span class="lang-es">Pegar texto</span></p>
+                        <span class="flow-arrow" style="margin: 0;">↓</span>
+                        <p class="text-body text-xs text-[#8b8b99]"><span class="lang-en">Translate</span><span class="lang-es">Traducir</span></p>
+                        <span class="flow-arrow" style="margin: 0;">↓</span>
+                        <p class="text-body text-xs text-[#8b8b99]"><span class="lang-en">Copy translated text</span><span class="lang-es">Copiar texto traducido</span></p>
+                        <span class="flow-arrow" style="margin: 0;">↓</span>
+                        <p class="text-body text-xs text-[#8b8b99]"><span class="lang-en">Edit Revit text element</span><span class="lang-es">Editar text element de Revit</span></p>
+                        <span class="flow-arrow" style="margin: 0;">↓</span>
+                        <p class="text-body text-xs text-[#8b8b99]"><span class="lang-en">Paste</span><span class="lang-es">Pegar</span></p>
+                        <span class="flow-arrow" style="margin: 0;">↓</span>
+                        <p class="text-body text-xs text-[#8b8b99]"><span class="lang-en">Format</span><span class="lang-es">Dar formato</span></p>
+                    </div>
+                </div>
+
+                <div class="fragment text-left md:pl-1">
+                    <p class="text-[0.65rem] mb-3 accent-text uppercase tracking-widest">
+                        <span class="lang-en">Optimized Flow</span><span class="lang-es">Flujo Automatizado</span>
+                    </p>
+                    <div class="flex flex-col items-start gap-1">
+                        <p class="text-body text-xs text-white"><span class="lang-en">Select text element</span><span class="lang-es">Seleccionar text element</span></p>
+                        <span class="flow-arrow" style="margin: 0;">↓</span>
+                        <p class="text-body text-xs text-white"><span class="lang-en">Click translate</span><span class="lang-es">Click en traducir</span></p>
+                        
+                        <!-- Animación de Código -->
+                        <div class="code-deploy-anim flex flex-col gap-[4px] my-3 w-32 border-l border-[rgba(197,139,89,0.3)] pl-2" aria-hidden="true">
+                            <p class="text-body text-xs text-[#8b8b99]"><span class="lang-en">Automated workflow code-based</span><span class="lang-es">Flujo automatizado basado en código</span></p>
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line"></div>
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-3"></div>
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-3"></div>
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-5"></div>
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-2"></div>
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-1"></div>
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line"></div>
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-4"></div>
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line"></div>
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-4"></div>
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-3"></div>
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-5"></div>
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-4"></div>
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-1"></div>
+                        </div>
+
+                        <span class="flow-arrow" style="margin: 0;">↓</span>
+                        <p class="text-body text-xs accent-text font-medium"><span class="lang-en">Done</span><span class="lang-es">Listo</span></p>
+                    </div>
                 </div>
             </div>
 
@@ -365,77 +437,86 @@
         <!-- PANTALLA 04: The Pattern -->
         <section class="slide" id="ch4">
             <h2 class="text-headline fragment dynamic-light-text">
-                <span class="lang-en">One idea led to another.</span>
-                <span class="lang-es">Una idea condujo a la siguiente.</span>
+                <span class="lang-en">An opportunity for improvement is identified. The solution is automated.</span>
+                <span class="lang-es">Se detecta una oportunidad de mejora. Se automatiza la solución.</span>
             </h2>
             
-            <div class="flex flex-wrap justify-center gap-6 w-full max-w-4xl mt-12">
-                <div class="fragment subtle-box text-center opacity-70" style="width: 10.5rem;">
+            <div class="flex flex-wrap justify-center gap-6 w-full max-w-6xl mt-5">
+                <div class="fragment subtle-box text-center opacity-70" style="width: 15rem; height: 10rem;">
                     <p class="text-body text-white font-medium">Translator</p>
                     <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
-                        <span class="lang-en">Streamlines workflow</span><span class="lang-es">Agiliza flujo de trabajo</span>
+                        <span class="lang-en">Streamlines workflows</span><span class="lang-es">Agiliza flujos de trabajo</span>
                     </p>
                 </div>
-                <div class="fragment subtle-box text-center opacity-80" style="width: 10.5rem;">
+                <div class="fragment subtle-box text-center opacity-80" style="width: 15rem; height: 10rem;">
                     <p class="text-body text-white font-medium">NecstinList</p>
-                </div>
-                <div class="fragment subtle-box text-center opacity-90" style="width: 10.5rem;">
-                    <p class="text-body text-white font-medium">Quantification</p>
-                    <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
-                        <span class="lang-en">Standardizes a process</span><span class="lang-es">Estandariza un proceso</span>
+                     <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
+                        <span class="lang-en">Streamlines workflows</span><span class="lang-es">Agiliza flujos de trabajo</span>
                     </p>
                 </div>
-                <div class="fragment subtle-box text-center" style="width: 10.5rem;">
-                    <p class="text-body text-white font-medium">Clash Detection</p>
+                <div class="fragment subtle-box text-center opacity-90" style="width: 15rem; height: 10rem;">
+                    <p class="text-body text-white font-medium">QuanTools</p>
                     <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
-                        <span class="lang-en">Streamlines workflow</span><span class="lang-es">Agiliza flujo de trabajo</span>
+                        <span class="lang-en">Standardize processes</span><span class="lang-es">Estandariza procesos</span>
+                    </p>
+                    <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
+                        <span class="lang-en">Streamlines workflows</span><span class="lang-es">Agiliza flujos de trabajo</span>
                     </p>
                 </div>
-                <div class="fragment subtle-box text-center" style="width: 10.5rem;">
+                <div class="fragment subtle-box text-center" style="width: 15rem; height: 10rem;">
+                    <p class="text-body text-white font-medium">Collider - Clash Detection</p>
+                    <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
+                        <span class="lang-en">Streamlines workflows</span><span class="lang-es">Agiliza flujos de trabajo</span>
+                    </p>
+                </div>
+                <div class="fragment subtle-box text-center" style="width: 15rem; height: 10rem;">
                     <p class="text-body text-white font-medium">Support Placement</p>
                     <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
-                        <span class="lang-en">Streamlines workflow</span><span class="lang-es">Agiliza flujo de trabajo</span>
+                        <span class="lang-en">Streamlines workflows</span><span class="lang-es">Agiliza flujos de trabajo</span>
                     </p>
                 </div>
-                <div class="fragment subtle-box text-center" style="width: 10.5rem;">
-                    <p class="text-body text-white font-medium">Parameter Resort</p>
+                <div class="fragment subtle-box text-center" style="width: 15rem; height: 10rem;">
+                    <p class="text-body text-white font-medium">Param Re-Sort</p>
                     <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
-                        <span class="lang-en">Streamlines workflow</span><span class="lang-es">Agiliza flujo de trabajo</span>
+                        <span class="lang-en">Streamlines workflows</span><span class="lang-es">Agiliza flujos de trabajo</span>
                     </p>
                 </div>
-                <div class="fragment subtle-box text-center dynamic-light-box border-[rgba(197,139,89,0.3)]" style="width: 10.5rem;">
+                <div class="fragment subtle-box text-center dynamic-light-box border-[rgba(197,139,89,0.3)]" style="width: 15rem;">
                     <p class="text-body accent-text font-medium">DataLens</p>
                     <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
-                        <span class="lang-en">Streamlines coordination</span><span class="lang-es">Agiliza coordinación</span>
+                        <span class="lang-en">Streamlines coordination</span><span class="lang-es">Agiliza la coordinación</span>
                     </p>
                 </div>
             </div>
 
-            <!-- Growing ecosystem: a flex-wrap chip row so any number of tools (odd or even)
-                 self-arranges centered, with no fixed grid to outgrow -->
             <div class="fragment text-center mt-10 w-full max-w-3xl">
                 <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] opacity-60 mb-4">
-                    <span class="lang-en">And the ecosystem keeps growing</span>
-                    <span class="lang-es">Y el ecosistema sigue creciendo</span>
+                    <span class="lang-en">Ecosystem keeps growing</span>
+                    <span class="lang-es">Ecosistema en crecimiento</span>
                 </p>
                 <div class="flex flex-wrap justify-center gap-3">
                     <span class="subtle-box text-[0.7rem] text-[#8b8b99] tracking-widest uppercase" style="padding: 0.6rem 1.1rem;">Renamer</span>
-                    <span class="subtle-box text-[0.7rem] text-[#8b8b99] tracking-widest uppercase" style="padding: 0.6rem 1.1rem;">NotifyUI</span>
-                    <span class="subtle-box text-[0.7rem] text-[#8b8b99] tracking-widest uppercase" style="padding: 0.6rem 1.1rem;">Easy Worksets</span>
+                    <span class="subtle-box text-[0.7rem] text-[#8b8b99] tracking-widest uppercase" style="padding: 0.6rem 1.1rem;">Match Elevations</span>
+                    <span class="subtle-box text-[0.7rem] text-[#8b8b99] tracking-widest uppercase" style="padding: 0.6rem 1.1rem;">Workset Switcher</span>
+                    <span class="subtle-box text-[0.7rem] text-[#8b8b99] tracking-widest uppercase" style="padding: 0.6rem 1.1rem;">RevitSer</span>
                     <span class="subtle-box text-[0.7rem] text-[#8b8b99] tracking-widest uppercase" style="padding: 0.6rem 1.1rem;">Bookmarks</span>
                     <span class="subtle-box text-[0.7rem] text-[#8b8b99] tracking-widest uppercase" style="padding: 0.6rem 1.1rem;">Param Setter</span>
-                    <span class="subtle-box text-[0.7rem] text-[#8b8b99] tracking-widest uppercase" style="padding: 0.6rem 1.1rem;">Doc Tracker</span>
+                    <span class="subtle-box text-[0.7rem] text-[#8b8b99] tracking-widest uppercase" style="padding: 0.6rem 1.1rem;">DocTracker</span>
                     <span class="subtle-box text-[0.7rem] text-[#8b8b99] tracking-widest uppercase" style="padding: 0.6rem 1.1rem;">Autosaver</span>
-                    <!-- Para agregar más herramientas: copia un <span> de estos dentro de este mismo
-                         contenedor flex-wrap. Al ser flex-wrap + justify-center, se reacomodan solas
-                         sin importar si el total es par o impar. -->
+                    <span class="subtle-box text-[0.7rem] text-[#8b8b99] tracking-widest uppercase" style="padding: 0.6rem 1.1rem;">...</span>
                 </div>
             </div>
 
-            <div class="fragment text-center mt-20">
-                <p class="text-headline" style="font-size: clamp(1.4rem, 2.5vw, 1.8rem); margin-bottom:0;">
-                    <span class="lang-en">But this is not a list of software projects.</span>
-                    <span class="lang-es">Pero esto no es una lista de proyectos de software.</span>
+            <div class="fragment text-center mt-10">
+                <p class="text-headline" style="font-size: clamp(1.4rem, 2.5vw, 1.8rem); margin-bottom:0; margin-top: 10;">
+                    <span class="lang-en">This is not a list of software projects.</span>
+                    <span class="lang-es">No se trata de una lista de proyectos de software.</span>
+                </p>
+            </div>
+            <div class="fragment mt-10 w-full text-center">
+                <p class="text-headline accent-text dynamic-light-text" style="font-size: clamp(1.2rem, 2vw, 1.8rem); margin-bottom: 0; margin-top: 10;">
+                    <span class="lang-en">It's about having the ability to identify opportunities to improve and automate workflows by creating custom software tools for teams..</span>
+                    <span class="lang-es">Se trata de que tenemos la capacidad de identificar oportunidades para mejorar y automatizar flujos de trabajo por medio de la creacion de herramientas de software personalizado para los equipos.</span>
                 </p>
             </div>
         </section>
@@ -503,7 +584,17 @@
             </h2>
             
             <div class="relative">
-                <div id="methodology-frame" class="flex flex-col items-center justify-center rounded-2xl px-10 md:px-16 py-8">
+                <div id="methodology-frame" class="flex flex-col items-center justify-center rounded-2xl px-10 md:px-16 py-8"
+                    style="
+                        -webkit-mask-image: linear-gradient(black, black), linear-gradient(to right, black 0%, black calc(50% - 80px), transparent calc(50% - 80px), transparent calc(50% + 80px), black calc(50% + 80px), black 100%);
+                        -webkit-mask-size: 100% calc(100% - 4px), 100% 4px;
+                        -webkit-mask-position: top left, bottom left;
+                        -webkit-mask-repeat: no-repeat;
+                        mask-image: linear-gradient(black, black), linear-gradient(to right, black 0%, black calc(50% - 80px), transparent calc(50% - 80px), transparent calc(50% + 80px), black calc(50% + 80px), black 100%);
+                        mask-size: 100% calc(100% - 4px), 100% 4px;
+                        mask-position: top left, bottom left;
+                        mask-repeat: no-repeat;
+                    ">
                     <div class="fragment step-item text-center opacity-40">
                         <p class="text-body text-white tracking-widest uppercase text-sm"><span class="lang-en">Observe</span><span class="lang-es">Observar</span></p>
                     </div>
@@ -526,15 +617,16 @@
                         </p>
                     </div>
                 </div>
-                <div class="fragment moonlight-frame-label absolute left-1/2 -translate-x-1/2 -bottom-5" data-hide-prev="false">
-                    <span class="text-sm tracking-[0.3em] uppercase accent-text px-4">Moonlight</span>
+                
+                <div class="fragment moonlight-frame-label absolute left-1/2 -translate-x-1/2" data-hide-prev="false" >
+                    <span class="text-sm tracking-[0.1em] uppercase accent-text px-4" style="background: transparent;">Moonlight</span>
                 </div>
             </div>
             
             <div class="fragment fast-fragment text-center mt-16 max-w-3xl">
                 <p class="text-body text-white">
                     <span class="lang-en">The true value is not in writing code, but in deeply understanding engineering workflows to augment our team's potential.</span>
-                    <span class="lang-es">El verdadero valor no está en escribir código, sino en comprender los flujos de ingeniería para potenciar la capacidad del equipo.</span>
+                    <span class="lang-es">El verdadero valor no está en escribir código, sino en comprender los flujos de ingeniería para potenciar las capacidades de los equipos.</span>
                 </p>
             </div>
         </section>
@@ -580,8 +672,8 @@
         <!-- PANTALLA 09: Integration Models -->
         <section class="slide" id="ch6b">
             <h2 class="text-headline fragment max-w-3xl dynamic-light-text">
-                <span class="lang-en">There is more than one way to integrate this capability.</span>
-                <span class="lang-es">Existe más de una forma de integrar esta capacidad.</span>
+                <span class="lang-en">Integration proposals.</span>
+                <span class="lang-es">Propuestas de integración.</span>
             </h2>
 
             <div class="flex flex-col md:flex-row w-full max-w-5xl gap-8 mt-12 items-stretch">
@@ -691,21 +783,21 @@
         <section class="slide" id="ch8">
             <div class="flex flex-col items-center text-center justify-center h-full w-full relative">
                 
-                <div class="fragment absolute top-1/2 -translate-y-1/2 w-full text-center pointer-events-none" data-hide-prev="true">
+                <div class="fragment absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none" data-hide-prev="true">
                     <h1 class="text-display text-[#8b8b99]" style="font-size: clamp(1.8rem, 3.5vw, 3rem);">
                         <span class="lang-en">The tools are not the proposal.</span>
                         <span class="lang-es">Las herramientas no son la propuesta.</span>
                     </h1>
                 </div>
                 
-                <div class="fragment absolute top-1/2 -translate-y-1/2 w-full text-center pointer-events-none" data-hide-prev="true">
+                <div class="fragment absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none" data-hide-prev="true">
                     <h1 class="text-display text-white dynamic-light-text" style="font-size: clamp(2rem, 4vw, 3.5rem);">
                         <span class="lang-en">The innovation practice behind them is.</span>
                         <span class="lang-es">La práctica de innovación detrás de ellas lo es.</span>
                     </h1>
                 </div>
 
-                <div class="fragment absolute top-1/2 -translate-y-1/2 w-full text-center pointer-events-none" data-hide-prev="true">
+                <div class="fragment absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none" data-hide-prev="true">
                     <p class="text-headline mb-4" style="font-size: clamp(1.5rem, 2.5vw, 2.2rem);">
                         <span class="lang-en">The question is not what we have built so far.</span>
                         <span class="lang-es">La pregunta no es qué hemos construido hasta ahora.</span>
@@ -716,8 +808,8 @@
                     </p>
                 </div>
 
-                <!-- Final Logo Placeholder -->
-                <div class="fragment absolute top-1/2 -translate-y-1/2 w-full flex justify-center pointer-events-none" data-hide-prev="true">
+                <!-- Modificado: Posicionamiento absoluto perfectamente centrado -->
+                <div class="fragment absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center w-full" data-hide-prev="true">
                      <div class="flex items-center justify-center gap-6">
                         <div id="moon-placeholder-end" class="w-16 h-16 md:w-20 md:h-20 shrink-0"></div>
                         <h1 class="text-display dynamic-light-text m-0">Moonlight</h1>
@@ -730,9 +822,11 @@
     </div>
 
     <script>
+        // CONFIGURACIÓN DE ALINEACIÓN
+        const MOON_ALIGNMENT = 'left';
+
         document.addEventListener("DOMContentLoaded", () => {
             
-            // --- Language Toggle Logic ---
             const langToggle = document.getElementById('langToggle');
             const htmlTag = document.documentElement;
             
@@ -741,31 +835,48 @@
                 htmlTag.setAttribute('lang', currentLang === 'en' ? 'es' : 'en');
             });
 
-            // --- Premium Custom Cursor Logic ---
+            // Conexión de los nuevos botones de navegación
+            const btnPrev = document.getElementById('btn-prev');
+            const btnNext = document.getElementById('btn-next');
+
+            btnPrev.addEventListener('click', (e) => {
+                e.preventDefault();
+                prevAction();
+            });
+
+            btnNext.addEventListener('click', (e) => {
+                e.preventDefault();
+                nextAction();
+            });
+
             const cursorDot = document.getElementById('cursor-dot');
             const cursorRing = document.getElementById('cursor-ring');
             
-            // GSAP quickTo for highly performant, smooth cursor following
             const xDotTo = gsap.quickTo(cursorDot, "x", {duration: 0.1, ease: "power3"});
             const yDotTo = gsap.quickTo(cursorDot, "y", {duration: 0.1, ease: "power3"});
             
             const xRingTo = gsap.quickTo(cursorRing, "x", {duration: 0.3, ease: "power3"});
             const yRingTo = gsap.quickTo(cursorRing, "y", {duration: 0.3, ease: "power3"});
 
-            // --- Easter Egg: Dynamic Moon Lighting Logic ---
             const moonImg = document.getElementById('the-moon');
             const placeholderStart = document.getElementById('moon-placeholder-start');
             const placeholderEnd = document.getElementById('moon-placeholder-end');
             
+            // Variables globales y objeto puente para animar el gradiente sin saltos
             let moonCenterX = window.innerWidth / 2;
             let moonCenterY = window.innerHeight / 2;
+            const moonPos = { x: moonCenterX, y: moonCenterY };
 
-            // Start hidden — it will fade in AFTER the "Moonlight" text on slide 1
             gsap.set(moonImg, { opacity: 0 });
 
-            // Web fonts loading late can shift text layout after we've already
-            // measured the placeholder position, making the logo look misaligned.
-            // Recalculate (silently, no animation) once fonts are actually ready.
+            gsap.to(moonImg, {
+                filter: "drop-shadow(0 0 34px rgba(197, 139, 89, 0.65))",
+                duration: 5,
+                ease: "sine.inOut",
+                repeat: -1,
+                yoyo: true
+            });
+
             if (document.fonts && document.fonts.ready) {
                 document.fonts.ready.then(() => {
                     updateMoonPosition(false);
@@ -774,66 +885,72 @@
 
             function updateMoonPosition(animate = true) {
                 let targetRect = null;
-                let targetWidth = 60;
-                let targetHeight = 60;
+                let targetWidth = 70;
+                let targetHeight = 70;
 
-                // Determine target location based on slide and fragment state
                 if (currentSlideIndex === 0 && currentFragmentIndex <= 0) {
                     targetRect = placeholderStart.getBoundingClientRect();
                 } else if (currentSlideIndex === slides.length - 1 && currentFragmentIndex === slides[currentSlideIndex].querySelectorAll('.fragment').length - 1) {
-                    // Only go to final placeholder on the very last fragment of the last slide
                     targetRect = placeholderEnd.getBoundingClientRect();
                 }
 
+                let destX, destY;
+
                 if (targetRect && targetRect.width > 0) {
-                    // Position aligned with title
-                    if(animate) {
-                        gsap.to(moonImg, { 
-                            x: targetRect.left, y: targetRect.top, 
-                            width: targetRect.width, height: targetRect.height, 
-                            duration: 1.5, ease: 'power3.inOut' 
-                        });
-                    } else {
-                        gsap.set(moonImg, { x: targetRect.left, y: targetRect.top, width: targetRect.width, height: targetRect.height });
-                    }
-                    moonCenterX = targetRect.left + (targetRect.width/2);
-                    moonCenterY = targetRect.top + (targetRect.height/2);
+                    destX = targetRect.left;
+                    destY = targetRect.top;
+                    targetWidth = targetRect.width;
+                    targetHeight = targetRect.height;
                 } else {
-                    // Default top-left position
                     const padding = window.innerWidth < 768 ? 20 : 50;
-                    const destX = padding;
-                    const destY = padding;
-                    
-                    if(animate) {
-                        gsap.to(moonImg, { 
-                            x: destX, y: destY, 
-                            width: targetWidth, height: targetHeight, 
-                            duration: 1.5, ease: 'power3.inOut' 
-                        });
+                    if (MOON_ALIGNMENT === 'right') {
+                        destX = window.innerWidth - padding - targetWidth;
+                        destY = padding;
+                    } else if (MOON_ALIGNMENT === 'center') {
+                        destX = (window.innerWidth / 2) - (targetWidth / 2);
+                        destY = padding;
                     } else {
-                        gsap.set(moonImg, { x: destX, y: destY, width: targetWidth, height: targetHeight });
+                        destX = padding;
+                        destY = padding;
                     }
-                    moonCenterX = destX + (targetWidth/2);
-                    moonCenterY = destY + (targetHeight/2);
                 }
-                
-                // Update global glow center
-                document.documentElement.style.setProperty('--moon-x', `${moonCenterX}px`);
-                document.documentElement.style.setProperty('--moon-y', `${moonCenterY}px`);
+
+                moonCenterX = destX + (targetWidth/2);
+                moonCenterY = destY + (targetHeight/2);
+
+                if(animate) {
+                    gsap.to(moonImg, { 
+                        x: destX, y: destY, 
+                        width: targetWidth, height: targetHeight, 
+                        duration: 1.5, ease: 'power3.inOut' 
+                    });
+                    
+                    gsap.to(moonPos, {
+                        x: moonCenterX, y: moonCenterY,
+                        duration: 1.5, ease: 'power3.inOut',
+                        onUpdate: () => {
+                            document.documentElement.style.setProperty('--moon-x', `${moonPos.x}px`);
+                            document.documentElement.style.setProperty('--moon-y', `${moonPos.y}px`);
+                        }
+                    });
+                } else {
+                    gsap.set(moonImg, { x: destX, y: destY, width: targetWidth, height: targetHeight });
+                    moonPos.x = moonCenterX;
+                    moonPos.y = moonCenterY;
+                    document.documentElement.style.setProperty('--moon-x', `${moonPos.x}px`);
+                    document.documentElement.style.setProperty('--moon-y', `${moonPos.y}px`);
+                }
             }
 
-            // Global Mouse Move Event
             window.addEventListener('mousemove', (e) => {
                 const mouseX = e.clientX;
                 const mouseY = e.clientY;
                 
-                // Move cursors
                 xDotTo(mouseX);
                 yDotTo(mouseY);
                 xRingTo(mouseX);
                 yRingTo(mouseY);
                 
-                // Expand ring slightly when moving fast (simulated)
                 cursorRing.style.width = '42px';
                 cursorRing.style.height = '42px';
                 clearTimeout(window.cursorTimeout);
@@ -842,30 +959,24 @@
                     cursorRing.style.height = '36px';
                 }, 150);
 
-                // --- Calculate Dynamic Lighting (Shadows cast AWAY from moon) ---
                 const dx = mouseX - moonCenterX;
                 const dy = mouseY - moonCenterY;
                 const dist = Math.sqrt(dx*dx + dy*dy);
                 
-                // The further the mouse, the stronger the shadow, capped at max offset
                 const maxShadowOffset = 25; 
                 const intensity = Math.min(dist / 600, 1); 
                 
                 const shadowX = (dx / dist) * maxShadowOffset * intensity;
                 const shadowY = (dy / dist) * maxShadowOffset * intensity;
                 
-                // Update CSS variables for all dynamic-light elements
                 document.documentElement.style.setProperty('--shadow-x', `${shadowX}px`);
                 document.documentElement.style.setProperty('--shadow-y', `${shadowY}px`);
             });
 
-            // Handle Resizing
             window.addEventListener('resize', () => {
                 updateMoonPosition(false);
             });
 
-
-            // --- Presentation Engine Logic ---
             const slides = document.querySelectorAll('.slide');
             const progress = document.getElementById('progress');
             let currentSlideIndex = 0;
@@ -878,16 +989,13 @@
                 gsap.set(fragments, { opacity: 0, y: 30, filter: "blur(15px)" });
             });
 
-            // Connector lines "draw" themselves in (scale) rather than drift up like text
             gsap.set(document.querySelectorAll('.connector-line'), { opacity: 0, scaleY: 0, y: 0, filter: "none" });
 
-            // Initialize first slide (instantly set moon pos without animation)
             setTimeout(() => {
                 updateMoonPosition(false);
                 goToSlide(0);
             }, 100);
 
-            // Controls
             window.addEventListener('keydown', (e) => {
                 if (isAnimating) return;
                 if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
@@ -923,9 +1031,6 @@
                 const target = fragments[index];
                 const isIntroReveal = (currentSlideIndex === 0 && index === 0);
 
-                // Mover la luna de forma simultánea a la transición de textos,
-                // EXCEPTO en la entrada inicial: ahí el texto "Moonlight" entra
-                // primero y el logo aparece después, con su propia transición.
                 if (!isIntroReveal) {
                     updateMoonPosition(true);
                 }
@@ -934,7 +1039,6 @@
                     isAnimating = false;
                 }});
 
-                // Check for data-hide-prev flag (clears screen of previous fragments)
                 if (target.dataset.hidePrev === "true" && index > 0) {
                     const previousFragments = fragments.slice(0, index);
                     tl.to(previousFragments, { 
@@ -948,8 +1052,6 @@
                 }
 
                 if (target.classList.contains('step-item')) {
-                    // Methodology word: reveals quickly and draws its connector
-                    // line to the previous step in the same click.
                     tl.to(target, {
                         opacity: 1,
                         y: 0,
@@ -967,7 +1069,6 @@
                         }, 0);
                     }
                 } else if (target.classList.contains('moonlight-frame-label')) {
-                    // Final step: enclose the whole sequence to read as "the Moonlight methodology"
                     tl.to(target, {
                         opacity: 1,
                         y: 0,
@@ -982,7 +1083,6 @@
                         ease: "power2.out"
                     }, 0);
                 } else if (target.classList.contains('fast-fragment')) {
-                    // Shortened timing for this slide's headline / closing line
                     tl.to(target, {
                         opacity: 1,
                         y: 0,
@@ -1000,8 +1100,6 @@
                     }, target.dataset.hidePrev === "true" ? 0.5 : 0);
                 }
 
-                // Entrance sequence for slide 1: once "Moonlight" has appeared,
-                // fade + pop the logo in at its placeholder position.
                 if (isIntroReveal) {
                     tl.call(() => {
                         updateMoonPosition(false);
@@ -1012,7 +1110,6 @@
                     }, null, 0.9);
                 }
 
-                // Auto-reveal inner elements (for sentences split in two parts like slide 1)
                 const autoReveals = target.querySelectorAll('.auto-reveal');
                 if(autoReveals.length > 0) {
                     gsap.fromTo(autoReveals, 
@@ -1020,6 +1117,17 @@
                         { opacity: 1, filter: "blur(0px)", y: 0, duration: 1.5, ease: "power3.out", stagger: 0.8 },
                         target.dataset.hidePrev === "true" ? 1.5 : 1.5 
                     );
+                }
+                
+                const codeLines = target.querySelectorAll('.code-line');
+                if(codeLines.length > 0) {
+                    gsap.to(codeLines, {
+                        width: (i) => i % 2 === 0 ? "100%" : "65%",
+                        duration: 0.35,
+                        stagger: 0.1,
+                        ease: "power2.out",
+                        delay: 0.5
+                    });
                 }
             }
 
@@ -1047,20 +1155,28 @@
                                 if (autoReveals.length > 0) {
                                     gsap.set(autoReveals, { opacity: 1, filter: "blur(0px)", y: 0 });
                                 }
+                                
+                                const codeLines = frag.querySelectorAll('.code-line');
+                                if (codeLines.length > 0) {
+                                    gsap.set(codeLines, { width: (i) => i % 2 === 0 ? "100%" : "65%" });
+                                }
                             });
                             currentFragmentIndex = toFragments.length - 1;
                         } else {
                             gsap.set(toFragments, { opacity: 0, y: 30, filter: "blur(15px)" });
+                            toFragments.forEach(frag => {
+                                const codeLines = frag.querySelectorAll('.code-line');
+                                if(codeLines.length > 0) gsap.set(codeLines, {width: 0});
+                            });
                             currentFragmentIndex = -1;
                             nextAction(); 
                         }
                         
-                        updateMoonPosition(true); // Animate moon to new slide state
+                        updateMoonPosition(true); 
                         isAnimating = false;
                     }
                 });
 
-                // Cinematic crossfade
                 tl.to(fromSlide, {
                     opacity: 0,
                     scale: reverse ? 0.98 : 1.02,
@@ -1100,7 +1216,6 @@
                 const total = slides.length.toString().padStart(2, '0');
                 progress.innerText = `${num} / ${total}`;
                 
-                // Hide UI elements on first and last slide for maximum visual silence
                 if (currentSlideIndex === 0 || currentSlideIndex === slides.length - 1) {
                     gsap.to('#ui-layer', { opacity: 0, duration: 1, pointerEvents: "none" });
                 } else {
