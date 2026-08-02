@@ -41,7 +41,23 @@
             color: var(--text-main);
             font-family: 'Inter', sans-serif;
             overflow: hidden; 
+        }
+
+        /* Capa de gradiente radial independiente: permanece invisible hasta la primera interacción */
+        #bg-glow {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: none;
             background-image: radial-gradient(circle at var(--moon-x) var(--moon-y), rgba(197, 139, 89, 0.05) 15%, var(--bg-color) 50%);
+            opacity: 0;
+            transition: opacity 1.8s ease;
+        }
+
+        #bg-glow.visible {
+            opacity: 1;
         }
 
         .grain {
@@ -119,7 +135,7 @@
             border-radius: 8px;
             padding: 2rem;
             box-shadow: var(--shadow-x) var(--shadow-y) 30px rgba(0,0,0,0.5), inset 0 0 15px rgba(255,255,255,0.02);
-            transition: border-color 0.5s ease, box-shadow 0.1s ease-out;
+            transition: border-color 0.5s ease, box-shadow 0.1s ease-out, transform 0.35s ease, background 0.35s ease;
             backdrop-filter: blur(10px);
         }
 
@@ -237,6 +253,66 @@
             transform: scale(1.1);
         }
 
+        /* Diapositiva 7: contraste visual entre práctica actual y capacidad organizacional */
+        .list-plain li {
+            position: relative;
+            padding-left: 1.3rem;
+            color: var(--text-muted);
+        }
+        .list-plain li::before {
+            content: "–";
+            position: absolute;
+            left: 0;
+            color: rgba(139, 139, 153, 0.6);
+        }
+
+        .box-featured {
+            background: linear-gradient(180deg, rgba(197,139,89,0.05), rgba(197,139,89,0.015));
+            border-color: rgba(197, 139, 89, 0.4) !important;
+            box-shadow: 0 0 50px rgba(197,139,89,0.1), inset 0 0 20px rgba(197,139,89,0.03);
+        }
+        .list-check li {
+            position: relative;
+            padding-left: 1.5rem;
+            color: var(--text-main);
+            font-weight: 400;
+        }
+        .list-check li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .callout-quote {
+            position: relative;
+            padding: 1.6rem 1rem;
+            border-top: 1px solid rgba(197, 139, 89, 0.3);
+            border-bottom: 1px solid rgba(197, 139, 89, 0.3);
+        }
+
+        /* Efecto interactivo al pasar el mouse sobre recuadros (diapositivas 4, 5, 7, 8) */
+        @keyframes moonlight-flash {
+            0%, 100% {
+                box-shadow: 0 0 0 1px rgba(197, 139, 89, 0.35), 0 0 20px rgba(197, 139, 89, 0.08);
+            }
+            50% {
+                box-shadow: 0 0 0 2px rgba(197, 139, 89, 0.65), 0 0 45px rgba(197, 139, 89, 0.28);
+            }
+        }
+
+        .subtle-box {
+            display: inline-block;
+        }
+
+        .subtle-box:hover {
+            border-color: rgba(197, 139, 89, 0.6);
+            background: rgba(255, 255, 255, 0.025);
+            transform: translateY(-3px) scale(1.02);
+            animation: moonlight-flash 1.6s ease-in-out infinite;
+        }
+
         #the-moon {
             position: fixed;
             z-index: 90;
@@ -248,6 +324,7 @@
 </head>
 <body>
 
+    <div id="bg-glow"></div>
     <div id="cursor-dot"></div>
     <div id="cursor-ring"></div>
     <div class="grain"></div>
@@ -288,8 +365,10 @@
                 
                 <div class="fragment absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full" data-hide-prev="true">
                     <p class="text-headline dynamic-light-text leading-tight">
-                        <span class="lang-en">Innovation begins by ceasing to search for the right tool<br><span class="auto-reveal opacity-0 inline-block mt-4 text-[#C58B59]">and starting to build it.</span></span>
-                        <span class="lang-es">La innovación comienza por dejar de buscar la herramienta correcta<br><span class="auto-reveal opacity-0 inline-block mt-4 text-[#C58B59]">y empezar a construirla.</span></span>
+                        <span class="lang-en">Innovation begins by ceasing to search for the right tool</span>
+                        <span class="lang-es">La innovación comienza por dejar de buscar la herramienta correcta</span>
+                        <br>
+                        <span id="ch1-line2" class="fragment inline-block mt-4 text-[#C58B59]" data-hide-prev="false" data-lang-en="and starting to build it." data-lang-es="y empezar a construirla."></span>
                     </p>
                 </div>
             </div>
@@ -650,7 +729,7 @@
                         <span class="lang-es">Práctica Actual</span>
                     </p>
 
-                    <ul class="space-y-5 text-body text-sm leading-relaxed">
+                    <ul class="list-plain space-y-5 text-body text-sm leading-relaxed">
                         <li>
                             <span class="lang-en">Results depend largely on the experience of the designer or modeler.</span>
                             <span class="lang-es">Los resultados dependen en gran medida de la experiencia del diseñador o modelador.</span>
@@ -684,13 +763,13 @@
                 </div>
 
                 <!-- Capacidad Organizacional -->
-                <div class="fragment flex-1 subtle-box dynamic-light-box border-[rgba(197,139,89,0.3)]">
+                <div class="fragment flex-1 subtle-box box-featured dynamic-light-box border-[rgba(197,139,89,0.3)]">
                     <p class="text-body accent-text text-xs uppercase tracking-widest mb-6">
                         <span class="lang-en">Organizational Capability</span>
                         <span class="lang-es">Capacidad Organizacional</span>
                     </p>
 
-                    <ul class="space-y-5 text-body text-sm leading-relaxed">
+                    <ul class="list-check space-y-5 text-body text-sm leading-relaxed">
                         <li>
                             <span class="lang-en">Results rely on standardized and consistent processes.</span>
                             <span class="lang-es">Los resultados dependen de procesos estandarizados y consistentes.</span>
@@ -726,15 +805,17 @@
             </div>
 
             <!-- Resumen -->
-            <div class="fragment text-center mt-10 max-w-4xl mx-auto">
-                <p class="text-body text-lg dynamic-light-text opacity-80">
-                    <span class="lang-en">
-                        The objective is not simply to develop software, but to transform individual expertise into an organizational capability that continuously improves processes, standards and digital innovation.
-                    </span>
-                    <span class="lang-es">
-                        El objetivo no es únicamente desarrollar software, sino transformar el conocimiento individual en una capacidad organizacional que impulse de forma continua la mejora de procesos, estándares e innovación digital.
-                    </span>
-                </p>
+            <div class="fragment text-center mt-10 max-w-3xl mx-auto">
+                <div class="callout-quote">
+                    <p class="text-body dynamic-light-text" style="font-size: clamp(0.95rem, 1.3vw, 1.3rem); font-weight: 400; color: var(--text-main); line-height: 1.7;">
+                        <span class="lang-en">
+                            The objective is not simply to develop software, but to transform individual expertise into an organizational capability that continuously improves processes, standards and digital innovation.
+                        </span>
+                        <span class="lang-es">
+                            El objetivo no es únicamente desarrollar software, sino transformar el conocimiento individual en una capacidad organizacional que impulse de forma continua la mejora de procesos, estándares e innovación digital.
+                        </span>
+                    </p>
+                </div>
             </div>
 
         </section>
@@ -927,10 +1008,20 @@
             const langToggle = document.getElementById('langToggle');
             const htmlTag = document.documentElement;
             
+            function updateDynamicText() {
+                const lang = htmlTag.getAttribute('lang');
+                document.querySelectorAll('[data-lang-en]').forEach(el => {
+                    el.textContent = lang === 'es' ? el.dataset.langEs : el.dataset.langEn;
+                });
+            }
+
             langToggle.addEventListener('click', () => {
                 const currentLang = htmlTag.getAttribute('lang');
                 htmlTag.setAttribute('lang', currentLang === 'en' ? 'es' : 'en');
+                updateDynamicText();
             });
+
+            updateDynamicText();
 
             // Conexión de los nuevos botones de navegación
             const btnPrev = document.getElementById('btn-prev');
@@ -938,11 +1029,14 @@
 
             btnPrev.addEventListener('click', (e) => {
                 e.preventDefault();
-                prevAction();
+                e.stopPropagation();
+                if (hasStarted) prevAction();
             });
 
             btnNext.addEventListener('click', (e) => {
                 e.preventDefault();
+                e.stopPropagation();
+                startIfNeeded();
                 nextAction();
             });
 
@@ -1088,20 +1182,35 @@
 
             gsap.set(document.querySelectorAll('.connector-line'), { opacity: 0, scaleY: 0, y: 0, filter: "none" });
 
+            let hasStarted = false;
+
             setTimeout(() => {
                 updateMoonPosition(false);
-                goToSlide(0);
+                goToSlide(0, true); // true = no revelar el primer fragmento todavía
             }, 100);
+
+            function startIfNeeded() {
+                if (hasStarted) return;
+                hasStarted = true;
+                document.getElementById('bg-glow').classList.add('visible');
+            }
 
             window.addEventListener('keydown', (e) => {
                 if (isAnimating) return;
                 if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
                     e.preventDefault();
+                    startIfNeeded();
                     nextAction();
                 } else if (e.key === 'ArrowLeft' || e.key === 'Backspace') {
                     e.preventDefault();
-                    prevAction();
+                    if (hasStarted) prevAction();
                 }
+            });
+
+            document.getElementById('presentation').addEventListener('click', () => {
+                if (isAnimating) return;
+                startIfNeeded();
+                nextAction();
             });
 
             function nextAction() {
@@ -1294,7 +1403,7 @@
                 }, 0.2);
             }
 
-            function goToSlide(index) {
+            function goToSlide(index, skipReveal = false) {
                 slides.forEach((s, i) => {
                     if (i === index) {
                         s.classList.add('active');
@@ -1305,7 +1414,7 @@
                     }
                 });
                 updateProgress();
-                nextAction(); 
+                if (!skipReveal) nextAction();
             }
 
             function updateProgress() {
