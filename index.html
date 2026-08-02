@@ -7,6 +7,8 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <!-- Plugin agregado para controlar las curvas de orilla a orilla -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MotionPathPlugin.min.js"></script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,7 +45,6 @@
             overflow: hidden; 
         }
 
-        /* Capa de gradiente radial independiente: permanece invisible hasta la primera interacción */
         #bg-glow {
             position: fixed;
             top: 0; left: 0;
@@ -58,6 +59,34 @@
 
         #bg-glow.visible {
             opacity: 1;
+        }
+
+        /* EASTER EGG: Asteroide - Ajustado para ser más tenue */
+        #easter-egg-sat {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            box-shadow: 0 0 4px rgba(255, 255, 255, 0.4);
+            z-index: 2; 
+            pointer-events: none;
+            opacity: 0; 
+            will-change: transform, opacity;
+        }
+
+        /* Rastro dinámico más corto y sutil */
+        #easter-egg-sat::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 100%; 
+            transform: translateY(-50%);
+            width: 70px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(197, 139, 89, 0.4));
         }
 
         .grain {
@@ -81,6 +110,7 @@
             transform: translate(-50%, -50%);
             pointer-events: none;
             z-index: 99999;
+            transition: opacity 0.2s ease;
         }
 
         #cursor-ring {
@@ -92,7 +122,20 @@
             transform: translate(-50%, -50%);
             pointer-events: none;
             z-index: 99998;
-            transition: width 0.2s, height 0.2s, border-color 0.2s;
+            transition: width 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                        height 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                        border-color 0.3s, background 0.3s;
+        }
+
+        #cursor-ring.cursor-hover {
+            width: 54px !important;
+            height: 54px !important;
+            border-color: rgba(197, 139, 89, 0.8);
+            background: rgba(197, 139, 89, 0.08);
+            backdrop-filter: blur(2px);
+        }
+        #cursor-dot.cursor-hover {
+            opacity: 0; 
         }
 
         .text-display {
@@ -191,7 +234,23 @@
         }
 
         #methodology-frame {
-            border: 1px solid transparent;
+            border: 2.5px solid transparent;
+        }
+
+        @keyframes moonlight-border-glow {
+            0%, 100% {
+                border-color: rgba(197, 139, 89, 0.35);
+                box-shadow: 0 0 40px rgba(197, 139, 89, 0.08);
+            }
+            50% {
+                border-color: rgba(197, 139, 89, 0.75);
+                box-shadow: 0 0 65px rgba(197, 139, 89, 0.24);
+            }
+        }
+
+        #methodology-frame.frame-glow,
+        .border-glow-active {
+            animation: moonlight-border-glow 4.5s ease-in-out infinite;
         }
 
         .moonlight-frame-label {
@@ -233,7 +292,6 @@
             border-color: var(--accent-dim);
         }
 
-        /* Estilos para los nuevos botones de navegación */
         .nav-btn {
             pointer-events: auto;
             background: transparent;
@@ -253,7 +311,6 @@
             transform: scale(1.1);
         }
 
-        /* Diapositiva 7: contraste visual entre práctica actual y capacidad organizacional */
         .list-plain li {
             position: relative;
             padding-left: 1.3rem;
@@ -266,9 +323,9 @@
             color: rgba(139, 139, 153, 0.6);
         }
 
-        .box-featured {
+        .subtle-box.box-featured {
             background: linear-gradient(180deg, rgba(197,139,89,0.05), rgba(197,139,89,0.015));
-            border-color: rgba(197, 139, 89, 0.4) !important;
+            border-color: rgba(197, 139, 89, 0.4);
             box-shadow: 0 0 50px rgba(197,139,89,0.1), inset 0 0 20px rgba(197,139,89,0.03);
         }
         .list-check li {
@@ -292,13 +349,12 @@
             border-bottom: 1px solid rgba(197, 139, 89, 0.3);
         }
 
-        /* Efecto interactivo al pasar el mouse sobre recuadros (diapositivas 4, 5, 7, 8) */
         @keyframes moonlight-flash {
             0%, 100% {
                 box-shadow: 0 0 0 1px rgba(197, 139, 89, 0.35), 0 0 20px rgba(197, 139, 89, 0.08);
             }
             50% {
-                box-shadow: 0 0 0 2px rgba(197, 139, 89, 0.65), 0 0 45px rgba(197, 139, 89, 0.28);
+                box-shadow: 0 0 0 2px rgba(197, 139, 89, 0.65), 0 0 65px rgba(197, 139, 89, 0.28);
             }
         }
 
@@ -306,11 +362,15 @@
             display: inline-block;
         }
 
+        .glow-border {
+            animation: moonlight-flash 4s ease-in-out infinite;
+        }
+
         .subtle-box:hover {
             border-color: rgba(197, 139, 89, 0.6);
             background: rgba(255, 255, 255, 0.025);
             transform: translateY(-3px) scale(1.02);
-            animation: moonlight-flash 1.6s ease-in-out infinite;
+            animation: moonlight-flash 4s ease-in-out infinite;
         }
 
         #the-moon {
@@ -325,27 +385,29 @@
 <body>
 
     <div id="bg-glow"></div>
+    
+    <!-- Easter Egg Contenedor -->
+    <div id="easter-egg-sat"></div>
+
     <div id="cursor-dot"></div>
     <div id="cursor-ring"></div>
     <div class="grain"></div>
     <img id="the-moon" src="https://img.icons8.com/color/96/moon-satellite.png" alt="Moonlight Logo">
 
     <div id="ui-layer">
-        <button id="langToggle" aria-label="Toggle Language">
+        <button id="langToggle" aria-label="Toggle Language" class="interactive-elem">
             <span class="lang-en">ESPAÑOL</span>
             <span class="lang-es">ENGLISH</span>
         </button>
         
-        <!-- Agrupación del contador y botones de navegación -->
         <div class="flex items-center gap-4">
-            <button id="btn-prev" class="nav-btn" aria-label="Previous Slide">
+            <button id="btn-prev" class="nav-btn interactive-elem" aria-label="Previous Slide">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
             </button>
             
-            <!-- Agregué pointer-events-auto al contador por si acaso interactúa con la zona -->
             <div id="progress" class="text-xs font-light text-[#8b8b99] tracking-widest pointer-events-auto">01 / 11</div>
             
-            <button id="btn-next" class="nav-btn" aria-label="Next Slide">
+            <button id="btn-next" class="nav-btn interactive-elem" aria-label="Next Slide">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
             </button>
         </div>
@@ -480,7 +542,6 @@
                         <span class="flow-arrow" style="margin: 0;">↓</span>
                         <p class="text-body text-xs text-white"><span class="lang-en">Click translate</span><span class="lang-es">Click en traducir</span></p>
                         
-                        <!-- Animación de Código -->
                         <div class="code-deploy-anim flex flex-col gap-[4px] my-3 w-32 border-l border-[rgba(197,139,89,0.3)] pl-2" aria-hidden="true">
                             <p class="text-body text-xs text-[#8b8b99]"><span class="lang-en">Automated workflow code-based</span><span class="lang-es">Flujo automatizado basado en código</span></p>
                             <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line"></div>
@@ -527,43 +588,46 @@
                         <span class="lang-en">Streamlines workflows</span><span class="lang-es">Agiliza flujos de trabajo</span>
                     </p>
                 </div>
-                <div class="fragment subtle-box text-center opacity-80" style="width: 15rem; height: 10rem;">
-                    <p class="text-body text-white font-medium">NecstinList</p>
-                     <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
+                 <div class="fragment subtle-box border-glow-active text-center" style="width: 15rem; height: 10rem;">
+                    <p class="text-body accent-text font-medium">Collider - Clash Detection</p>
+                    <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
                         <span class="lang-en">Streamlines workflows</span><span class="lang-es">Agiliza flujos de trabajo</span>
                     </p>
                 </div>
-                <div class="fragment subtle-box text-center opacity-90" style="width: 15rem; height: 10rem;">
-                    <p class="text-body text-white font-medium">QuanTools</p>
+                    <div class="fragment subtle-box text-center" style="width: 15rem; height: 10rem;">
+                    <p class="text-body text-white font-medium">Param Re-Sort</p>
+                    <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
+                        <span class="lang-en">Streamlines workflows</span><span class="lang-es">Agiliza flujos de trabajo</span>
+                    </p>
+                </div>
+                   <div class="fragment subtle-box border-glow-active text-center" style="width: 15rem; height: 10rem;">
+                    <p class="text-body accent-text font-medium">QuanTools</p>
                     <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
                         <span class="lang-en">Standardize processes</span><span class="lang-es">Estandariza procesos</span>
                     </p>
                     <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
                         <span class="lang-en">Streamlines workflows</span><span class="lang-es">Agiliza flujos de trabajo</span>
                     </p>
-                </div>
-                <div class="fragment subtle-box text-center" style="width: 15rem; height: 10rem;">
-                    <p class="text-body text-white font-medium">Collider - Clash Detection</p>
+                </div> 
+                <div class="fragment subtle-box text-center opacity-80" style="width: 15rem; height: 10rem;">
+                    <p class="text-body text-white font-medium">Runs Measure</p>
+                     <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
+                        <span class="lang-en">Streamlines workflows</span><span class="lang-es">Agiliza flujos de trabajo</span>
+                    </p>
+                </div>                           
+                <div class="fragment subtle-box border-glow-active text-center" style="width: 15rem; height: 10rem;">
+                    <p class="text-body accent-text font-medium">Support Placement</p>
                     <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
                         <span class="lang-en">Streamlines workflows</span><span class="lang-es">Agiliza flujos de trabajo</span>
                     </p>
-                </div>
+                </div>            
                 <div class="fragment subtle-box text-center" style="width: 15rem; height: 10rem;">
-                    <p class="text-body text-white font-medium">Support Placement</p>
-                    <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
-                        <span class="lang-en">Streamlines workflows</span><span class="lang-es">Agiliza flujos de trabajo</span>
-                    </p>
-                </div>
-                <div class="fragment subtle-box text-center" style="width: 15rem; height: 10rem;">
-                    <p class="text-body text-white font-medium">Param Re-Sort</p>
-                    <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
-                        <span class="lang-en">Streamlines workflows</span><span class="lang-es">Agiliza flujos de trabajo</span>
-                    </p>
-                </div>
-                <div class="fragment subtle-box text-center dynamic-light-box border-[rgba(197,139,89,0.3)]" style="width: 15rem;">
-                    <p class="text-body accent-text font-medium">DataLens</p>
+                    <p class="text-body text-white font-medium">Data Lens</p>
                     <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
                         <span class="lang-en">Streamlines coordination</span><span class="lang-es">Agiliza la coordinación</span>
+                    </p>
+                    <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
+                        <span class="lang-en">Under development...</span><span class="lang-es">En desarrollo...</span>
                     </p>
                 </div>
             </div>
@@ -574,9 +638,10 @@
                     <span class="lang-es">Ecosistema en crecimiento</span>
                 </p>
                 <div class="flex flex-wrap justify-center gap-3">
-                    <span class="subtle-box text-[0.7rem] text-[#8b8b99] tracking-widest uppercase" style="padding: 0.6rem 1.1rem;">Renamer</span>
+                    <span class="subtle-box text-[0.7rem] text-[#8b8b99] tracking-widest uppercase" style="padding: 0.6rem 1.1rem;">NecstinList</span>
                     <span class="subtle-box text-[0.7rem] text-[#8b8b99] tracking-widest uppercase" style="padding: 0.6rem 1.1rem;">Match Elevations</span>
                     <span class="subtle-box text-[0.7rem] text-[#8b8b99] tracking-widest uppercase" style="padding: 0.6rem 1.1rem;">Workset Switcher</span>
+                    <span class="subtle-box text-[0.7rem] text-[#8b8b99] tracking-widest uppercase" style="padding: 0.6rem 1.1rem;">Renamer</span>
                     <span class="subtle-box text-[0.7rem] text-[#8b8b99] tracking-widest uppercase" style="padding: 0.6rem 1.1rem;">RevitSer</span>
                     <span class="subtle-box text-[0.7rem] text-[#8b8b99] tracking-widest uppercase" style="padding: 0.6rem 1.1rem;">Bookmarks</span>
                     <span class="subtle-box text-[0.7rem] text-[#8b8b99] tracking-widest uppercase" style="padding: 0.6rem 1.1rem;">Param Setter</span>
@@ -763,7 +828,7 @@
                 </div>
 
                 <!-- Capacidad Organizacional -->
-                <div class="fragment flex-1 subtle-box box-featured dynamic-light-box border-[rgba(197,139,89,0.3)]">
+                <div class="fragment flex-1 subtle-box box-featured border-glow-active dynamic-light-box border-[rgba(197,139,89,0.3)]">
                     <p class="text-body accent-text text-xs uppercase tracking-widest mb-6">
                         <span class="lang-en">Organizational Capability</span>
                         <span class="lang-es">Capacidad Organizacional</span>
@@ -989,8 +1054,7 @@
                 <div class="fragment absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center w-full" data-hide-prev="true">
                      <div class="flex items-center justify-center gap-6">
                         <div id="moon-placeholder-end" class="w-16 h-16 md:w-20 md:h-20 shrink-0"></div>
-                        <!-- Agregamos translate-y-2 para empujar el texto ligeramente hacia abajo -->
-                        <h1 class="text-display dynamic-light-text m-0 translate-y-8">Moonlight</h1>
+                        <h1 class="text-display dynamic-light-text m-0 translate-y-2">Moonlight</h1>
                     </div>
                 </div>
 
@@ -1002,6 +1066,9 @@
     <script>
         // CONFIGURACIÓN DE ALINEACIÓN
         const MOON_ALIGNMENT = 'left';
+
+        // REGISTRO DE PLUGINS GSAP
+        gsap.registerPlugin(MotionPathPlugin);
 
         document.addEventListener("DOMContentLoaded", () => {
             
@@ -1022,6 +1089,80 @@
             });
 
             updateDynamicText();
+
+            // ----------------------------------------------------
+            // LÓGICA DEL EASTER EGG (TRAYECTORIAS CURVAS EXACTAS)
+            // ----------------------------------------------------
+            const sat = document.getElementById('easter-egg-sat');
+            
+            // Helpers para calcular coordenadas basadas en el viewport
+            const vw = (coef) => window.innerWidth * coef;
+            const vh = (coef) => window.innerHeight * coef;
+
+            let pathIndex = 0;
+
+            function getAsteroidPaths() {
+                return [
+                    // Inicio 1: Sale Arriba-Izq (fuera), entra cruzando, sale por Medio-Der
+                    { 
+                        path: [{x: vw(0.15), y: vh(-0.1)}, {x: vw(0.6), y: vh(0.15)}, {x: vw(1.1), y: vh(0.4)}],
+                        duration: 35
+                    },
+                    // Retorno 1: Sale Abajo-Der (fuera), entra cruzando, sale por Abajo-Izq
+                    { 
+                        path: [{x: vw(1.1), y: vh(0.7)}, {x: vw(0.5), y: vh(0.85)}, {x: vw(-0.1), y: vh(0.8)}],
+                        duration: 40
+                    },
+                    // Inicio 2: Sale Arriba-Izq (más centrado), cruza, sale por Medio-Abajo-Der
+                    { 
+                        path: [{x: vw(0.3), y: vh(-0.1)}, {x: vw(0.7), y: vh(0.25)}, {x: vw(1.1), y: vh(0.6)}],
+                        duration: 38
+                    },
+                    // Retorno 2: Sale Abajo-Der (muy abajo), cruza, sale por Abajo-Izq (más alto)
+                    { 
+                        path: [{x: vw(1.1), y: vh(0.9)}, {x: vw(0.5), y: vh(0.95)}, {x: vw(-0.1), y: vh(0.7)}],
+                        duration: 40
+                    }
+                ];
+            }
+
+            function animateAsteroidSequence() {
+                if (!sat) return;
+                const paths = getAsteroidPaths();
+                const currentData = paths[pathIndex];
+                
+                // Aseguramos que inicie en el punto 0 invisible
+                gsap.set(sat, { x: currentData.path[0].x, y: currentData.path[0].y, opacity: 0 });
+
+                const tl = gsap.timeline({
+                    onComplete: () => {
+                        // Avanza al siguiente ciclo
+                        pathIndex = (pathIndex + 1) % paths.length;
+                        // Pausa entre 4 y 8 segundos antes de iniciar el siguiente trayecto
+                        setTimeout(animateAsteroidSequence, (4 + Math.random() * 4) * 1000);
+                    }
+                });
+
+                // Movimiento curvo usando MotionPath (autoRotate inclina la estela perfectamente)
+                tl.to(sat, {
+                    motionPath: {
+                        path: currentData.path,
+                        type: "soft",
+                        autoRotate: true
+                    },
+                    duration: currentData.duration,
+                    ease: "none"
+                }, 0);
+
+                // Aparece tenuemente en los primeros 5 segundos de la orilla 
+                tl.to(sat, { opacity: 0.35, duration: 5, ease: "power1.inOut" }, 0)
+                  // Desaparece en los últimos 5 segundos antes de salir de la otra orilla
+                  .to(sat, { opacity: 0, duration: 5, ease: "power1.inOut" }, currentData.duration - 5);
+            }
+            
+            // Inicia 3 segundos después de cargar
+            setTimeout(animateAsteroidSequence, 3000);
+            // ----------------------------------------------------
 
             // Conexión de los nuevos botones de navegación
             const btnPrev = document.getElementById('btn-prev');
@@ -1049,11 +1190,23 @@
             const xRingTo = gsap.quickTo(cursorRing, "x", {duration: 0.3, ease: "power3"});
             const yRingTo = gsap.quickTo(cursorRing, "y", {duration: 0.3, ease: "power3"});
 
+            // Interactividad del cursor sobre botones
+            const interactiveElements = document.querySelectorAll('.interactive-elem');
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursorRing.classList.add('cursor-hover');
+                    cursorDot.classList.add('cursor-hover');
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursorRing.classList.remove('cursor-hover');
+                    cursorDot.classList.remove('cursor-hover');
+                });
+            });
+
             const moonImg = document.getElementById('the-moon');
             const placeholderStart = document.getElementById('moon-placeholder-start');
             const placeholderEnd = document.getElementById('moon-placeholder-end');
             
-            // Variables globales y objeto puente para animar el gradiente sin saltos
             let moonCenterX = window.innerWidth / 2;
             let moonCenterY = window.innerHeight / 2;
             const moonPos = { x: moonCenterX, y: moonCenterY };
@@ -1142,13 +1295,17 @@
                 xRingTo(mouseX);
                 yRingTo(mouseY);
                 
-                cursorRing.style.width = '42px';
-                cursorRing.style.height = '42px';
-                clearTimeout(window.cursorTimeout);
-                window.cursorTimeout = setTimeout(() => {
-                    cursorRing.style.width = '36px';
-                    cursorRing.style.height = '36px';
-                }, 150);
+                if (!cursorRing.classList.contains('cursor-hover')) {
+                    cursorRing.style.width = '42px';
+                    cursorRing.style.height = '42px';
+                    clearTimeout(window.cursorTimeout);
+                    window.cursorTimeout = setTimeout(() => {
+                        if (!cursorRing.classList.contains('cursor-hover')) {
+                            cursorRing.style.width = '36px';
+                            cursorRing.style.height = '36px';
+                        }
+                    }, 150);
+                }
 
                 const dx = mouseX - moonCenterX;
                 const dy = mouseY - moonCenterY;
@@ -1186,7 +1343,7 @@
 
             setTimeout(() => {
                 updateMoonPosition(false);
-                goToSlide(0, true); // true = no revelar el primer fragmento todavía
+                goToSlide(0, true); 
             }, 100);
 
             function startIfNeeded() {
@@ -1207,7 +1364,9 @@
                 }
             });
 
-            document.getElementById('presentation').addEventListener('click', () => {
+            document.getElementById('presentation').addEventListener('click', (e) => {
+                if (e.target.closest('#ui-layer')) return; 
+
                 if (isAnimating) return;
                 startIfNeeded();
                 nextAction();
@@ -1286,7 +1445,10 @@
                         borderColor: "rgba(197, 139, 89, 0.35)",
                         boxShadow: "0 0 40px rgba(197, 139, 89, 0.08)",
                         duration: 0.7,
-                        ease: "power2.out"
+                        ease: "power2.out",
+                        onComplete: () => {
+                            document.getElementById('methodology-frame').classList.add('frame-glow');
+                        }
                     }, 0);
                 } else if (target.classList.contains('fast-fragment')) {
                     tl.to(target, {
@@ -1350,6 +1512,8 @@
                         updateProgress();
                         
                         const toFragments = Array.from(toSlide.querySelectorAll('.fragment'));
+                        const methodologyFrame = document.getElementById('methodology-frame');
+
                         if (reverse) {
                             gsap.set(toFragments, { opacity: 1, y: 0, filter: "blur(0px)" });
                             toFragments.forEach((frag, idx) => {
@@ -1366,6 +1530,14 @@
                                 if (codeLines.length > 0) {
                                     gsap.set(codeLines, { width: (i) => i % 2 === 0 ? "100%" : "65%" });
                                 }
+
+                                if (frag.classList.contains('moonlight-frame-label') && methodologyFrame) {
+                                    gsap.set(methodologyFrame, {
+                                        borderColor: "rgba(197, 139, 89, 0.35)",
+                                        boxShadow: "0 0 40px rgba(197, 139, 89, 0.08)"
+                                    });
+                                    methodologyFrame.classList.add('frame-glow');
+                                }
                             });
                             currentFragmentIndex = toFragments.length - 1;
                         } else {
@@ -1374,6 +1546,10 @@
                                 const codeLines = frag.querySelectorAll('.code-line');
                                 if(codeLines.length > 0) gsap.set(codeLines, {width: 0});
                             });
+                            if (methodologyFrame) {
+                                methodologyFrame.classList.remove('frame-glow');
+                                gsap.set(methodologyFrame, { borderColor: "rgba(0,0,0,0)", boxShadow: "none" });
+                            }
                             currentFragmentIndex = -1;
                             nextAction(); 
                         }
