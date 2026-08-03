@@ -89,16 +89,25 @@
             background: linear-gradient(to right, transparent, rgba(197, 139, 89, 0.4));
         }
 
-        .grain {
+       .grain {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
             pointer-events: none;
-            z-index: 9999;
-            opacity: 0.01;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            
+            /* Enviamos las estrellas al fondo, detrás de la UI y los textos */
+            z-index: 0; 
+            
+            /* Subimos la opacidad para que el cielo estrellado sea visible */
+            opacity: 0.15; 
+            
+            /* SVG ajustado con una matriz de color matemática para crear puntos blancos brillantes */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.2' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 20 0 0 0 -15'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)'/%3E%3C/svg%3E");
+            
+            /* Escala el patrón de estrellas. Si quieres estrellas más pequeñas y densas, usa 150px */
+            background-size: 170px 170px; 
         }
 
         #cursor-dot {
@@ -428,7 +437,7 @@
                 <div class="fragment absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full" data-hide-prev="true">
                     <p class="text-headline dynamic-light-text leading-tight">
                         <span class="lang-en">Innovation begins by ceasing to search for the right tool</span>
-                        <span class="lang-es">La innovación comienza por dejar de buscar la herramienta correcta</span>
+                        <span class="lang-es">La innovación comienza por dejar de buscar la herramienta adecuada</span>
                         <br>
                         <span id="ch1-line2" class="fragment inline-block mt-4 text-[#C58B59]" data-hide-prev="false" data-lang-en="and starting to build it." data-lang-es="y empezar a construirla."></span>
                     </p>
@@ -1053,11 +1062,11 @@
                 <!-- Modificado: Posicionamiento absoluto perfectamente centrado -->
                 <div class="fragment absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center w-full" data-hide-prev="true">
                      <div class="flex items-center justify-center gap-6">
-                        <div id="moon-placeholder-end" class="w-16 h-16 md:w-20 md:h-20 shrink-0"></div>
+                        <!-- Agregamos -translate-y-2 para subir el logo -->
+                        <div id="moon-placeholder-end" class="w-16 h-16 md:w-20 md:h-20 shrink-0 -translate-y-5"></div>
                         <h1 class="text-display dynamic-light-text m-0 translate-y-2">Moonlight</h1>
                     </div>
                 </div>
-
             </div>
         </section>
         
