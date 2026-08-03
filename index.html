@@ -641,46 +641,49 @@
             </h2>
             
             <div class="flex flex-wrap justify-center gap-6 w-full max-w-6xl mt-5">
-                <div class="fragment subtle-box text-center opacity-70" style="width: 15rem; height: 10rem;">
+                <div class="fragment subtle-box text-center opacity-70 video-trigger interactive-elem cursor-pointer" data-video="OxeLwpwuELY" style="width: 15rem; height: 10rem;">
                     <p class="text-body text-white font-medium">Translator</p>
                     <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
                         <span class="lang-en">Streamlines workflows</span><span class="lang-es">Agiliza flujos de trabajo</span>
                     </p>
                 </div>
-                 <div class="fragment subtle-box border-glow-active text-center" style="width: 15rem; height: 10rem;">
-                    <p class="text-body accent-text font-medium">Collider - Clash Detection</p>
+                 <div class="fragment subtle-box border-glow-active text-center opacity-70 video-trigger interactive-elem cursor-pointer" data-video="OxeLwpwuELY" style="width: 15rem; height: 10rem;">
+                    <p class="text-body accent-text font-medium">Collider</p>
+                    <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
+                        <span class="lang-en">- Clash detection -</span><span class="lang-es">- Clash detection -</span>
+                    </p>  
                     <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
                         <span class="lang-en">Streamlines workflows</span><span class="lang-es">Agiliza flujos de trabajo</span>
-                    </p>
+                    </p>                    
                 </div>
-                    <div class="fragment subtle-box text-center" style="width: 15rem; height: 10rem;">
+                    <div class="fragment subtle-box text-center opacity-70 video-trigger interactive-elem cursor-pointer" data-video="OxeLwpwuELY" style="width: 15rem; height: 10rem;">
                     <p class="text-body text-white font-medium">Param Re-Sort</p>
                     <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
                         <span class="lang-en">Streamlines workflows</span><span class="lang-es">Agiliza flujos de trabajo</span>
-                    </p>
+                    </p>                    
                 </div>
-                   <div class="fragment subtle-box border-glow-active text-center" style="width: 15rem; height: 10rem;">
+                   <div class="fragment subtle-box border-glow-active text-center opacity-70 video-trigger interactive-elem cursor-pointer" data-video="OxeLwpwuELY" style="width: 15rem; height: 10rem;">
                     <p class="text-body accent-text font-medium">QuanTools</p>
                     <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
                         <span class="lang-en">Standardize processes</span><span class="lang-es">Estandariza procesos</span>
                     </p>
                     <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
                         <span class="lang-en">Streamlines workflows</span><span class="lang-es">Agiliza flujos de trabajo</span>
-                    </p>
+                    </p>    
                 </div> 
-                <div class="fragment subtle-box text-center opacity-80" style="width: 15rem; height: 10rem;">
+                <div class="fragment subtle-box text-center opacity-80 opacity-70 video-trigger interactive-elem cursor-pointer" data-video="OxeLwpwuELY" style="width: 15rem; height: 10rem;">
                     <p class="text-body text-white font-medium">Runs Measure</p>
                      <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
                         <span class="lang-en">Streamlines workflows</span><span class="lang-es">Agiliza flujos de trabajo</span>
                     </p>
                 </div>                           
-                <div class="fragment subtle-box border-glow-active text-center" style="width: 15rem; height: 10rem;">
-                    <p class="text-body accent-text font-medium">Support Placement</p>
+                <div class="fragment subtle-box border-glow-active text-center opacity-70 video-trigger interactive-elem cursor-pointer" data-video="OxeLwpwuELY" style="width: 15rem; height: 10rem;">
+                    <p class="text-body accent-text font-medium">SupportFlow</p>
                     <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
                         <span class="lang-en">Streamlines workflows</span><span class="lang-es">Agiliza flujos de trabajo</span>
                     </p>
                 </div>            
-                <div class="fragment subtle-box text-center" style="width: 15rem; height: 10rem;">
+                <div class="fragment subtle-box text-center opacity-70 video-trigger interactive-elem cursor-pointer" data-video="OxeLwpwuELY" style="width: 15rem; height: 10rem;">
                     <p class="text-body text-white font-medium">Data Lens</p>
                     <p class="text-[0.65rem] tracking-widest uppercase text-[#8b8b99] mt-2">
                         <span class="lang-en">Streamlines coordination</span><span class="lang-es">Agiliza la coordinación</span>
@@ -1670,7 +1673,76 @@
                     gsap.to('#ui-layer', { opacity: 1, duration: 1, pointerEvents: "auto" });
                 }
             }
+
+            // ----------------------------------------------------
+            // LÓGICA DEL POPUP DE VIDEO
+            // ----------------------------------------------------
+            const videoModal = document.getElementById('video-modal');
+            const videoContainer = document.getElementById('video-container');
+            const closeModalBtn = document.getElementById('close-modal');
+            const videoTriggers = document.querySelectorAll('.video-trigger');
+
+            videoTriggers.forEach(trigger => {
+                trigger.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Evita que cambie de diapositiva al hacer clic
+                    const videoId = trigger.getAttribute('data-video') || 'dQw4w9WgXcQ';
+                    
+                    // Obtenemos el origen actual de tu página web para pasárselo a YouTube
+                    const currentOrigin = window.location.origin;
+
+                    // Inyectamos el iframe con los parámetros de seguridad correctos para evitar el Error 153
+                    videoContainer.innerHTML = `
+                        <iframe class="w-full h-full" 
+                            src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&origin=${encodeURIComponent(currentOrigin)}" 
+                            title="YouTube video player" frameborder="0" 
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen></iframe>
+                    `;
+                    
+                    // Muestra el modal
+                    videoModal.classList.remove('opacity-0', 'pointer-events-none');
+                });
+            });
+
+            function closeVideoModal() {
+                videoModal.classList.add('opacity-0', 'pointer-events-none');
+                // Limpia el contenido para detener el video al cerrar
+                setTimeout(() => {
+                    videoContainer.innerHTML = '';
+                }, 300);
+            }
+
+            closeModalBtn.addEventListener('click', closeVideoModal);
+            
+            // Cerrar también si hacen clic fuera de la caja del video
+            videoModal.addEventListener('click', (e) => {
+                if (e.target === videoModal) {
+                    closeVideoModal();
+                }
+            });
+
+            // Cerrar con la tecla Escape
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeVideoModal();
+                }
+            });
         });
     </script>
+
+    <!-- POPUP DE VIDEO MODAL -->
+    <div id="video-modal" class="fixed inset-0 z-[99999] flex items-center justify-center bg-black/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="relative w-full max-w-4xl mx-4 aspect-video bg-[#15151a] border border-[rgba(197,139,89,0.4)] rounded-xl overflow-hidden shadow-2xl">
+            <!-- Botón de cerrar -->
+            <button id="close-modal" class="absolute top-4 right-4 z-10 text-white bg-black/50 hover:bg-[#C58B59] w-10 h-10 rounded-full flex items-center justify-center transition-colors interactive-elem" aria-label="Close modal">
+                ✕
+            </button>
+            <!-- Contenedor del Iframe de YouTube -->
+            <div id="video-container" class="w-full h-full flex items-center justify-center">
+                <!-- El iframe se inyectará dinámicamente aquí -->
+            </div>
+        </div>
+    </div>
 </body>
 </html>
