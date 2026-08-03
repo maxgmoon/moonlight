@@ -101,7 +101,7 @@
             z-index: 0; 
             
             /* Subimos la opacidad para que el cielo estrellado sea visible */
-            opacity: 0.15; 
+            opacity: 0; 
             
             /* SVG ajustado con una matriz de color matemática para crear puntos blancos brillantes */
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.2' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 20 0 0 0 -15'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)'/%3E%3C/svg%3E");
@@ -500,7 +500,7 @@
                     </p>
                     <p class="text-body text-white">
                         <span class="lang-en">"We need a script to translate parameters."</span>
-                        <span class="lang-es">"Necesitamos un script para traducir parámetros."</span>
+                        <span class="lang-es">"Queremos un flujo de Dynamo para traducir textos en Revit"</span>
                     </p>
                 </div>
 
@@ -551,22 +551,72 @@
                         <span class="flow-arrow" style="margin: 0;">↓</span>
                         <p class="text-body text-xs text-white"><span class="lang-en">Click translate</span><span class="lang-es">Click en traducir</span></p>
                         
-                        <div class="code-deploy-anim flex flex-col gap-[4px] my-3 w-32 border-l border-[rgba(197,139,89,0.3)] pl-2" aria-hidden="true">
-                            <p class="text-body text-xs text-[#8b8b99]"><span class="lang-en">Automated workflow code-based</span><span class="lang-es">Flujo automatizado basado en código</span></p>
+                       <!-- Flujo Automatizado: Estructura Híbrida Extendida y Balanceada -->
+                        <div class="code-deploy-anim flex flex-col gap-[3px] my-3 w-32 border-l border-[rgba(197,139,89,0.3)] pl-3" aria-hidden="true">
+                            <p class="text-body text-xs text-[#8b8b99] mb-1">
+                                <span class="lang-en"><span class="accent-text">Code-base</span> automated workflow</span>
+                                <span class="lang-es">Flujo automatizado basado en <span class="accent-text">código</span></span>
+                            </p>
+                            
+                            <!-- Apertura de etiqueta global -->
+                            <span class="text-[#C58B59] text-[10px] font-mono font-bold leading-none">&lt;/&gt;</span>
+                            
+                            <!-- Namespace / Using inicial (Nivel 0) -->
                             <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line"></div>
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line"></div>
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line"></div>
+                            
+                            <!-- Nivel 0: Apertura de Clase -->
+                            <span class="text-[#8b8b99] text-[9px] font-mono opacity-60">{</span>
+                            
+                            <!-- Nivel 1: Declaración de Variables / Parámetros -->
                             <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-3"></div>
                             <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-3"></div>
-                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-5"></div>
-                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-2"></div>
-                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-1"></div>
-                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line"></div>
-                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-4"></div>
-                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line"></div>
-                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-4"></div>
                             <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-3"></div>
-                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-5"></div>
-                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-4"></div>
-                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-1"></div>
+                            
+                            <!-- Nivel 1: Apertura de Método -->
+                            <span class="text-[#8b8b99] text-[9px] font-mono ml-3 opacity-60">{</span>
+                            
+                            <!-- Nivel 2: Bucle principal (Revit API Iteración) -->
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-6"></div>
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-6"></div>
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-6"></div>
+                            
+                            <!-- Nivel 2: Apertura de Condicional (if) -->
+                            <span class="text-[#8b8b99] text-[9px] font-mono ml-6 opacity-60">{</span>
+                            
+                            <!-- Nivel 3: Máxima profundidad (Lógica de Modificación) -->
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-9"></div>
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-9"></div>
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-9"></div>
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-9"></div>
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-9"></div>
+                            
+                            <!-- Nivel 2: Cierre de Condicional -->
+                            <span class="text-[#8b8b99] text-[9px] font-mono ml-6 opacity-60">}</span>
+                            
+                            <!-- Nivel 2: Post-procesamiento -->
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-6"></div>
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-6"></div>
+                            
+                            <!-- Nivel 1: Cierre de Método -->
+                            <span class="text-[#8b8b99] text-[9px] font-mono ml-3 opacity-60">}</span>
+                            
+                            <!-- Nivel 1: Retorno de datos -->
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-3"></div>
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-3"></div>
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line ml-3"></div>
+                            
+                            <!-- Nivel 0: Cierre de Clase -->
+                            <span class="text-[#8b8b99] text-[9px] font-mono opacity-60">}</span>
+                            
+                            <!-- Raíz final -->
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line"></div>
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line"></div>                            
+                            <div class="h-[3px] bg-[#C58B59] rounded-full w-0 code-line"></div>
+                            
+                            <!-- Cierre de etiqueta global -->
+                            <span class="text-[#C58B59] text-[10px] font-mono font-bold leading-none">&lt;/&gt;</span>
                         </div>
 
                         <span class="flow-arrow" style="margin: 0;">↓</span>
@@ -1480,10 +1530,17 @@
                 if (isIntroReveal) {
                     tl.call(() => {
                         updateMoonPosition(false);
+                        // Anima el logo
                         gsap.fromTo(moonImg,
                             { opacity: 0, scale: 0.6 },
                             { opacity: 1, scale: 1, duration: 1, ease: "power3.out" }
                         );
+                        // Anima el fondo al mismo tiempo (ajusta 0.15 a la opacidad que te guste)
+                        gsap.to('.grain', {
+                            opacity: 0.15,
+                            duration: 1.5,
+                            ease: "power3.out"
+                        });
                     }, null, 0.9);
                 }
 
@@ -1500,8 +1557,8 @@
                 if(codeLines.length > 0) {
                     gsap.to(codeLines, {
                         width: (i) => i % 2 === 0 ? "100%" : "65%",
-                        duration: 0.35,
-                        stagger: 0.1,
+                        duration: 0.20,
+                        stagger: 0.075,
                         ease: "power2.out",
                         delay: 0.5
                     });
