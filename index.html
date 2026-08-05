@@ -734,11 +734,13 @@
                 <span class="lang-es">Ahorro de Tiempo Sostenido</span>
             </h2>
 
-            <div class="flex flex-col w-full max-w-3xl gap-5 mt-10">
+                <div class="flex flex-col w-full max-w-3xl gap-5 mt-10">                
+                <!-- Soportería -->
                 <div class="fragment subtle-box flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-                    <p class="text-body text-white font-medium">
-                        <span class="lang-en">Support Placement</span><span class="lang-es">Colocación de Soportería</span>
-                    </p>
+                    <div class="flex flex-col">
+                        <span class="accent-text font-bold text-lg"><span class="lang-en">SupportFlow</span><span class="lang-es">SupportFlow</span></span>
+                        <span class="text-body text-white font-medium text-sm md:text-base"><span class="lang-en">Support Placement</span><span class="lang-es">Colocación de Soportería</span></span>
+                    </div>
                     <div class="flex items-center gap-4 text-sm">
                         <span class="text-[#8b8b99] line-through"><span class="lang-en">1 Hour</span><span class="lang-es">1 Hora</span></span>
                         <span class="flow-arrow" style="margin:0;">→</span>
@@ -746,10 +748,12 @@
                     </div>
                 </div>
 
+                <!-- Cuantificación -->
                 <div class="fragment subtle-box flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-                    <p class="text-body text-white font-medium">
-                        <span class="lang-en">Quantification &amp; Data Extraction</span><span class="lang-es">Cuantificación y Extracción de Datos</span>
-                    </p>
+                    <div class="flex flex-col">
+                        <span class="accent-text font-bold text-lg"><span class="lang-en">QuanTools</span><span class="lang-es">QuanTools</span></span>
+                        <span class="text-body text-white font-medium text-sm md:text-base"><span class="lang-en">Quantification &amp; Data Extraction</span><span class="lang-es">Cuantificación y Extracción de Datos</span></span>
+                    </div>
                     <div class="flex items-center gap-4 text-sm">
                         <span class="text-[#8b8b99] line-through"><span class="lang-en">1 Hour</span><span class="lang-es">1 Hora</span></span>
                         <span class="flow-arrow" style="margin:0;">→</span>
@@ -757,16 +761,19 @@
                     </div>
                 </div>
 
+                <!-- Parámetros -->
                 <div class="fragment subtle-box flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-                    <p class="text-body text-white font-medium">
-                        <span class="lang-en">Parameter Data Reorganization</span><span class="lang-es">Reorganización de Datos en Parámetros</span>
-                    </p>
+                    <div class="flex flex-col">
+                        <span class="accent-text font-bold text-lg"><span class="lang-en">Param Re-Sort</span><span class="lang-es">Param Re-Sort</span></span>
+                        <span class="text-body text-white font-medium text-sm md:text-base"><span class="lang-en">Parameter Data Reorganization</span><span class="lang-es">Reorganización de Datos en Parámetros</span></span>
+                    </div>
                     <div class="flex items-center gap-4 text-sm">
                         <span class="text-[#8b8b99] line-through"><span class="lang-en">1 Hour</span><span class="lang-es">1 Hora</span></span>
                         <span class="flow-arrow" style="margin:0;">→</span>
                         <span class="accent-text font-medium"><span class="lang-en">1 Minute</span><span class="lang-es">1 Minuto</span></span>
                     </div>
                 </div>
+                
             </div>
 
             <div class="fragment text-center mt-16">
@@ -814,13 +821,13 @@
                     </div>
                     <div class="fragment step-item text-center opacity-90">
                         <div class="connector-line" aria-hidden="true"></div>
-                        <p class="text-body text-white tracking-widest uppercase text-sm"><span class="lang-en">Develop</span><span class="lang-es">Desarrollar</span></p>
-                    </div>
-                    <div class="fragment step-item text-center">
-                        <div class="connector-line" aria-hidden="true"></div>
                         <p class="text-display accent-text dynamic-light-text" style="font-size: clamp(1.5rem, 3vw, 2.5rem);">
-                            <span class="lang-en">Implement</span><span class="lang-es">Implementar</span>
+                            <span class="lang-en">Develop</span><span class="lang-es">Desarrollar</span>
                         </p>
+                    </div>
+                    <div class="fragment step-item text-center opacity-80">
+                        <div class="connector-line" aria-hidden="true"></div>
+                        <p class="text-body text-white tracking-widest uppercase text-sm"><span class="lang-en">Implement</span><span class="lang-es">Implementar</span></p>
                     </div>
                 </div>
                 
@@ -1078,6 +1085,119 @@
                         <span class="lang-en">Positioning the team as an internal reference for BIM innovation.</span>
                         <span class="lang-es">Posicionamiento del equipo como referente interno en innovación BIM.</span>
                     </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- PANTALLA 07B: A Vision -->
+        <section class="slide" id="ch7b">
+            <style>
+                #ch7b .beacon-node { display: flex; flex-direction: column; align-items: center; gap: 0.6rem; flex-shrink: 0; }
+                #ch7b .beacon-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--accent); position: relative; flex-shrink: 0; }
+                #ch7b .beacon-dot.origin { background: rgba(255,255,255,0.65); }
+                #ch7b .beacon-dot.global { width: 18px; height: 18px; box-shadow: 0 0 20px 4px rgba(197,139,89,0.55); }
+                #ch7b .beacon-dot::after {
+                    content: ''; position: absolute; inset: -6px; border-radius: 50%;
+                    border: 1.5px solid var(--accent); filter: blur(2.5px);
+                    animation: beacon-ping 2.6s ease-out infinite;
+                }
+                #ch7b .beacon-dot.origin::after { border-color: rgba(255,255,255,0.65); }
+                #ch7b .beacon-dot.lac::after { animation-delay: 0.4s; }
+                #ch7b .beacon-dot.global::after { animation-delay: 1.2s; }
+                @keyframes beacon-ping {
+                    0% { transform: scale(1); opacity: 0.55; }
+                    100% { transform: scale(6); opacity: 0; }
+                }
+                /* Neutraliza el opacity inline del punto/etiqueta "México" en la segunda fila para que el gris quede idéntico al de la primera fila */
+                #ch7b .fragment .fragment .beacon-dot.origin { opacity: 1 !important; }
+                #ch7b .fragment .fragment .beacon-label { opacity: 1 !important; }
+
+                #ch7b .growth-line { height: 1px; background: linear-gradient(to right, var(--accent), rgba(197,139,89,0.15)); flex-shrink: 0; align-self: flex-start; margin-top: 5px; position: relative; overflow: visible; }
+
+                /* Onda viajera: sale de México y recorre la línea hasta tocar el punto de destino */
+                #ch7b .growth-line::after {
+                    content: '';
+                    position: absolute;
+                    top: 50%;
+                    left: 0;
+                    width: 7px;
+                    height: 7px;
+                    margin-top: -3.5px;
+                    margin-left: -3.5px;
+                    border-radius: 50%;
+                    background: var(--accent);
+                    filter: blur(2px);
+                    box-shadow: 0 0 10px 3px rgba(197,139,89,0.85);
+                    opacity: 0;
+                    animation: wave-travel 2.6s ease-in-out infinite;
+                }
+                @keyframes wave-travel {
+                    0%   { left: 0%;   opacity: 0; }
+                    12%  { opacity: 1; }
+                    82%  { opacity: 1; }
+                    100% { left: 100%; opacity: 0; }
+                }
+
+                #ch7b .beacon-label { font-size: 0.7rem; letter-spacing: 0.1em; white-space: nowrap; }
+            </style>
+
+            <div class="flex flex-col items-center text-center justify-center h-full w-full relative">
+
+                <!-- Fragmento 0 (auto al llegar): evidencia tangible -->
+                <div class="fragment absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none" data-hide-prev="true">
+                    <p class="text-body" style="font-size: clamp(1rem, 1.4vw, 1.15rem); font-weight: 200; color: var(--text-muted); max-width: 600px; margin-left:auto; margin-right:auto; letter-spacing: 0.01em;">
+                        <span class="lang-en">A real possibility, with three years of development and tangible evidence behind it.</span>
+                        <span class="lang-es">Es una posibilidad real, con tres años de desarrollo y evidencia tangible detrás.</span>
+                    </p>
+                </div>
+
+                <!-- Fragmento 1 (clic 1): Visión + etapa LAC -->
+                <div class="fragment absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center pointer-events-none" data-hide-prev="true">
+                    <p class="text-body accent-text" style="font-size: 1.0rem; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 2.5rem;">
+                        <span class="lang-en">Vision</span><span class="lang-es">Visión</span>
+                    </p>
+
+                    <div style="display:flex; align-items:flex-start; justify-content:center; gap: 0;">
+                        <div class="beacon-node">
+                            <div class="beacon-dot origin"></div>
+                            <span class="beacon-label text-body" style="color: var(--text-muted); opacity:0.7;">
+                                <span class="lang-en">Mexico</span><span class="lang-es">México</span>
+                            </span>
+                        </div>
+                        <div class="growth-line" style="width: 4rem;"></div>
+                        <div class="beacon-node">
+                            <div class="beacon-dot lac"></div>
+                            <span class="beacon-label text-body text-white">LAC</span>
+                        </div>
+                    </div>
+
+                    <p class="text-headline mt-10" style="font-size: clamp(1.1rem, 2vw, 1.6rem); max-width: 780px;">
+                        <span class="lang-en">Position WSP Mexico as a benchmark for digital innovation within WSP LAC.</span>
+                        <span class="lang-es">Posicionar a WSP México como referente de innovación digital dentro de WSP LAC.</span>
+                    </p>
+
+                    <!-- Fragmento 2 (clic 2, se acumula debajo): etapa Global -->
+                    <div class="fragment flex flex-col items-center pointer-events-none" data-hide-prev="false" style="margin-top: 2.5rem;">
+                        <div style="display:flex; align-items:flex-start; justify-content:center; gap: 0; margin-bottom: 1.5rem;">
+                            <div class="beacon-node">
+                                <div class="beacon-dot origin" style="opacity:0.5;"></div>
+                                <span class="beacon-label text-body" style="color: var(--text-muted); opacity:0.5;">
+                                    <span class="lang-en">Mexico</span><span class="lang-es">México</span>
+                                </span>
+                            </div>
+                            <div class="growth-line" style="width: 8rem; background: linear-gradient(to right, rgba(197,139,89,0.6), var(--accent));"></div>
+                            <div class="beacon-node">
+                                <div class="beacon-dot global"></div>
+                                <span class="beacon-label accent-text" style="font-weight: 600;">GLOBAL</span>
+                            </div>
+                        </div>
+
+                        <p class="text-headline dynamic-light-text" style="font-size: clamp(1.1rem, 2vw, 1.6rem); max-width: 780px;">
+                            <span class="lang-en">Subsequently, to project it as a benchmark for digital BIM innovation at a global level.</span>
+                            <span class="lang-es">Posteriormente, proyectarlo como referente de innovación digital BIM a nivel Global.</span>
+                        </p>
+                    </div>
                 </div>
 
             </div>
