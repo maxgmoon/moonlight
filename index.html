@@ -730,8 +730,8 @@
         <!-- PANTALLA 04B: Sustained Time Savings -->
         <section class="slide" id="ch4b">
             <h2 class="text-headline fragment dynamic-light-text">
-                <span class="lang-en">Sustained Time Savings</span>
-                <span class="lang-es">Ahorro de Tiempo Sostenido</span>
+                <span class="lang-en">Sustained time savings</span>
+                <span class="lang-es">Ahorro de tiempo sostenido</span>
             </h2>
 
                 <div class="flex flex-col w-full max-w-3xl gap-5 mt-10">                
@@ -1096,17 +1096,17 @@
                 #ch7b .beacon-node { display: flex; flex-direction: column; align-items: center; gap: 0.6rem; flex-shrink: 0; }
                 #ch7b .beacon-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--accent); position: relative; flex-shrink: 0; }
                 #ch7b .beacon-dot.origin { background: rgba(255,255,255,0.65); }
-                #ch7b .beacon-dot.global { width: 18px; height: 18px; box-shadow: 0 0 20px 4px rgba(197,139,89,0.55); }
+                #ch7b .beacon-dot.global { width: 18px; height: 18px; box-shadow: 0 0 10px 2px rgba(197,139,89,0.55); }
                 #ch7b .beacon-dot::after {
                     content: ''; position: absolute; inset: -6px; border-radius: 50%;
-                    border: 1.5px solid var(--accent); filter: blur(2.5px);
+                    border: 1px solid var(--accent); filter: blur(0.2px);
                     animation: beacon-ping 2.6s ease-out infinite;
                 }
                 #ch7b .beacon-dot.origin::after { border-color: rgba(255,255,255,0.65); }
                 #ch7b .beacon-dot.lac::after { animation-delay: 0.4s; }
                 #ch7b .beacon-dot.global::after { animation-delay: 1.2s; }
                 @keyframes beacon-ping {
-                    0% { transform: scale(1); opacity: 0.55; }
+                    0% { transform: scale(1); opacity: 0.65; }
                     100% { transform: scale(6); opacity: 0; }
                 }
                 /* Neutraliza el opacity inline del punto/etiqueta "México" en la segunda fila para que el gris quede idéntico al de la primera fila */
@@ -1121,21 +1121,21 @@
                     position: absolute;
                     top: 50%;
                     left: 0;
-                    width: 7px;
-                    height: 7px;
-                    margin-top: -3.5px;
+                    width: 3px;
+                    height: 3px;
+                    margin-top: -1.5px;
                     margin-left: -3.5px;
                     border-radius: 50%;
                     background: var(--accent);
-                    filter: blur(2px);
-                    box-shadow: 0 0 10px 3px rgba(197,139,89,0.85);
+                    filter: blur(1px);
+                    box-shadow: 0 0 5px 1.5px rgba(197,139,89,0.85);
                     opacity: 0;
                     animation: wave-travel 2.6s ease-in-out infinite;
                 }
                 @keyframes wave-travel {
                     0%   { left: 0%;   opacity: 0; }
-                    12%  { opacity: 1; }
-                    82%  { opacity: 1; }
+                    10%  { opacity: 0.85; }
+                    80%  { opacity: 0.65; }
                     100% { left: 100%; opacity: 0; }
                 }
 
@@ -1165,7 +1165,7 @@
                                 <span class="lang-en">Mexico</span><span class="lang-es">México</span>
                             </span>
                         </div>
-                        <div class="growth-line" style="width: 4rem;"></div>
+                        <div class="growth-line" style="width: 4rem; background: linear-gradient(to right, rgba(197,139,89,0.6), var(--accent));"></div>
                         <div class="beacon-node">
                             <div class="beacon-dot lac"></div>
                             <span class="beacon-label text-body text-white">LAC</span>
@@ -1174,7 +1174,7 @@
 
                     <p class="text-headline mt-10" style="font-size: clamp(1.1rem, 2vw, 1.6rem); max-width: 780px;">
                         <span class="lang-en">Position WSP Mexico as a benchmark for digital innovation within WSP LAC.</span>
-                        <span class="lang-es">Posicionar a WSP México como referente de innovación digital dentro de WSP LAC.</span>
+                        <span class="lang-es">Posicionar a WSP México como referente en desarrollo digital para WSP LAC.</span>
                     </p>
 
                     <!-- Fragmento 2 (clic 2, se acumula debajo): etapa Global -->
@@ -1195,7 +1195,7 @@
 
                         <p class="text-headline dynamic-light-text" style="font-size: clamp(1.1rem, 2vw, 1.6rem); max-width: 780px;">
                             <span class="lang-en">Subsequently, to project it as a benchmark for digital BIM innovation at a global level.</span>
-                            <span class="lang-es">Posteriormente, proyectarlo como referente de innovación digital BIM a nivel Global.</span>
+                            <span class="lang-es">Escalar nuestros desarrollos para ser el referente BIM a nivel global.</span>
                         </p>
                     </div>
                 </div>
