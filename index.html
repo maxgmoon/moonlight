@@ -27,6 +27,11 @@
             --shadow-y: 10px;
             --moon-x: 50vw;
             --moon-y: 50vh;
+
+            /* NUEVAS VARIABLES: Valores máximos del bg-glow (Estado inicial) */
+            --glow-alpha: 0.05;
+            --glow-inner: 20%;
+            --glow-outer: 45%;
         }
 
         * {
@@ -52,11 +57,14 @@
             height: 100vh;
             z-index: 1;
             pointer-events: none;
-            background-image: radial-gradient(circle at var(--moon-x) var(--moon-y), rgba(197, 139, 89, 0.05) 15%, var(--bg-color) 50%);
+
+            /* MODIFICADO: Ahora el gradiente se alimenta de las variables dinámicas */
+            background-image: radial-gradient(circle at var(--moon-x) var(--moon-y), rgba(220, 139, 89, var(--glow-alpha)) var(--glow-inner), var(--bg-color) var(--glow-outer));
+            
             opacity: 0;
             transition: opacity 1.8s ease;
         }
-
+        
         #bg-glow.visible {
             opacity: 1;
         }
@@ -1848,6 +1856,78 @@
                     closeVideoModal();
                 }
             });
+
+            // ----------------------------------------------------
+            // EFECTO DE "RESPIRACIÓN" DINÁMICO E INTELIGENTE
+            // ----------------------------------------------------
+
+            // Objeto base
+            const glowState = {
+                alpha: 0.05,
+                inner: 15,
+                outer: 50
+            };
+
+            // Función para inyectar los valores al CSS en tiempo real
+            function updateGlowCSS() {
+                document.documentElement.style.setProperty('--glow-alpha', glowState.alpha);
+                document.documentElement.style.setProperty('--glow-inner', `${glowState.inner}%`);
+                document.documentElement.style.setProperty('--glow-outer', `${glowState.outer}%`);
+            }
+
+            // Ciclo de animación infinito pero adaptable
+            function animateGlow() {
+                // Verificamos si estamos en la primera o la última diapositiva
+                // (slides y currentSlideIndex ya existen en tu código general)
+                const isStartOrEnd = (currentSlideIndex === 0) || (currentSlideIndex === slides.length - 1);
+
+                // --- PANEL DE CONTROL ---
+                // Aquí puedes ajustar los valores exactos para ambas situaciones:
+
+                // 1. TIEMPO (Velocidad de la animación)
+                const duracion = isStartOrEnd ? 5 : 8; // 4s en Inicio/Fin, 8s (más lento y largo) en el centro
+
+                // 2. VALORES MÍNIMOS (Hasta dónde se encoge)
+                // En inicio/fin se encoge más y brilla más. En medio apenas cambia.
+                const minAlpha = isStartOrEnd ? 0.09 : 0.06;  // Opacidad
+                const minInner = isStartOrEnd ? 8 : 13;       // Centro (13 es casi igual a 15)
+                const minOuter = isStartOrEnd ? 40 : 55;      // Borde exterior (45 es casi igual a 50)
+
+                // 3. VALORES MÁXIMOS BASE (Hasta dónde vuelve a crecer)
+                const maxAlpha = 0.05; 
+                const maxInner = 15;
+                const maxOuter = 50;
+
+                // FASE 1: Se encoge (Inhala)
+                gsap.to(glowState, {
+                    alpha: minAlpha,
+                    inner: minInner,
+                    outer: minOuter,
+                    duration: duracion,
+                    ease: "sine.inOut",
+                    onUpdate: updateGlowCSS,
+                    onComplete: () => {
+                        
+                        // Re-evaluamos por si el usuario cambió de slide justo a la mitad del latido
+                        const isNowStartOrEnd = (currentSlideIndex === 0) || (currentSlideIndex === slides.length - 1);
+                        const duracionRegreso = isNowStartOrEnd ? 5 : 8;
+
+                        // FASE 2: Vuelve a crecer (Exhala) y repite
+                        gsap.to(glowState, {
+                            alpha: maxAlpha,
+                            inner: maxInner,
+                            outer: maxOuter,
+                            duration: duracionRegreso,
+                            ease: "sine.inOut",
+                            onUpdate: updateGlowCSS,
+                            onComplete: animateGlow // Se vuelve a llamar a sí misma creando un ciclo infinito
+                        });
+                    }
+                });
+            }
+
+            // Arrancamos el ciclo por primera vez
+            animateGlow();
         });
     </script>
 
