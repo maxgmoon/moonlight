@@ -255,6 +255,39 @@
             transform: scale(1.1);
         }
 
+        #slide-indicators {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.05rem;
+            margin-bottom: 0.15rem;
+            color: var(--text-muted);
+            font-size: 0.6rem;
+            font-weight: 400;
+            line-height: 1;
+        }
+
+        .slide-indicator,
+        .slide-indicator-separator {
+            color: inherit;
+        }
+
+        .slide-indicator {
+            pointer-events: auto;
+            padding: 0.15rem;
+            border: 0;
+            background: transparent;
+            font: inherit;
+            opacity: 0.7;
+            transition: color 0.2s ease, opacity 0.2s ease;
+        }
+
+        .slide-indicator:hover,
+        .slide-indicator.active {
+            color: var(--text-main);
+            opacity: 1;
+        }
+
         .list-plain li {
             position: relative;
             padding-left: 1.3rem;
@@ -383,14 +416,17 @@
             <span class="lang-es">ENGLISH</span>
         </button>
         
-        <div class="flex items-center gap-6">
-            <button id="btn-prev" class="nav-btn" aria-label="Previous Slide">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-            </button>
-            <div id="progress" class="text-sm font-semibold tracking-widest pointer-events-auto" style="color: var(--text-muted);">01 / 11</div>
-            <button id="btn-next" class="nav-btn" aria-label="Next Slide">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-            </button>
+        <div class="flex flex-col items-center gap-1">
+            <div id="slide-indicators" aria-label="Slide navigation"></div>
+            <div class="flex items-center gap-6">
+                <button id="btn-prev" class="nav-btn" aria-label="Previous Slide">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                </button>
+                <div id="progress" class="text-sm font-semibold tracking-widest pointer-events-auto" style="color: var(--text-muted);">01 / 11</div>
+                <button id="btn-next" class="nav-btn" aria-label="Next Slide">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -626,8 +662,8 @@
                     <p class="accent-text font-bold">SupportFlow</p>
                     <p class="text-[0.65rem] font-semibold tracking-widest uppercase mt-2" style="color: var(--text-muted);">Agiliza flujos</p>
                 </div>            
-                <div class="fragment corporate-box interactive-box text-center p-4 rounded w-48 opacity-60">
-                    <p class="font-bold accent-hover" style="color: var(--text-main);">Data Lens</p>
+                <div class="fragment corporate-box interactive-box text-center p-4 rounded w-48 opacity-90 image-trigger" data-image="datalens.png" style="border-width: 2px; border-color: var(--accent);">
+                    <p class="accent-text font-bold">Data Lens</p>
                     <p class="text-[0.65rem] font-semibold tracking-widest uppercase mt-2" style="color: var(--text-muted);">En desarrollo...</p>
                 </div>
             </div>
@@ -647,7 +683,7 @@
                     <span class="corporate-box interactive-box text-[0.65rem] font-semibold tracking-widest uppercase" style="padding: 0.5rem 1rem;">Param Setter</span>
                     <span class="corporate-box interactive-box text-[0.65rem] font-semibold tracking-widest uppercase" style="padding: 0.5rem 1rem;">DocTracker</span>
                     <span class="corporate-box interactive-box text-[0.65rem] font-semibold tracking-widest uppercase" style="padding: 0.5rem 1rem;">Autosaver</span>
-                    <span class="text-[0.65rem] font-bold tracking-widest uppercase" style="color: var(--text-muted); padding: 0.5rem;">...</span>
+                    <span class="corporate-box interactive-box text-[0.65rem] font-semibold tracking-widest uppercase" style="padding: 0.5rem 1rem;">...</span>
                 </div>
             </div>
 
@@ -657,8 +693,8 @@
                     <span class="lang-es">No se trata de una lista de proyectos de software.</span>
                 </p>
                 <p class="text-sm mt-3 font-medium" style="color: var(--text-muted);">
-                    <span class="lang-en">It's about having the ability to identify opportunities to improve and automate workflows by creating custom software tools for teams.</span>
-                    <span class="lang-es">Se trata de que tenemos la capacidad de identificar oportunidades para mejorar y automatizar flujos de trabajo por medio de la creación de herramientas de software personalizado para los equipos.</span>
+                    <span class="lang-en">It is about having the ability to optimize and automate workflows by creating custom software tools for teams.</span>
+                    <span class="lang-es">Se trata de que tenemos la capacidad de optimizar y automatizar flujos de trabajo creando herramientas de software personalizadas para los equipos.</span>
                 </p>
             </div>
         </section>
@@ -1044,6 +1080,8 @@
             const btnPrev = document.getElementById('btn-prev');
             const btnNext = document.getElementById('btn-next');
             const progress = document.getElementById('progress');
+            const slideIndicators = document.getElementById('slide-indicators');
+            const showSlideIndicators = true;
             
             let currentSlideIndex = 0;
             let currentFragmentIndex = -1;
@@ -1059,6 +1097,40 @@
                 const num = (currentSlideIndex + 1).toString().padStart(2, '0');
                 const total = slides.length.toString().padStart(2, '0');
                 progress.innerText = `${num} / ${total}`;
+                slideIndicators.querySelectorAll('.slide-indicator').forEach((indicator, index) => {
+                    indicator.classList.toggle('active', index === currentSlideIndex);
+                    indicator.setAttribute('aria-current', index === currentSlideIndex ? 'step' : 'false');
+                });
+            }
+
+            function createSlideIndicators() {
+                if (!showSlideIndicators) {
+                    slideIndicators.hidden = true;
+                    return;
+                }
+
+                slides.forEach((slide, index) => {
+                    const indicator = document.createElement('button');
+                    indicator.type = 'button';
+                    indicator.className = 'slide-indicator';
+                    indicator.textContent = index + 1;
+                    indicator.setAttribute('aria-label', `Go to slide ${index + 1}`);
+                    indicator.addEventListener('click', () => goToSlide(index));
+                    slideIndicators.appendChild(indicator);
+
+                    if (index < slides.length - 1) {
+                        const separator = document.createElement('span');
+                        separator.className = 'slide-indicator-separator';
+                        separator.textContent = '•';
+                        separator.setAttribute('aria-hidden', 'true');
+                        slideIndicators.appendChild(separator);
+                    }
+                });
+            }
+
+            function goToSlide(index) {
+                if (isAnimating || index === currentSlideIndex || index < 0 || index >= slides.length) return;
+                transitionSlide(currentSlideIndex, index, index < currentSlideIndex);
             }
 
             function updateTheme(theme) {
@@ -1373,6 +1445,8 @@
 
             btnNext.addEventListener('click', nextAction);
             btnPrev.addEventListener('click', prevAction);
+            createSlideIndicators();
+            updateProgress();
 
             setTimeout(() => {
                 slides[0].classList.add('active');
@@ -1381,22 +1455,37 @@
             }, 100);
 
             // --- MODAL DE VIDEO ---
+            // --- MODAL DE VIDEO E IMAGEN ---
             const videoModal = document.getElementById('video-modal');
             const videoContainer = document.getElementById('video-container');
             const closeModalBtn = document.getElementById('close-modal');
             const videoTriggers = document.querySelectorAll('.video-trigger');
+            const imageTriggers = document.querySelectorAll('.image-trigger');
 
+            // Abrir Video de YouTube
             videoTriggers.forEach(trigger => {
                 trigger.addEventListener('click', (e) => {
                     e.stopPropagation();
                     const videoId = trigger.getAttribute('data-video');
                     const currentOrigin = window.location.origin;
                     videoContainer.innerHTML = `
-                        <iframe class="w-full h-full" 
+                        <iframe class="w-full aspect-video rounded" 
                             src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&origin=${encodeURIComponent(currentOrigin)}" 
                             title="YouTube video player" frameborder="0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                             allowfullscreen></iframe>
+                    `;
+                    videoModal.classList.remove('opacity-0', 'pointer-events-none');
+                });
+            });
+
+            // Abrir Imagen de Data Lens
+            imageTriggers.forEach(trigger => {
+                trigger.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const imageSrc = trigger.getAttribute('data-image');
+                    videoContainer.innerHTML = `
+                        <img src="${imageSrc}" alt="Data Lens Preview" class="w-full h-auto max-h-[75vh] object-contain rounded">
                     `;
                     videoModal.classList.remove('opacity-0', 'pointer-events-none');
                 });
