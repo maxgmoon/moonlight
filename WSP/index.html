@@ -1046,10 +1046,10 @@
     </div>
 
     <!-- POPUP DE VIDEO MODAL -->
-    <div id="video-modal" class="fixed inset-0 z-[99999] flex items-center justify-center bg-black/85 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
-        <!-- Cambiamos max-w-6xl por max-w-7xl y el padding a p-4 para que sea más amplio -->
-        <div class="relative w-full max-w-7xl mx-4 p-4 bg-black rounded shadow-2xl overflow-hidden border flex items-center justify-center" style="border-color: var(--accent); border-radius: var(--box-radius); max-height: 92vh;">
-            <button id="close-modal" class="absolute top-4 right-4 z-20 text-white bg-black/60 hover:bg-[#ff372f] w-10 h-10 rounded-full flex items-center justify-center transition-colors">✕</button>
+    <div id="video-modal" class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/85 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+        <!-- Cambiamos max-w-6xl por max-w-[92vw] y max-h-[85vh] por max-h-[94vh] para que abarque casi toda la pantalla -->
+        <div class="relative w-full max-w-[85vw] mx-4 p-4 bg-black rounded shadow-2xl overflow-hidden border flex items-center justify-center" style="border-color: var(--accent); border-radius: var(--box-radius); max-height: 94vh;">
+            <button id="close-modal" class="absolute top-5 right-5 z-20 text-white bg-black/60 hover:bg-[#ff372f] w-11 h-11 rounded-full flex items-center justify-center transition-colors text-lg">✕</button>
             <div id="video-container" class="w-full h-full flex items-center justify-center overflow-auto"></div>
         </div>
     </div>
