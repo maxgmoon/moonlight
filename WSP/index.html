@@ -35,6 +35,13 @@
         --accent: var(--wsp-red);
         --font-primary: 'Inter', sans-serif;
         --box-radius: 4px; 
+
+        /* Ajuste fino de alineación vertical del logo junto al texto "Moonlight".
+           Sube o baja este valor (en px) hasta que el logo quede perfectamente
+           alineado con el texto. Positivo = baja el logo, negativo = lo sube.
+           Se aplica como margin (no transform) para no interferir con las
+           animaciones GSAP del logo. */
+        --logo-align-offset: 4px;
     }
 
     /* --- THEME LIGHT --- */
@@ -92,6 +99,14 @@
         body.theme-dark .wsp-logo-invertible {
             filter: brightness(0) invert(1);
             transition: filter 0.8s ease;
+        }
+
+        /* Alineación del logo con el texto "Moonlight" (ver --logo-align-offset arriba).
+           Usamos margin-top en lugar de transform para que no choque con las
+           animaciones GSAP (x, y, scale) que se aplican sobre estas mismas imágenes. */
+        #center-logo,
+        #end-logo {
+            margin-top: var(--logo-align-offset);
         }
 
         /* Encabezado Institucional WSP */
@@ -334,7 +349,7 @@
             margin: 1.5rem auto;
         }
 
-        .beacon-node { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+        .beacon-node { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 130px; }
 
         .beacon-label {
             margin-top: 0.85rem;
@@ -484,7 +499,7 @@
             
             <div class="fragment absolute left-1/2 -translate-x-1/2 -translate-y-1/2 w-full flex justify-center items-center" id="intro-center-group" data-hide-prev="false" style="top: 50%;">
                 <div class="flex items-center justify-center gap-6" id="logo-moonlight-container">
-                    <img src="logo.png" alt="WSP Logo" id="center-logo" class="h-12 md:h-16 wsp-logo-invertible relative z-50" style="transform: translateY(12px);">
+                    <img src="logo.png" alt="WSP Logo" id="center-logo" class="h-12 md:h-16 wsp-logo-invertible relative z-50">
                     <span class="text-display m-0 opacity-0 font-light moonlight-text" id="intro-separator">|</span>
                     <h1 class="text-display m-0 opacity-0 moonlight-text" id="intro-moonlight-text" style="color: var(--text-main);">Moonlight</h1>
                 </div>
@@ -1069,19 +1084,14 @@
                     </p>
                 </div>
 
-                <div class="fragment absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center w-full" data-hide-prev="true">
-                    
-                    <p class="text-2xl font-bold accent-text uppercase tracking-widest mb-12">
-                        <span class="lang-es">Visión</span>
-                    </p>
-
+                <div class="fragment absolute top-[42%] left-1/2 -translate-x-1/2 flex flex-col items-center w-full" data-hide-prev="true">
                     <div class="flex flex-col items-center w-full">
-                        <div class="flex items-start justify-center mb-6">
+                        <div class="flex items-center justify-center mb-6">
                             <div class="beacon-node">
                                 <div class="beacon-dot origin"></div>
                                 <span class="beacon-label" style="color: var(--text-muted);">México</span>
                             </div>
-                            <div class="dotted-path origin-path w-32"></div>
+                            <div class="dotted-path origin-path w-32" style="margin-left: 1.5rem; margin-right: 1.5rem;"></div>
                             <div class="beacon-node">
                                 <div class="beacon-dot lac"></div>
                                 <span class="beacon-label" style="color: var(--text-main);">LAC</span>
@@ -1091,39 +1101,16 @@
                             <span class="lang-es">Posicionar a WSP México como referente en desarrollo digital para WSP LAC.</span>
                         </p>
                     </div>
-
                 </div>
 
-                <div class="fragment absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center w-full" data-hide-prev="true">
-                    
-                    <p class="text-2xl font-bold accent-text uppercase tracking-widest mb-8">
-                        <span class="lang-es">Visión</span>
-                    </p>
-
-                    <div class="flex flex-col items-center w-full mb-8">
-                        <div class="flex items-start justify-center mb-4">
-                            <div class="beacon-node">
-                                <div class="beacon-dot origin"></div>
-                                <span class="beacon-label" style="color: var(--text-muted);">México</span>
-                            </div>
-                            <div class="dotted-path origin-path w-24"></div>
-                            <div class="beacon-node">
-                                <div class="beacon-dot lac"></div>
-                                <span class="beacon-label" style="color: var(--text-main);">LAC</span>
-                            </div>
-                        </div>
-                        <p class="text-base font-semibold max-w-2xl" style="color: var(--text-main);">
-                            <span class="lang-es">Posicionar a WSP México como referente en desarrollo digital para WSP LAC.</span>
-                        </p>
-                    </div>
-
-                    <div class="flex flex-col items-center w-full">
-                        <div class="flex items-start justify-center mb-4">
+                <div class="fragment absolute top-[63%] left-1/2 -translate-x-1/2 flex flex-col items-center w-full" data-hide-prev="true">
+                    <div class="flex flex-col items-center w-full" style="margin-top: 1.5rem;">
+                        <div class="flex items-center justify-center mb-4">
                             <div class="beacon-node">
                                 <div class="beacon-dot origin" style="opacity: 0.5;"></div>
-                                <span class="beacon-label" style="color: var(--text-muted); opacity: 0.5;">México</span>
+                                <span class="beacon-label" style="color: var(--text-muted); ">México</span>
                             </div>
-                            <div class="dotted-path w-24"></div>
+                            <div class="dotted-path w-32" style="margin-left: 1.5rem; margin-right: 1.5rem;"></div>
                             <div class="beacon-node">
                                 <div class="beacon-dot global"></div>
                                 <span class="beacon-label accent-text">GLOBAL</span>
@@ -1133,7 +1120,6 @@
                             <span class="lang-es">Escalar nuestros desarrollos para ser el referente BIM a nivel global.</span>
                         </p>
                     </div>
-
                 </div>
             </div>
         </section>
@@ -1145,28 +1131,32 @@
                 <div class="fragment absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center" data-hide-prev="true">
                     <h1 class="text-display" style="color: var(--text-muted);">
                         <span class="lang-es">El verdadero valor no es la herramienta,</span>
+                         <span class="lang-en">The true value is not the tool,</span>
                     </h1>
                 </div>
                 
                 <div class="fragment absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center" data-hide-prev="true">
                     <h1 class="text-display accent-text">
                         <span class="lang-es">sino la capacidad de crearla.</span>
+                        <span class="lang-en">but the ability to create it.</span>
                     </h1>
                 </div>
 
                 <div class="fragment absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center" data-hide-prev="true">
                     <p class="text-3xl font-medium mb-4" style="color: var(--text-muted);">
                         <span class="lang-es">La pregunta no es qué hemos construido hasta hoy.</span>
+                        <span class="lang-en">The question is not what we have built so far.</span>
                     </p>
                     <p class="text-4xl font-bold" style="color: var(--text-main);">
-                        <span class="lang-es">La pregunta es: ¿qué construiremos mañana?</span>
+                        <span class="lang-es">La pregunta es: <span class="accent-text">¿qué construiremos mañana?</span></span>
+                        <span class="lang-en">The question is: <span class="accent-text">What will we build tomorrow?</span></span>
                     </p>
                 </div>
 
                 <div class="fragment absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center w-full" id="final-fragment" data-hide-prev="true">
                     
                     <div class="flex items-center justify-center gap-6 px-4">
-                        <img src="logo.png" alt="WSP Logo" id="end-logo" class="h-12 md:h-16 wsp-logo-invertible relative opacity-0" style="transform: translateY(12px);">
+                        <img src="logo.png" alt="WSP Logo" id="end-logo" class="h-12 md:h-16 wsp-logo-invertible relative opacity-0">
                         
                         <span class="text-display m-0 opacity-0 font-light" id="end-separator">|</span>
                         
@@ -1271,35 +1261,39 @@
                 const centerLogo = document.getElementById('center-logo');
                 const headerLogo = document.getElementById('header-logo');
                 const headerWrap = document.getElementById('corporate-header');
-                
-                if (!reverse) {
-                    const cRect = centerLogo.getBoundingClientRect();
-                    const hRect = headerLogo.getBoundingClientRect();
-                    const dx = hRect.left - cRect.left;
-                    const dy = (hRect.top - cRect.top) - 12;
-                    const scaleX = hRect.width / cRect.width;
-                    const scaleY = hRect.height / cRect.height;
 
-                    gsap.to(centerLogo, { 
-                        x: dx, y: dy, scaleX: scaleX, scaleY: scaleY, 
-                        transformOrigin: "top left", 
-                        duration: 1.2, 
+                if (!reverse) {
+                    const startRect = centerLogo.getBoundingClientRect();
+                    const headerRect = headerLogo.getBoundingClientRect();
+                    const dx = headerRect.left - startRect.left;
+                    const dy = headerRect.top - startRect.top;
+                    const scaleX = headerRect.width / startRect.width;
+                    const scaleY = headerRect.height / startRect.height;
+
+                    gsap.set(centerLogo, { clearProps: "transform", x: 0, y: 0, scaleX: 1, scaleY: 1, transformOrigin: "top left" });
+                    gsap.to(centerLogo, {
+                        x: dx,
+                        y: dy,
+                        scaleX: scaleX,
+                        scaleY: scaleY,
+                        transformOrigin: "top left",
+                        duration: 1.2,
                         ease: "power3.inOut",
                         onComplete: () => {
                             gsap.set(headerWrap, { opacity: 1 });
                             gsap.set(centerLogo, { opacity: 0 });
                         }
                     });
-                    
+
                     gsap.to('.moonlight-text', { opacity: 0, duration: 0.6, ease: "power2.out" });
                 } else {
                     gsap.set(headerWrap, { opacity: 0 });
-                    gsap.set(centerLogo, { opacity: 1 });
+                    gsap.set(centerLogo, { opacity: 1, clearProps: "transform", x: 0, y: 0, scaleX: 1, scaleY: 1 });
                     
                     gsap.set('#intro-moonlight-text', { clipPath: "inset(0 0% 0 0)" });
                     gsap.to('.moonlight-text', { opacity: 1, duration: 0.6, ease: "power2.out", delay: 0.4 });
                     
-                    gsap.to(centerLogo, { x: 0, y: 0, scaleX: 1, scaleY: 1, duration: 1.2, ease: "power3.inOut" });
+                    gsap.to(centerLogo, { x: 0, y: 0, scaleX: 1, scaleY: 1, duration: 0.1, ease: "power3.inOut" });
                 }
             }
 
@@ -1312,7 +1306,7 @@
                 const endMoonlightText = document.getElementById('end-moonlight-text');
 
                 if(!reverse) {
-                    gsap.set(endLogo, { clearProps: "transform", opacity: 1 });
+                    gsap.set(endLogo, { clearProps: "transform", x: 0, y: 0, scaleX: 1, scaleY: 1, opacity: 1, transformOrigin: "top left" });
                     
                     gsap.set(endSeparator, { opacity: 0 });
                     gsap.set(endMoonlightText, { clipPath: "inset(0 100% 0 0)", opacity: 1, x: -15 });
@@ -1320,7 +1314,7 @@
                     const eRect = endLogo.getBoundingClientRect();
                     const hRect = headerLogo.getBoundingClientRect();
                     const dx = hRect.left - eRect.left;
-                    const dy = (hRect.top - eRect.top) - 12;
+                    const dy = hRect.top - eRect.top;
                     const scaleX = hRect.width / eRect.width;
                     const scaleY = hRect.height / eRect.height;
 
@@ -1445,14 +1439,25 @@
                     tl.to(target, { opacity: 1, y: 0, duration: 0.1 });
                     tl.to(points, { opacity: 1, y: 0, duration: 0.6, stagger: 0.7, ease: "power3.out" });
                 }
+                else if (slide.id === 'ch7b') {
+                    if (index === 0) {
+                        tl.to(target, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0);
+                    } else if (index === 1) {
+                        tl.to(fragments[0], { opacity: 1, y: -180, duration: 0.55, ease: "power2.inOut" }, 0);
+                        tl.to(target, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.12);
+                    } else if (index === 2) {
+                        tl.to(fragments[0], { opacity: 1, y: -180, duration: 0.55, ease: "power2.inOut" }, 0);
+                        tl.to(fragments[1], { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0);
+                        tl.to(target, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.12);
+                    }
+                }
                 else if (target.id === 'final-fragment') {
                      if (target.dataset.hidePrev === "true" && index > 0) {
                         const previousFragments = fragments.slice(0, index);
                         tl.to(previousFragments, { opacity: 0, y: -15, duration: 0.5, ease: "power2.inOut" }, 0);
                     }
                     
-                    gsap.set(target, { y: 0 });
-                    tl.to(target, { opacity: 1, duration: 0.1 });
+                    gsap.set(target, { y: 0, opacity: 1 });
                     
                     animateLogoToCenterLastSlide(false);
                 }
