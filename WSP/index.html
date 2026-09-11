@@ -36,11 +36,6 @@
         --font-primary: 'Inter', sans-serif;
         --box-radius: 4px; 
 
-        /* Ajuste fino de alineación vertical del logo junto al texto "Moonlight".
-           Sube o baja este valor (en px) hasta que el logo quede perfectamente
-           alineado con el texto. Positivo = baja el logo, negativo = lo sube.
-           Se aplica como margin (no transform) para no interferir con las
-           animaciones GSAP del logo. */
         --logo-align-offset: 25px;
     }
 
@@ -66,7 +61,6 @@
         --bar-track-bg: var(--grey-1);
     }
 
-        /* Cursor Personalizado (Solo Punto) */
         * {
             cursor: none !important;
             box-sizing: border-box;
@@ -101,15 +95,11 @@
             transition: filter 0.8s ease;
         }
 
-        /* Alineación del logo con el texto "Moonlight" (ver --logo-align-offset arriba).
-           Usamos margin-top en lugar de transform para que no choque con las
-           animaciones GSAP (x, y, scale) que se aplican sobre estas mismas imágenes. */
         #center-logo,
         #end-logo {
             margin-top: var(--logo-align-offset);
         }
 
-        /* Encabezado Institucional WSP */
         #corporate-header {
             position: fixed;
             top: 0;
@@ -124,7 +114,6 @@
             opacity: 0; 
         }
 
-        /* TIPOGRAFÍA FINA RESTAURADA */
         .text-display {
             font-size: clamp(2rem, 4vw, 3.5rem); 
             font-weight: 200;
@@ -349,7 +338,7 @@
             margin: 1.5rem auto;
         }
 
-        /* Botón flotante: anexo "Propuesta Final" */
+        /* --- BOTÓN FLOTANTE Y EFECTO BREATHING --- */
         #annex-toggle-btn {
             position: fixed;
             top: 2rem;
@@ -369,11 +358,22 @@
             border-radius: var(--box-radius);
             box-shadow: 0 8px 24px rgba(255, 55, 47, 0.35);
             transition: opacity 0.4s ease, transform 0.25s ease, box-shadow 0.25s ease;
+            animation: btn-breathing-glow 2.5s infinite ease-in-out;
         }
 
         #annex-toggle-btn:hover {
             transform: translateY(-2px) scale(1.03);
-            box-shadow: 0 12px 28px rgba(255, 55, 47, 0.45);
+        }
+
+        @keyframes btn-breathing-glow {
+            0%, 100% { 
+                box-shadow: 0 8px 24px rgba(255, 55, 47, 0.35); 
+                filter: brightness(1); 
+            }
+            50% { 
+                box-shadow: 0 8px 35px rgba(255, 55, 47, 0.8), 0 0 15px rgba(255, 55, 47, 0.5); 
+                filter: brightness(1.15); 
+            }
         }
 
         .beacon-node { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 130px; }
@@ -448,13 +448,11 @@
             to { background-position: 10px center; }
         }
 
-        /* --- ESTILOS SIMPLIFICADOS Y HOMOGÉNEOS DE LAS BARRAS --- */
         .bar-track {
             background-color: var(--bar-track-bg);
             transition: background-color 0.8s ease;
         }
 
-       /* Barra Manual: Con efecto breathing cálido/alerta (Grey #1 a Orange #1 / Orange #2) */
         .bar-manual-gradient {
             background: linear-gradient(90deg, #404040 0%, #c33900 70%, #f35b05 100%) !important;
             animation: glow-pulse-manual 2.8s infinite ease-in-out !important;
@@ -471,7 +469,6 @@
             }
         }
 
-        /* Barra Herramienta: Con efecto breathing usando Green #2 a Green #1 */
         .bar-auto-glow {
             background: linear-gradient(90deg, #224807 0%, #496c1a 100%) !important;
             animation: glow-pulse-auto 2.8s infinite ease-in-out !important;
@@ -498,6 +495,7 @@
         <div class="text-xs font-bold tracking-widest uppercase" style="color: var(--text-muted);">Moonlight</div>
     </div>
 
+    <!-- AQUÍ ESTÁ EL BOTÓN QUE BUSCABAS -->
     <button id="annex-toggle-btn" type="button">
         <span id="annex-toggle-label">Ver Propuesta Final</span>
     </button>
@@ -1199,16 +1197,14 @@
             </div>
         </section>
 
-       <!-- ANEXO FINAL: Propuesta Integrada -->
+        <!-- ANEXO FINAL: Propuesta Integrada -->
         <section class="slide" id="ch-final" data-theme="light">
             
-            <!-- 1. Título SIN la clase 'fragment' -->
             <h2 class="text-headline max-w-5xl mb-4">
                 <span class="lang-es">Propuesta de Integración y Transición</span>
                 <span class="lang-en">Integration and Transition Proposal</span>
             </h2>
 
-            <!-- 2. Fragmento fantasma para pausar la presentación antes del Slider -->
             <div class="fragment absolute" style="width:1px; height:1px; pointer-events:none;"></div>
 
             <!-- SECCIÓN 1: QUÉ PROPONGO (Slider) -->
@@ -1229,8 +1225,8 @@
                             <span class="lang-en">Special Systems Design</span>
                         </p>
                         <p class="text-body text-[0.75rem] mt-2 text-center leading-tight">
-                            <span class="lang-es">Continuidad de responsabilidades y proyectos actuales.</span>
-                            <span class="lang-en">Continuity of current responsibilities and projects.</span>
+                            <span class="lang-es">Continuidad total de responsabilidades y proyectos actuales.</span>
+                            <span class="lang-en">Full continuity of current responsibilities and projects.</span>
                         </p>
                     </div>
                     
@@ -1273,7 +1269,7 @@
                 
                 <div class="flex flex-col md:flex-row gap-4 w-full">
                     <!-- Caja 1 -->
-                    <div class="flex-1 corporate-box interactive-box rounded flex flex-col" style="padding: 1.5rem !important; border-bottom-width: 1.5px; border-bottom-color: var(--accent);">
+                    <div class="flex-1 corporate-box interactive-box rounded flex flex-col" style="padding: 1.5rem !important;">
                         <p class="font-bold text-xs uppercase tracking-widest mb-3" style="color: var(--text-main);">
                             <span class="lang-es">Herramientas Actuales</span>
                             <span class="lang-en">Current Tools</span>
@@ -1285,20 +1281,20 @@
                     </div>
                     
                     <!-- Caja 2 -->
-                    <div class="flex-1 corporate-box interactive-box rounded flex flex-col" style="padding: 1.5rem !important; border-bottom-width: 1.5px; border-bottom-color: var(--accent);">
-                        <p class="font-bold text-xs uppercase tracking-widest mb-3 accent-text">
+                    <div class="flex-1 corporate-box interactive-box rounded flex flex-col" style="padding: 1.5rem !important; border-bottom-width: 3px; border-bottom-color: var(--accent);">
+                        <p class="font-bold text-xs uppercase tracking-widest mb-3" style="color: var(--text-main);">
                             <span class="lang-es">Ajuste al Nuevo Rol</span>
                             <span class="lang-en">New Role Adjustment</span>
                         </p>
                         <p class="text-body text-xs leading-relaxed">
-                            <span class="lang-es"><strong>Evolución del rol hacia la creación y mantenimiento</strong> continuo de nuevas soluciones internas, con un ajuste salarial acorde a las funciones tecnológicas integradas.</span>
-                            <span class="lang-en"><strong>Evolution of the role towards the creation and continuous maintenance</strong> of new internal solutions, with a salary adjustment commensurate with the integrated technological functions.</span>
+                            <span class="lang-es"><strong>Evolución del rol hacia la creación y mantenimiento</strong> continuo de soluciones internas, con un ajuste salarial acorde a las funciones tecnológicas integradas.</span>
+                            <span class="lang-en"><strong>Evolution of the role towards the creation and continuous maintenance</strong> of internal solutions, with a salary adjustment commensurate with the integrated technological functions.</span>
                         </p>
                     </div>
                     
                     <!-- Caja 3 -->
-                    <div class="flex-1 corporate-box interactive-box rounded flex flex-col" style="padding: 1.5rem !important; border-bottom-width: 1.5px; border-bottom-color: var(--accent);">
-                        <p class="font-bold text-xs uppercase tracking-widest mb-3 style="color: var(--text-main);">
+                    <div class="flex-1 corporate-box interactive-box rounded flex flex-col" style="padding: 1.5rem !important;">
+                        <p class="font-bold text-xs uppercase tracking-widest mb-3 accent-text">
                             <span class="lang-es">Incentivo de Innovación</span>
                             <span class="lang-en">Innovation Incentive</span>
                         </p>
@@ -1310,6 +1306,7 @@
                 </div>
             </div>
         </section>
+        
     </div>
 
     <!-- POPUP DE VIDEO MODAL -->
@@ -1358,10 +1355,9 @@
             gsap.set(document.querySelectorAll('#impact-points-group .impact-point'), { opacity: 0, y: 20 });
 
             function updateProgress() {
-                // Forzamos a que el total mostrado sea 11 (restando la diapositiva anexa)
                 const totalSlides = slides.length - 1; 
                 let current = currentSlideIndex + 1;
-                if (current > totalSlides) current = totalSlides; // Si estás en el anexo, muestra 11/11
+                if (current > totalSlides) current = totalSlides; 
                 
                 const num = current.toString().padStart(2, '0');
                 const total = totalSlides.toString().padStart(2, '0');
@@ -1380,11 +1376,10 @@
                     return;
                 }
                 
-                const totalDots = slides.length - 1; // Descontamos el anexo
+                const totalDots = slides.length - 1; 
                 let dotCount = 0;
 
                 slides.forEach((slide, index) => {
-                    // Si es la diapositiva final anexa, saltamos su creación
                     if (slide.id === 'ch-final') return; 
 
                     const indicator = document.createElement('button');
@@ -1406,9 +1401,22 @@
                 });
             }
 
-            function goToSlide(index) {
+            // Variable originalGoToSlide para interceptar y ocultar el botón de anexo si se navega fuera
+            let originalGoToSlide = function(index) {
                 if (isAnimating || index === currentSlideIndex || index < 0 || index >= slides.length) return;
                 transitionSlide(currentSlideIndex, index, index < currentSlideIndex);
+            };
+
+            function goToSlide(index) {
+                if (isAnimating || index === currentSlideIndex || index < 0 || index >= slides.length) return;
+                const targetId = slides[index].id;
+                if (targetId !== 'ch8' && targetId !== 'ch-final') {
+                    gsap.to('#annex-toggle-btn', { opacity: 0, duration: 0.3 });
+                    gsap.set('#annex-toggle-btn', { pointerEvents: 'none' });
+                    inAnnex = false;
+                    document.getElementById('annex-toggle-label').textContent = 'Ver Propuesta Final';
+                }
+                originalGoToSlide(index);
             }
 
             function updateTheme(theme) {
@@ -1497,8 +1505,8 @@
                 if (isAnimating) return;
                 const currentSlide = slides[currentSlideIndex];
                 const fragments = Array.from(currentSlide.querySelectorAll('.fragment'));
-
-                // El anexo (ch9/ch10) solo se activa con el botón dedicado, no con la flecha normal.
+                
+                // Evitar avanzar si estamos en ch8 (cierre) porque hay que presionar el botón de Anexo
                 if (currentSlide.id === 'ch8' && currentFragmentIndex >= fragments.length - 1) {
                     return;
                 }
@@ -1513,9 +1521,9 @@
 
             function prevAction() {
                 if (isAnimating) return;
-
-                // Salir del anexo (ch9/ch10) solo con el botón dedicado, no con la flecha normal.
-                if (['ch9', 'ch10'].includes(slides[currentSlideIndex].id) && currentFragmentIndex <= 0) {
+                
+                // Salir del anexo solo con el botón dedicado, no con la flecha normal
+                if (slides[currentSlideIndex].id === 'ch-final' && currentFragmentIndex <= 0) {
                     return;
                 }
 
@@ -1631,7 +1639,8 @@
                     gsap.set(target, { y: 0, opacity: 1 });
                     
                     animateLogoToCenterLastSlide(false);
-
+                    
+                    // MOSTRAR BOTÓN DE ANEXO
                     gsap.set('#annex-toggle-btn', { pointerEvents: 'auto' });
                     gsap.to('#annex-toggle-btn', { opacity: 1, duration: 0.8, delay: 1.2 });
                 }
@@ -1642,7 +1651,6 @@
                     }
                     tl.to(target, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, target.dataset.hidePrev === "true" ? 0.4 : 0);
 
-                    // --- ANIMACIÓN DE CRECIMIENTO SINCRONIZADA ---
                     const manualBar = target.querySelector('.bar-manual-gradient');
                     if (manualBar) {
                         const targetManualWidth = manualBar.getAttribute('data-target-width') || '85%';
@@ -1789,10 +1797,9 @@
             createSlideIndicators();
             updateProgress();
 
-            // --- ANEXO: Propuesta Final ---
+            // --- LÓGICA DEL BOTÓN DEL ANEXO Y EL SLIDER ---
             const annexToggleBtn = document.getElementById('annex-toggle-btn');
             const annexToggleLabel = document.getElementById('annex-toggle-label');
-            const ANNEX_IDS = ['ch-final'];
             let inAnnex = false;
 
             function findSlideIndexById(id) {
@@ -1804,56 +1811,26 @@
                 isAnimating = true;
 
                 if (!inAnnex) {
-                    // Ir al anexo: el logo regresa al header, y avanzamos a la primera diapositiva de propuesta.
                     animateLogoToCenterLastSlide(true);
                     const targetIndex = findSlideIndexById('ch-final');
                     setTimeout(() => {
                         transitionSlide(currentSlideIndex, targetIndex, false);
                     }, 200);
                     inAnnex = true;
-                    annexToggleLabel.textContent = 'Volver al Cierre';
+                    annexToggleLabel.textContent = 'Volver';
                 } else {
-                    // Volver al cierre: regresamos a ch8 y repetimos la animación del logo al centro.
                     const ch8Index = findSlideIndexById('ch8');
                     transitionSlide(currentSlideIndex, ch8Index, true);
                     setTimeout(() => {
                         animateLogoToCenterLastSlide(false);
                     }, 250);
                     inAnnex = false;
-                    annexToggleLabel.textContent = 'Ver Propuesta Final';
+                    annexToggleLabel.textContent = 'Propuesta Final';
                 }
 
                 setTimeout(() => { isAnimating = false; }, 1800);
             });
 
-            // Resguardo: si se navega a cualquier diapositiva ajena al cierre/anexo (p.ej. vía los indicadores),
-            // el botón flotante se oculta para no quedar visible fuera de contexto.
-            const originalGoToSlide = goToSlide;
-            goToSlide = function(index) {
-                if (isAnimating || index === currentSlideIndex || index < 0 || index >= slides.length) return;
-                const targetId = slides[index].id;
-                if (targetId !== 'ch8' && !ANNEX_IDS.includes(targetId)) {
-                    gsap.to('#annex-toggle-btn', { opacity: 0, duration: 0.3 });
-                    gsap.set('#annex-toggle-btn', { pointerEvents: 'none' });
-                    inAnnex = false;
-                    annexToggleLabel.textContent = 'Ver Propuesta Final';
-                }
-                originalGoToSlide(index);
-            };
-
-            setTimeout(() => {
-                slides[0].classList.add('active');
-                gsap.set(slides[0], { opacity: 1 });
-                updateTheme(slides[0].dataset.theme);
-            }, 100);
-
-            const videoModal = document.getElementById('video-modal');
-            const videoContainer = document.getElementById('video-container');
-            const closeModalBtn = document.getElementById('close-modal');
-            const videoTriggers = document.querySelectorAll('.video-trigger');
-            const imageTriggers = document.querySelectorAll('.image-trigger');
-
-            // Lógica del Slider Interactivo
             const roleSlider = document.getElementById('role-slider');
             if (roleSlider) {
                 const boxDesign = document.getElementById('box-design');
@@ -1874,6 +1851,19 @@
                     valDev.textContent = `${devPct}%`;
                 });
             }
+            // --- FIN LOGICA ANEXO ---
+
+            setTimeout(() => {
+                slides[0].classList.add('active');
+                gsap.set(slides[0], { opacity: 1 });
+                updateTheme(slides[0].dataset.theme);
+            }, 100);
+
+            const videoModal = document.getElementById('video-modal');
+            const videoContainer = document.getElementById('video-container');
+            const closeModalBtn = document.getElementById('close-modal');
+            const videoTriggers = document.querySelectorAll('.video-trigger');
+            const imageTriggers = document.querySelectorAll('.image-trigger');
 
             videoTriggers.forEach(trigger => {
                 trigger.addEventListener('click', (e) => {
