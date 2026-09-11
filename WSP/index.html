@@ -349,6 +349,33 @@
             margin: 1.5rem auto;
         }
 
+        /* Botón flotante: anexo "Propuesta Final" */
+        #annex-toggle-btn {
+            position: fixed;
+            top: 2rem;
+            right: 3rem;
+            z-index: 200;
+            pointer-events: none;
+            opacity: 0;
+            background-color: var(--accent);
+            color: #ffffff;
+            border: none;
+            padding: 0.85rem 1.6rem;
+            font-family: var(--font-primary);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            border-radius: var(--box-radius);
+            box-shadow: 0 8px 24px rgba(255, 55, 47, 0.35);
+            transition: opacity 0.4s ease, transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        #annex-toggle-btn:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 12px 28px rgba(255, 55, 47, 0.45);
+        }
+
         .beacon-node { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 130px; }
 
         .beacon-label {
@@ -470,6 +497,10 @@
         <img src="logo.png" alt="WSP Logo" id="header-logo" class="h-6 md:h-8 wsp-logo-invertible">
         <div class="text-xs font-bold tracking-widest uppercase" style="color: var(--text-muted);">Moonlight</div>
     </div>
+
+    <button id="annex-toggle-btn" type="button">
+        <span id="annex-toggle-label">Ver Propuesta Final</span>
+    </button>
 
     <div id="ui-layer">
         <button id="langToggle" aria-label="Toggle Language">
@@ -1167,7 +1198,118 @@
                 </div>
             </div>
         </section>
-        
+
+       <!-- ANEXO FINAL: Propuesta Integrada -->
+        <section class="slide" id="ch-final" data-theme="light">
+            
+            <!-- 1. Título SIN la clase 'fragment' -->
+            <h2 class="text-headline max-w-5xl mb-4">
+                <span class="lang-es">Propuesta de Integración y Transición</span>
+                <span class="lang-en">Integration and Transition Proposal</span>
+            </h2>
+
+            <!-- 2. Fragmento fantasma para pausar la presentación antes del Slider -->
+            <div class="fragment absolute" style="width:1px; height:1px; pointer-events:none;"></div>
+
+            <!-- SECCIÓN 1: QUÉ PROPONGO (Slider) -->
+            <div class="fragment w-full max-w-5xl flex flex-col items-center mt-2">
+                <p class="font-bold text-xs uppercase tracking-widest mb-3 text-left w-full" style="color: var(--text-muted);">
+                    <span class="lang-es">Qué Propongo</span>
+                    <span class="lang-en">What I Propose</span>
+                </p>
+                
+                <!-- Contenedor del Slider Interactivo (Con efecto hover) -->
+                <div class="relative w-full flex items-stretch h-36 rounded overflow-hidden corporate-box interactive-box" style="padding: 0 !important; border: 1px solid var(--border-light); background-color: var(--bg-alt);">
+                    
+                    <!-- Caja Izquierda (Diseño) -->
+                    <div id="box-design" class="flex flex-col justify-center items-center h-full transition-all duration-75 ease-out relative z-0" style="width: 70%; border-right: 2px solid var(--accent); background-color: var(--wsp-white); padding: 1rem;">
+                        <p id="val-design" class="text-display" style="font-size: clamp(2rem, 4vw, 3rem); color: var(--text-main); margin-bottom: 0;">70%</p>
+                        <p class="font-bold text-[0.7rem] uppercase tracking-widest mt-1 text-center" style="color: var(--text-main);">
+                            <span class="lang-es">Diseño en Sistemas Especiales</span>
+                            <span class="lang-en">Special Systems Design</span>
+                        </p>
+                        <p class="text-body text-[0.75rem] mt-2 text-center leading-tight">
+                            <span class="lang-es">Continuidad de responsabilidades y proyectos actuales.</span>
+                            <span class="lang-en">Continuity of current responsibilities and projects.</span>
+                        </p>
+                    </div>
+                    
+                    <!-- Caja Derecha (Desarrollo) -->
+                    <div id="box-dev" class="flex flex-col justify-center items-center h-full transition-all duration-75 ease-out relative z-0" style="width: 30%; background-color: #fafafa; padding: 1rem;">
+                        <p id="val-dev" class="text-display accent-text" style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 0;">30%</p>
+                        <p class="font-bold text-[0.7rem] uppercase tracking-widest mt-1 text-center" style="color: var(--text-main);">
+                            <span class="lang-es">Desarrollo BIM</span>
+                            <span class="lang-en">BIM Development</span>
+                        </p>
+                        <p class="text-body text-[0.75rem] mt-2 text-center leading-tight">
+                            <span class="lang-es">Identificar y construir herramientas para los equipos.</span>
+                            <span class="lang-en">Identify and build tools for the teams.</span>
+                        </p>
+                    </div>
+                    
+                    <!-- Input Range (Slider Invisible) -->
+                    <input type="range" id="role-slider" min="20" max="80" value="70" class="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-20">
+                    
+                    <!-- Indicador visual del Slider -->
+                    <div id="slider-handle" class="absolute top-1/2 -translate-y-1/2 w-8 h-8 bg-white rounded-full shadow-md border flex items-center justify-center pointer-events-none z-10 transition-all duration-75 ease-out" style="left: 70%; transform: translate(-50%, -50%); border-color: var(--accent);">
+                        <div class="flex gap-[3px]">
+                            <div class="w-[2px] h-3 bg-gray-400 rounded"></div>
+                            <div class="w-[2px] h-3 bg-gray-400 rounded"></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-[0.8rem] italic mt-4 w-full text-center" style="color: var(--text-muted);">
+                    <span class="lang-es">Distribución inicial, sujeta a ajuste conforme el rol evolucione.</span>
+                    <span class="lang-en">Initial distribution, subject to adjustment as the role evolves.</span>
+                </p>
+            </div>
+
+            <!-- SECCIÓN 2: QUÉ BUSCO (3 Cajas) -->
+            <div class="fragment w-full max-w-5xl mt-6">
+                <p class="font-bold text-xs uppercase tracking-widest mb-3 accent-text text-left w-full">
+                    <span class="lang-es">Qué Busco</span>
+                    <span class="lang-en">What I Seek</span>
+                </p>
+                
+                <div class="flex flex-col md:flex-row gap-4 w-full">
+                    <!-- Caja 1 -->
+                    <div class="flex-1 corporate-box interactive-box rounded flex flex-col" style="padding: 1.5rem !important; border-bottom-width: 1.5px; border-bottom-color: var(--accent);">
+                        <p class="font-bold text-xs uppercase tracking-widest mb-3" style="color: var(--text-main);">
+                            <span class="lang-es">Herramientas Actuales</span>
+                            <span class="lang-en">Current Tools</span>
+                        </p>
+                        <p class="text-body text-xs leading-relaxed">
+                            <span class="lang-es">Integración de la suite desarrollada al flujo de los equipos mediante un <strong>licenciamiento de uso interno</strong>, asegurando su adaptación, evolución y mantenimiento continuo.</span>
+                            <span class="lang-en">Integration of the developed suite into the teams' workflow through an <strong>internal use license</strong>, ensuring its adaptation, evolution, and continuous maintenance.</span>
+                        </p>
+                    </div>
+                    
+                    <!-- Caja 2 -->
+                    <div class="flex-1 corporate-box interactive-box rounded flex flex-col" style="padding: 1.5rem !important; border-bottom-width: 1.5px; border-bottom-color: var(--accent);">
+                        <p class="font-bold text-xs uppercase tracking-widest mb-3 accent-text">
+                            <span class="lang-es">Ajuste al Nuevo Rol</span>
+                            <span class="lang-en">New Role Adjustment</span>
+                        </p>
+                        <p class="text-body text-xs leading-relaxed">
+                            <span class="lang-es"><strong>Evolución del rol hacia la creación y mantenimiento</strong> continuo de nuevas soluciones internas, con un ajuste salarial acorde a las funciones tecnológicas integradas.</span>
+                            <span class="lang-en"><strong>Evolution of the role towards the creation and continuous maintenance</strong> of new internal solutions, with a salary adjustment commensurate with the integrated technological functions.</span>
+                        </p>
+                    </div>
+                    
+                    <!-- Caja 3 -->
+                    <div class="flex-1 corporate-box interactive-box rounded flex flex-col" style="padding: 1.5rem !important; border-bottom-width: 1.5px; border-bottom-color: var(--accent);">
+                        <p class="font-bold text-xs uppercase tracking-widest mb-3 style="color: var(--text-main);">
+                            <span class="lang-es">Incentivo de Innovación</span>
+                            <span class="lang-en">Innovation Incentive</span>
+                        </p>
+                        <p class="text-body text-xs leading-relaxed">
+                            <span class="lang-es"><strong>Explorar en conjunto un esquema de incentivo</strong> que valore el ecosistema ya desarrollado, reconociendo la iniciativa de aportar estas soluciones funcionales al flujo de trabajo.</span>
+                            <span class="lang-en"><strong>Jointly explore an incentive scheme</strong> that values the already developed ecosystem, recognizing the initiative of providing these functional solutions to the workflow.</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 
     <!-- POPUP DE VIDEO MODAL -->
@@ -1216,9 +1358,16 @@
             gsap.set(document.querySelectorAll('#impact-points-group .impact-point'), { opacity: 0, y: 20 });
 
             function updateProgress() {
-                const num = (currentSlideIndex + 1).toString().padStart(2, '0');
-                const total = slides.length.toString().padStart(2, '0');
+                // Forzamos a que el total mostrado sea 11 (restando la diapositiva anexa)
+                const totalSlides = slides.length - 1; 
+                let current = currentSlideIndex + 1;
+                if (current > totalSlides) current = totalSlides; // Si estás en el anexo, muestra 11/11
+                
+                const num = current.toString().padStart(2, '0');
+                const total = totalSlides.toString().padStart(2, '0');
+                
                 progress.innerText = `${num} / ${total}`;
+                
                 slideIndicators.querySelectorAll('.slide-indicator').forEach((indicator, index) => {
                     indicator.classList.toggle('active', index === currentSlideIndex);
                     indicator.setAttribute('aria-current', index === currentSlideIndex ? 'step' : 'false');
@@ -1230,8 +1379,14 @@
                     slideIndicators.hidden = true;
                     return;
                 }
+                
+                const totalDots = slides.length - 1; // Descontamos el anexo
+                let dotCount = 0;
 
                 slides.forEach((slide, index) => {
+                    // Si es la diapositiva final anexa, saltamos su creación
+                    if (slide.id === 'ch-final') return; 
+
                     const indicator = document.createElement('button');
                     indicator.type = 'button';
                     indicator.className = 'slide-indicator';
@@ -1240,13 +1395,14 @@
                     indicator.addEventListener('click', () => goToSlide(index));
                     slideIndicators.appendChild(indicator);
 
-                    if (index < slides.length - 1) {
+                    if (dotCount < totalDots - 1) {
                         const separator = document.createElement('span');
                         separator.className = 'slide-indicator-separator';
                         separator.textContent = '•';
                         separator.setAttribute('aria-hidden', 'true');
                         slideIndicators.appendChild(separator);
                     }
+                    dotCount++;
                 });
             }
 
@@ -1341,7 +1497,12 @@
                 if (isAnimating) return;
                 const currentSlide = slides[currentSlideIndex];
                 const fragments = Array.from(currentSlide.querySelectorAll('.fragment'));
-                
+
+                // El anexo (ch9/ch10) solo se activa con el botón dedicado, no con la flecha normal.
+                if (currentSlide.id === 'ch8' && currentFragmentIndex >= fragments.length - 1) {
+                    return;
+                }
+
                 if (currentFragmentIndex < fragments.length - 1) {
                     currentFragmentIndex++;
                     revealFragment(currentSlide, fragments, currentFragmentIndex);
@@ -1352,6 +1513,12 @@
 
             function prevAction() {
                 if (isAnimating) return;
+
+                // Salir del anexo (ch9/ch10) solo con el botón dedicado, no con la flecha normal.
+                if (['ch9', 'ch10'].includes(slides[currentSlideIndex].id) && currentFragmentIndex <= 0) {
+                    return;
+                }
+
                 if (currentSlideIndex > 0) {
                     if (currentSlideIndex === 0 && currentFragmentIndex === 2) {
                         isAnimating = true;
@@ -1362,8 +1529,10 @@
                         return;
                     }
                     
-                    if (currentSlideIndex === slides.length - 1 && currentFragmentIndex === slides[currentSlideIndex].querySelectorAll('.fragment').length - 1) {
+                    if (slides[currentSlideIndex].id === 'ch8' && currentFragmentIndex === slides[currentSlideIndex].querySelectorAll('.fragment').length - 1) {
                         animateLogoToCenterLastSlide(true);
+                        gsap.to('#annex-toggle-btn', { opacity: 0, duration: 0.3 });
+                        gsap.set('#annex-toggle-btn', { pointerEvents: 'none' });
                     }
 
                     if (currentFragmentIndex > 0) {
@@ -1462,6 +1631,9 @@
                     gsap.set(target, { y: 0, opacity: 1 });
                     
                     animateLogoToCenterLastSlide(false);
+
+                    gsap.set('#annex-toggle-btn', { pointerEvents: 'auto' });
+                    gsap.to('#annex-toggle-btn', { opacity: 1, duration: 0.8, delay: 1.2 });
                 }
                 else {
                     if (target.dataset.hidePrev === "true" && index > 0) {
@@ -1617,6 +1789,58 @@
             createSlideIndicators();
             updateProgress();
 
+            // --- ANEXO: Propuesta Final ---
+            const annexToggleBtn = document.getElementById('annex-toggle-btn');
+            const annexToggleLabel = document.getElementById('annex-toggle-label');
+            const ANNEX_IDS = ['ch-final'];
+            let inAnnex = false;
+
+            function findSlideIndexById(id) {
+                return Array.prototype.findIndex.call(slides, s => s.id === id);
+            }
+
+            annexToggleBtn.addEventListener('click', () => {
+                if (isAnimating) return;
+                isAnimating = true;
+
+                if (!inAnnex) {
+                    // Ir al anexo: el logo regresa al header, y avanzamos a la primera diapositiva de propuesta.
+                    animateLogoToCenterLastSlide(true);
+                    const targetIndex = findSlideIndexById('ch-final');
+                    setTimeout(() => {
+                        transitionSlide(currentSlideIndex, targetIndex, false);
+                    }, 200);
+                    inAnnex = true;
+                    annexToggleLabel.textContent = 'Volver al Cierre';
+                } else {
+                    // Volver al cierre: regresamos a ch8 y repetimos la animación del logo al centro.
+                    const ch8Index = findSlideIndexById('ch8');
+                    transitionSlide(currentSlideIndex, ch8Index, true);
+                    setTimeout(() => {
+                        animateLogoToCenterLastSlide(false);
+                    }, 250);
+                    inAnnex = false;
+                    annexToggleLabel.textContent = 'Ver Propuesta Final';
+                }
+
+                setTimeout(() => { isAnimating = false; }, 1800);
+            });
+
+            // Resguardo: si se navega a cualquier diapositiva ajena al cierre/anexo (p.ej. vía los indicadores),
+            // el botón flotante se oculta para no quedar visible fuera de contexto.
+            const originalGoToSlide = goToSlide;
+            goToSlide = function(index) {
+                if (isAnimating || index === currentSlideIndex || index < 0 || index >= slides.length) return;
+                const targetId = slides[index].id;
+                if (targetId !== 'ch8' && !ANNEX_IDS.includes(targetId)) {
+                    gsap.to('#annex-toggle-btn', { opacity: 0, duration: 0.3 });
+                    gsap.set('#annex-toggle-btn', { pointerEvents: 'none' });
+                    inAnnex = false;
+                    annexToggleLabel.textContent = 'Ver Propuesta Final';
+                }
+                originalGoToSlide(index);
+            };
+
             setTimeout(() => {
                 slides[0].classList.add('active');
                 gsap.set(slides[0], { opacity: 1 });
@@ -1628,6 +1852,28 @@
             const closeModalBtn = document.getElementById('close-modal');
             const videoTriggers = document.querySelectorAll('.video-trigger');
             const imageTriggers = document.querySelectorAll('.image-trigger');
+
+            // Lógica del Slider Interactivo
+            const roleSlider = document.getElementById('role-slider');
+            if (roleSlider) {
+                const boxDesign = document.getElementById('box-design');
+                const boxDev = document.getElementById('box-dev');
+                const valDesign = document.getElementById('val-design');
+                const valDev = document.getElementById('val-dev');
+                const sliderHandle = document.getElementById('slider-handle');
+
+                roleSlider.addEventListener('input', (e) => {
+                    const designPct = e.target.value;
+                    const devPct = 100 - designPct;
+                    
+                    boxDesign.style.width = `${designPct}%`;
+                    boxDev.style.width = `${devPct}%`;
+                    sliderHandle.style.left = `${designPct}%`;
+                    
+                    valDesign.textContent = `${designPct}%`;
+                    valDev.textContent = `${devPct}%`;
+                });
+            }
 
             videoTriggers.forEach(trigger => {
                 trigger.addEventListener('click', (e) => {
