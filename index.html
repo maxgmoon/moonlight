@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta content="width=device-width,initial-scale=1.0" name="viewport"/>
   <title>
-   Moonlight — Revit Toolsgit 
+   Moonlight - Revit tools suite 
   </title>
   <script src="https://cdn.tailwindcss.com">
   </script>
@@ -530,12 +530,7 @@ html[lang="es"] .lang-en {
      <div class="eyebrow reveal">
       Revit productivity ecosystem
      </div>
-     <h1 class="dynamic-light-text reveal">
-      Moon
-      <span class="accent">
-       light
-      </span>
-     </h1>
+    <h1 class="dynamic-light-text reveal">Moon<span class="accent">light</span></h1>
      <p class="hero-copy reveal">
       <span class="lang-es">
        Herramientas creadas alrededor del flujo real de trabajo en Revit. Automatización, coordinación y datos, integrados donde hacen falta.
@@ -749,7 +744,7 @@ html[lang="es"] .lang-en {
      </h2>
      <p>
       <span class="lang-es">
-       Descarga instalador de Moonlight y lleva conjunto de herramientas directamente a tu entorno de Revit.
+       Descarga instalador de Moonlight y lleva el conjunto de herramientas directamente a tu entorno de Revit.
       </span>
       <span class="lang-en">
        Download Moonlight installer and bring toolset directly into your Revit environment.
@@ -784,12 +779,325 @@ html[lang="es"] .lang-en {
    </span>
   </footer>
   <script>
-   const DOWNLOAD_URL="https://pub-1ec3f389b376414abd3d325e8e184b3c.r2.dev/Moonlight.Installer.zip";
-gsap.registerPlugin(MotionPathPlugin);
-document.addEventListener("DOMContentLoaded",()=>{const htmlTag=document.documentElement,langToggle=document.getElementById('langToggle');document.querySelectorAll('#heroDownload,#mainDownload').forEach(a=>a.href=DOWNLOAD_URL);langToggle.addEventListener('click',()=>htmlTag.setAttribute('lang',htmlTag.getAttribute('lang')==='en'?'es':'en'));
-const sat=document.getElementById('easter-egg-sat');const vw=coef=>window.innerWidth*coef;const vh=coef=>window.innerHeight*coef;let pathIndex=0;function getAsteroidPaths(){return [{path:[{x:vw(.15),y:vh(-.1)},{x:vw(.6),y:vh(.15)},{x:vw(1.1),y:vh(.4)}],duration:35},{path:[{x:vw(1.1),y:vh(.7)},{x:vw(.5),y:vh(.85)},{x:vw(-.1),y:vh(.8)}],duration:40},{path:[{x:vw(.3),y:vh(-.1)},{x:vw(.7),y:vh(.25)},{x:vw(1.1),y:vh(.6)}],duration:38},{path:[{x:vw(1.1),y:vh(.9)},{x:vw(.5),y:vh(.95)},{x:vw(-.1),y:vh(.7)}],duration:40}]}function animateAsteroidSequence(){if(!sat)return;const paths=getAsteroidPaths(),currentData=paths[pathIndex];gsap.set(sat,{x:currentData.path[0].x,y:currentData.path[0].y,opacity:0});const tl=gsap.timeline({onComplete:()=>{pathIndex=(pathIndex+1)%paths.length;setTimeout(animateAsteroidSequence,(4+Math.random()*4)*1000)}});tl.to(sat,{motionPath:{path:currentData.path,type:"soft",autoRotate:true},duration:currentData.duration,ease:"none"},0);tl.to(sat,{opacity:.35,duration:5,ease:"power1.inOut"},0).to(sat,{opacity:0,duration:5,ease:"power1.inOut"},currentData.duration-5)}setTimeout(animateAsteroidSequence,3000);
-const cursorDot=document.getElementById('cursor-dot'),cursorRing=document.getElementById('cursor-ring');const xDotTo=gsap.quickTo(cursorDot,"x",{duration:.1,ease:"power3"}),yDotTo=gsap.quickTo(cursorDot,"y",{duration:.1,ease:"power3"}),xRingTo=gsap.quickTo(cursorRing,"x",{duration:.3,ease:"power3"}),yRingTo=gsap.quickTo(cursorRing,"y",{duration:.3,ease:"power3"});document.querySelectorAll('.interactive-elem').forEach(el=>{el.addEventListener('mouseenter',()=>{cursorRing.classList.add('cursor-hover');cursorDot.classList.add('cursor-hover')});el.addEventListener('mouseleave',()=>{cursorRing.classList.remove('cursor-hover');cursorDot.classList.remove('cursor-hover')})});const moonImg=document.getElementById('the-moon');let moonCenterX=70,moonCenterY=70;function syncMoon(){const r=moonImg.getBoundingClientRect();moonCenterX=r.left+r.width/2;moonCenterY=r.top+r.height/2;document.documentElement.style.setProperty('--moon-x',`${moonCenterX}px`);document.documentElement.style.setProperty('--moon-y',`${moonCenterY}px`)}syncMoon();gsap.to(moonImg,{filter:"drop-shadow(0 0 45px rgba(197,139,89,.75))",duration:5,ease:"sine.inOut",repeat:-1,yoyo:true});window.addEventListener('resize',syncMoon);window.addEventListener('mousemove',e=>{xDotTo(e.clientX);yDotTo(e.clientY);xRingTo(e.clientX);yRingTo(e.clientY);const dx=e.clientX-moonCenterX,dy=e.clientY-moonCenterY,dist=Math.sqrt(dx*dx+dy*dy)||1,intensity=Math.min(dist/600,1);document.documentElement.style.setProperty('--shadow-x',`${(dx/dist)*25*intensity}px`);document.documentElement.style.setProperty('--shadow-y',`${(dy/dist)*25*intensity}px`)});
-const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){gsap.to(entry.target,{opacity:1,y:0,filter:'blur(0px)',duration:1.2,ease:'power3.out'});observer.unobserve(entry.target)}}),{threshold:.12});document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));const glowState={alpha:.05,inner:15,outer:50};function updateGlowCSS(){document.documentElement.style.setProperty('--glow-alpha',glowState.alpha);document.documentElement.style.setProperty('--glow-inner',`${glowState.inner}%`);document.documentElement.style.setProperty('--glow-outer',`${glowState.outer}%`)}function animateGlow(){gsap.to(glowState,{alpha:.065,inner:12,outer:54,duration:8,ease:'sine.inOut',onUpdate:updateGlowCSS,onComplete:()=>gsap.to(glowState,{alpha:.05,inner:15,outer:50,duration:8,ease:'sine.inOut',onUpdate:updateGlowCSS,onComplete:animateGlow})})}animateGlow()});
-  </script>
+    const DOWNLOAD_URL = "https://pub-1ec3f389b376414abd3d325e8e184b3c.r2.dev/Moonlight.Installer.zip";
+
+    gsap.registerPlugin(MotionPathPlugin);
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const htmlTag = document.documentElement;
+        const langToggle = document.getElementById("langToggle");
+
+        // Download buttons
+        document.querySelectorAll("#heroDownload, #mainDownload").forEach(a => {
+            a.href = DOWNLOAD_URL;
+        });
+
+        // Language toggle
+        langToggle.addEventListener("click", () => {
+            htmlTag.setAttribute(
+                "lang",
+                htmlTag.getAttribute("lang") === "en" ? "es" : "en"
+            );
+        });
+
+
+        // =========================================================
+        // COMET / EASTER EGG
+        // =========================================================
+
+        const sat = document.getElementById("easter-egg-sat");
+
+        const vw = coef => window.innerWidth * coef;
+        const vh = coef => window.innerHeight * coef;
+
+        let pathIndex = 0;
+
+        function getAsteroidPaths() {
+            return [
+                {
+                    path: [
+                        { x: vw(0.15), y: vh(-0.1) },
+                        { x: vw(0.6), y: vh(0.15) },
+                        { x: vw(1.1), y: vh(0.4) }
+                    ],
+                    duration: 35
+                },
+                {
+                    path: [
+                        { x: vw(1.1), y: vh(0.7) },
+                        { x: vw(0.5), y: vh(0.85) },
+                        { x: vw(-0.1), y: vh(0.8) }
+                    ],
+                    duration: 40
+                },
+                {
+                    path: [
+                        { x: vw(0.3), y: vh(-0.1) },
+                        { x: vw(0.7), y: vh(0.25) },
+                        { x: vw(1.1), y: vh(0.6) }
+                    ],
+                    duration: 38
+                },
+                {
+                    path: [
+                        { x: vw(1.1), y: vh(0.9) },
+                        { x: vw(0.5), y: vh(0.95) },
+                        { x: vw(-0.1), y: vh(0.7) }
+                    ],
+                    duration: 40
+                }
+            ];
+        }
+
+        function animateAsteroidSequence() {
+            if (!sat) return;
+
+            const paths = getAsteroidPaths();
+            const currentData = paths[pathIndex];
+
+            gsap.set(sat, {
+                x: currentData.path[0].x,
+                y: currentData.path[0].y,
+                opacity: 0
+            });
+
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    pathIndex = (pathIndex + 1) % paths.length;
+
+                    setTimeout(
+                        animateAsteroidSequence,
+                        (4 + Math.random() * 4) * 1000
+                    );
+                }
+            });
+
+            tl.to(
+                sat,
+                {
+                    motionPath: {
+                        path: currentData.path,
+                        type: "soft",
+                        autoRotate: true
+                    },
+                    duration: currentData.duration,
+                    ease: "none"
+                },
+                0
+            );
+
+            tl.to(
+                sat,
+                {
+                    opacity: 0.35,
+                    duration: 5,
+                    ease: "power1.inOut"
+                },
+                0
+            ).to(
+                sat,
+                {
+                    opacity: 0,
+                    duration: 5,
+                    ease: "power1.inOut"
+                },
+                currentData.duration - 5
+            );
+        }
+
+        setTimeout(animateAsteroidSequence, 3000);
+
+
+        // =========================================================
+        // CUSTOM CURSOR
+        // =========================================================
+
+        const cursorDot = document.getElementById("cursor-dot");
+        const cursorRing = document.getElementById("cursor-ring");
+
+        const xDotTo = gsap.quickTo(cursorDot, "x", {
+            duration: 0.1,
+            ease: "power3"
+        });
+
+        const yDotTo = gsap.quickTo(cursorDot, "y", {
+            duration: 0.1,
+            ease: "power3"
+        });
+
+        const xRingTo = gsap.quickTo(cursorRing, "x", {
+            duration: 0.3,
+            ease: "power3"
+        });
+
+        const yRingTo = gsap.quickTo(cursorRing, "y", {
+            duration: 0.3,
+            ease: "power3"
+        });
+
+        document.querySelectorAll(".interactive-elem").forEach(el => {
+            el.addEventListener("mouseenter", () => {
+                cursorRing.classList.add("cursor-hover");
+                cursorDot.classList.add("cursor-hover");
+            });
+
+            el.addEventListener("mouseleave", () => {
+                cursorRing.classList.remove("cursor-hover");
+                cursorDot.classList.remove("cursor-hover");
+            });
+        });
+
+
+        // =========================================================
+        // MOON
+        // =========================================================
+
+        const moonImg = document.getElementById("the-moon");
+
+        let moonCenterX = 70;
+        let moonCenterY = 70;
+
+        function syncMoon() {
+            const r = moonImg.getBoundingClientRect();
+
+            moonCenterX = r.left + r.width / 2;
+            moonCenterY = r.top + r.height / 2;
+
+            document.documentElement.style.setProperty(
+                "--moon-x",
+                `${moonCenterX}px`
+            );
+
+            document.documentElement.style.setProperty(
+                "--moon-y",
+                `${moonCenterY}px`
+            );
+        }
+
+        syncMoon();
+
+        gsap.to(moonImg, {
+            filter: "drop-shadow(0 0 45px rgba(197,139,89,.75))",
+            duration: 5,
+            ease: "sine.inOut",
+            repeat: -1,
+            yoyo: true
+        });
+
+        window.addEventListener("resize", syncMoon);
+
+
+        // =========================================================
+        // MOUSE LIGHT / DYNAMIC SHADOW
+        // =========================================================
+
+        window.addEventListener("mousemove", e => {
+            xDotTo(e.clientX);
+            yDotTo(e.clientY);
+
+            xRingTo(e.clientX);
+            yRingTo(e.clientY);
+
+            const dx = e.clientX - moonCenterX;
+            const dy = e.clientY - moonCenterY;
+
+            const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+            const intensity = Math.min(dist / 600, 1);
+
+            document.documentElement.style.setProperty(
+                "--shadow-x",
+                `${(dx / dist) * 25 * intensity}px`
+            );
+
+            document.documentElement.style.setProperty(
+                "--shadow-y",
+                `${(dy / dist) * 25 * intensity}px`
+            );
+        });
+
+
+        // =========================================================
+        // REVEAL ANIMATIONS
+        // =========================================================
+
+        const observer = new IntersectionObserver(
+            entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        gsap.to(entry.target, {
+                            opacity: 1,
+                            y: 0,
+                            filter: "blur(0px)",
+                            duration: 1.2,
+                            ease: "power3.out"
+                        });
+
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            {
+                threshold: 0.12
+            }
+        );
+
+        document.querySelectorAll(".reveal").forEach(el => {
+            observer.observe(el);
+        });
+
+
+        // =========================================================
+        // BACKGROUND GLOW
+        // =========================================================
+
+        const glowState = {
+            alpha: 0.05,
+            inner: 15,
+            outer: 50
+        };
+
+        function updateGlowCSS() {
+            document.documentElement.style.setProperty(
+                "--glow-alpha",
+                glowState.alpha
+            );
+
+            document.documentElement.style.setProperty(
+                "--glow-inner",
+                `${glowState.inner}%`
+            );
+
+            document.documentElement.style.setProperty(
+                "--glow-outer",
+                `${glowState.outer}%`
+            );
+        }
+
+        function animateGlow() {
+            gsap.to(glowState, {
+                alpha: 0.065,
+                inner: 12,
+                outer: 54,
+                duration: 8,
+                ease: "sine.inOut",
+                onUpdate: updateGlowCSS,
+
+                onComplete: () => {
+                    gsap.to(glowState, {
+                        alpha: 0.05,
+                        inner: 15,
+                        outer: 50,
+                        duration: 8,
+                        ease: "sine.inOut",
+                        onUpdate: updateGlowCSS,
+                        onComplete: animateGlow
+                    });
+                }
+            });
+        }
+
+        animateGlow();
+    });
+</script>
  </body>
 </html>
