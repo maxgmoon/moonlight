@@ -766,10 +766,8 @@ html[lang="es"] .lang-en {
      </a>
      <div class="meta">
       <span class="lang-es">
-       Enlace configurable en DOWNLOAD_URL
       </span>
       <span class="lang-en">
-       Link configurable in DOWNLOAD_URL
       </span>
      </div>
     </div>
@@ -784,7 +782,7 @@ html[lang="es"] .lang-en {
    </span>
   </footer>
   <script>
-   const DOWNLOAD_URL="PON_AQUI_TU_ENLACE_DE_DESCARGA";
+   const DOWNLOAD_URL="https://pub-1ec3f389b376414abd3d325e8e184b3c.r2.dev/Moonlight.Installer.zip";
 gsap.registerPlugin(MotionPathPlugin);
 document.addEventListener("DOMContentLoaded",()=>{const htmlTag=document.documentElement,langToggle=document.getElementById('langToggle');document.querySelectorAll('#heroDownload,#mainDownload').forEach(a=>a.href=DOWNLOAD_URL);langToggle.addEventListener('click',()=>htmlTag.setAttribute('lang',htmlTag.getAttribute('lang')==='en'?'es':'en'));
 const sat=document.getElementById('easter-egg-sat');const vw=coef=>window.innerWidth*coef;const vh=coef=>window.innerHeight*coef;let pathIndex=0;function getAsteroidPaths(){return [{path:[{x:vw(.15),y:vh(-.1)},{x:vw(.6),y:vh(.15)},{x:vw(1.1),y:vh(.4)}],duration:35},{path:[{x:vw(1.1),y:vh(.7)},{x:vw(.5),y:vh(.85)},{x:vw(-.1),y:vh(.8)}],duration:40},{path:[{x:vw(.3),y:vh(-.1)},{x:vw(.7),y:vh(.25)},{x:vw(1.1),y:vh(.6)}],duration:38},{path:[{x:vw(1.1),y:vh(.9)},{x:vw(.5),y:vh(.95)},{x:vw(-.1),y:vh(.7)}],duration:40}]}function animateAsteroidSequence(){if(!sat)return;const paths=getAsteroidPaths(),currentData=paths[pathIndex];gsap.set(sat,{x:currentData.path[0].x,y:currentData.path[0].y,opacity:0});const tl=gsap.timeline({onComplete:()=>{pathIndex=(pathIndex+1)%paths.length;setTimeout(animateAsteroidSequence,(4+Math.random()*4)*1000)}});tl.to(sat,{motionPath:{path:currentData.path,type:"soft",autoRotate:true},duration:currentData.duration,ease:"none"},0);tl.to(sat,{opacity:.35,duration:5,ease:"power1.inOut"},0).to(sat,{opacity:0,duration:5,ease:"power1.inOut"},currentData.duration-5)}setTimeout(animateAsteroidSequence,3000);
