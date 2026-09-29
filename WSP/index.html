@@ -484,6 +484,42 @@
                 filter: brightness(1.35);
             }
         }
+        #meth-frame {
+            position: relative;
+            border: 0 !important;
+        }
+
+        #meth-border {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+            pointer-events: none;
+        }
+
+        #meth-border-path {
+            fill: none;
+            stroke: var(--border-light);
+            stroke-width: 0.3;
+            vector-effect: non-scaling-stroke;
+        }
+
+        #meth-label {
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translate(-50%, 50%);
+            padding: 0 1rem;
+            background: var(transparent);
+            color: var(--text-main);
+            font-size: clamp(1.25rem, 2vw, 1.75rem);
+            font-weight: 200;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            white-space: nowrap;
+            opacity: 0;
+        }
     </style>
 </head>
 <body class="theme-light">
@@ -948,8 +984,13 @@
             </h2>
             
             <div class="fragment w-full max-w-5xl" id="meth-sequence">
-                <div id="meth-frame" class="border p-6 md:p-10 flex flex-col md:flex-row justify-between items-center opacity-0" style="border-color: transparent;">
+                <div id="meth-frame" class="border p-6 md:p-10 flex flex-col md:flex-row justify-between items-center opacity-0">
                     
+                    <svg id="meth-border" aria-hidden="true" preserveAspectRatio="none">
+                        <path id="meth-border-path"></path>
+                    </svg>
+                    <span id="meth-label" class="text-display">Moonlight</span>
+
                     <div class="meth-word text-center shrink-0">
                         <p class="font-bold text-sm uppercase tracking-wider" style="color: var(--text-main);"><span class="lang-en">Observe</span><span class="lang-es">Observar</span></p>
                     </div>
@@ -1600,11 +1641,48 @@
                 else if (target.id === 'meth-sequence') {
                     const frame = target.querySelector('#meth-frame');
                     const items = target.querySelectorAll('.meth-word, .meth-line');
+                    const label = target.querySelector('#meth-label');
+                    const border = target.querySelector('#meth-border');
+                    const path = target.querySelector('#meth-border-path');
+
                     gsap.set(items, { opacity: 0, scaleX: 0 });
-                    
+                    gsap.set(label, { opacity: 0 });
+
                     tl.to(target, { opacity: 1, y: 0, duration: 0.2 })
-                      .to(frame, { opacity: 1, borderColor: "var(--border-light)", duration: 0.6 })
-                      .to(items, { opacity: 1, scaleX: 1, duration: 0.4, stagger: 0.15, ease: "power2.out" });
+                    .to(frame, { opacity: 1, duration: 0.1 })
+                    .to(items, { opacity: 1, scaleX: 1, duration: 0.4, stagger: 0.15, ease: "power2.out" })
+                    .to(label, { opacity: 1, duration: 0.45, ease: "power2.out" })
+                    .call(() => {
+                        const width = frame.clientWidth;
+                        const height = frame.clientHeight;
+                        const gap = label.getBoundingClientRect().width / 2 + 8;
+                        const center = width / 2;
+
+                        border.setAttribute('viewBox', `0 0 ${width} ${height}`);
+                        const radius = 7;
+                        path.setAttribute('d', `M ${center - gap} ${height}
+                            L ${radius} ${height}
+                            Q 0 ${height} 0 ${height - radius}
+                            L 0 ${radius}
+                            Q 0 0 ${radius} 0
+                            L ${width - radius} 0
+                            Q ${width} 0 ${width} ${radius}
+                            L ${width} ${height - radius}
+                            Q ${width} ${height} ${width - radius} ${height}
+                            L ${center + gap} ${height}`);
+
+                        const length = path.getTotalLength();
+                        gsap.set(path, { strokeDasharray: length, strokeDashoffset: length });
+                        gsap.to(path, {
+                            strokeDashoffset: 0,
+                            duration: 0.75,
+                            ease: "none",
+                            onComplete: () => { isAnimating = false; }
+                        });
+                    });
+
+                    // El trazo continúa tras terminar la línea de tiempo.
+                    tl.eventCallback('onComplete', null);
                 }
                 else if (target.id === 'models-group') {
                     const boxes = target.querySelectorAll('.model-box');
@@ -1711,11 +1789,31 @@
                                     const prevToHide = toFragments.slice(0, idx);
                                     gsap.set(prevToHide, { opacity: 0 });
                                 }
-                                if(frag.id === 'meth-sequence') {
+                                if (frag.id === 'meth-sequence') {
                                     const frame = frag.querySelector('#meth-frame');
                                     const items = frag.querySelectorAll('.meth-word, .meth-line');
-                                    gsap.set(frame, { opacity: 1, borderColor: "var(--border-light)" });
+                                    const label = frag.querySelector('#meth-label');
+                                    const border = frag.querySelector('#meth-border');
+                                    const path = frag.querySelector('#meth-border-path');
+
+                                    gsap.set(frame, { opacity: 1 });
                                     gsap.set(items, { opacity: 1, scaleX: 1 });
+                                    gsap.set(label, { opacity: 1 });
+
+                                    const width = frame.clientWidth;
+                                    const height = frame.clientHeight;
+                                    const gap = label.getBoundingClientRect().width / 2 + 8;
+                                    const center = width / 2;
+
+                                    border.setAttribute('viewBox', `0 0 ${width} ${height}`);
+                                    path.setAttribute('d', `M ${center - gap} ${height}
+                                        L 0 ${height}
+                                        L 0 0
+                                        L ${width} 0
+                                        L ${width} ${height}
+                                        L ${center + gap} ${height}`);
+
+                                    gsap.set(path, { strokeDasharray: 'none', strokeDashoffset: 0 });
                                 }
                                 if(frag.id === 'models-group') {
                                     gsap.set(frag.querySelectorAll('.model-box'), { opacity: 1, y: 0 });
@@ -1750,6 +1848,8 @@
                             
                             const methSeq = toSlide.querySelector('#meth-sequence');
                             if(methSeq) {
+                                gsap.set(methSeq.querySelector('#meth-label'), { opacity: 0 });
+                                methSeq.querySelector('#meth-border-path').setAttribute('d', '');
                                 const frame = methSeq.querySelector('#meth-frame');
                                 const items = methSeq.querySelectorAll('.meth-word, .meth-line');
                                 gsap.set(frame, { opacity: 0, borderColor: "transparent" });
