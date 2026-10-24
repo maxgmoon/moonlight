@@ -5,7 +5,756 @@
 
 .viewport-bar{gap:8px;flex-wrap:wrap}.viewport-bar>span{flex:1;font-size:11px}.sensor{overflow-wrap:anywhere}.help-tooltip{z-index:9999}.transport label{white-space:nowrap}#creative-controls{background:#fff4dd;color:#805517}#creative-strength{max-width:180px}
 
-:root{--ink:#243648;--muted:#6e7d87;--line:#dbe2e6;--blue:#2777b2;--bluebg:#eaf3fa;--orange:#c86d3e;--bg:#f4f6f7;--white:#fff}*{box-sizing:border-box}body{margin:0;font:12px 'Segoe UI',system-ui,sans-serif;color:var(--ink);background:var(--bg)}button,input,select{font:inherit}button{cursor:pointer;border:1px solid var(--line);border-radius:4px;background:#fff;color:var(--ink);padding:7px 10px}button:hover{background:#eef5fb;border-color:#98b7cd}button.active{background:var(--bluebg);border-color:var(--blue);color:var(--blue)}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--blue);outline-offset:1px}button:disabled{opacity:.45;cursor:default}input:not([type=checkbox]):not([type=range]),select{padding:6px;border:1px solid #ccd5db;border-radius:3px;color:var(--ink);background:#fff;width:100%;min-width:0}input[type=range]{width:100%;accent-color:var(--blue)}input[type=checkbox]{accent-color:var(--blue)}header{height:49px;background:#253a4c;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 19px}.brand{font-size:20px;letter-spacing:-.6px}.brand span{color:#88c8e6}.brand small{font:9px monospace;color:#bfd0db;letter-spacing:2px;margin-left:13px}header .actions{display:flex;gap:7px}header button{background:#344d62;border:1px solid #526878;color:white}nav{display:flex;gap:24px;padding:9px 21px 0;border-bottom:1px solid var(--line);background:white;height:35px}.tab{font-size:12px;padding:0 0 7px}.tab.selected{color:var(--blue);border-bottom:3px solid var(--blue)}.ribbon{display:flex;gap:15px;align-items:stretch;background:#fff;border-bottom:1px solid var(--line);padding:9px 15px 6px;min-height:89px;overflow:auto}.rgroup{display:flex;flex-wrap:wrap;gap:5px;align-content:flex-start;border-right:1px solid var(--line);padding-right:15px;position:relative;padding-bottom:19px;flex-shrink:0}.rgroup small{position:absolute;bottom:0;left:0;width:100%;text-align:center;color:var(--muted);font-size:10px}.tool{display:flex;flex-direction:column;align-items:center;gap:4px;border-color:transparent;min-width:55px;padding:4px 7px;font-size:11px}.tool b{font:22px system-ui;font-weight:400;color:#537a92}.tool[data-tool=fire] b,.tool[data-tool=fuel] b{color:var(--orange)}.primary{background:var(--blue);border-color:var(--blue);color:#fff}.primary:hover{background:#1c6395;color:#fff}.workspace{height:calc(100vh - 205px);min-height:550px;display:grid;grid-template-columns:210px minmax(330px,1fr) 267px}.panel{background:white;overflow:auto}.left{border-right:1px solid var(--line)}.right{border-left:1px solid var(--line)}.panel-title{padding:11px 14px;font-size:11px;font-weight:600;letter-spacing:.4px;border-bottom:1px solid var(--line);background:#f7f9fa;position:sticky;top:0;z-index:2}.panel-section{padding:13px;border-bottom:1px solid var(--line)}.panel-section h3{font-size:11px;text-transform:uppercase;letter-spacing:1px;margin:0 0 11px;color:#586d7d}.hint{font-size:11px;line-height:1.6;color:var(--muted)}.tree{padding:5px 8px}.tree button{display:flex;width:100%;text-align:left;border:0;background:none;gap:9px;padding:7px 8px;align-items:center}.tree button.active{background:var(--bluebg);color:var(--blue)}.tree i{font-style:normal;color:#748c9a}.tree button.fire i{color:var(--orange)}.tree span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tree small{margin-left:auto;color:#8c9aa3;font:9px monospace}.center{min-width:0;display:flex;flex-direction:column;overflow:hidden}.viewport-bar{height:37px;display:flex;align-items:center;justify-content:space-between;padding:5px 15px;background:#fafcfd;border-bottom:1px solid var(--line)}.viewport-bar span{font-size:11px}.viewport-bar select{width:140px;padding:3px}.stage{flex:1;position:relative;min-height:280px;overflow:hidden;background:#eef2f3}canvas{width:100%;height:100%;display:block;touch-action:none;outline:none}.stamp{position:absolute;left:17px;top:16px;pointer-events:none}.stamp b{font-size:10px;font-weight:500;letter-spacing:1.5px;display:block}.stamp span{display:block;color:#7b8c94;font:10px monospace;margin-top:5px}.viewcube{position:absolute;right:13px;top:12px;background:#ffffffd9;border:1px solid #c8d4dd;border-radius:7px;padding:7px;display:grid;grid-template-columns:repeat(2,1fr);gap:4px;box-shadow:0 5px 15px #263f4b0a}.viewcube button{font-size:9px;padding:6px}.viewport-tools{position:absolute;right:14px;bottom:12px;display:flex;gap:5px}.viewport-tools button{background:#fffffff0;font-size:11px}.scale{position:absolute;left:17px;bottom:15px;font:10px monospace;color:#647b88;pointer-events:none}.statusline{padding:8px 14px;min-height:31px;background:#fff;border-top:1px solid var(--line);font-size:10px;color:var(--muted)}.transport{padding:10px 14px;display:flex;gap:9px;align-items:center;background:white;border-top:1px solid var(--line)}.transport select{width:58px}.time{font:21px monospace;letter-spacing:-1px;margin-left:auto}.transport small{font-size:9px;color:var(--muted)}.diagnostics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border-top:1px solid var(--line)}.diagnostic{padding:11px 14px;background:#f9fbfc}.diagnostic span{display:block;font-size:9px;letter-spacing:.5px;color:var(--muted);text-transform:uppercase}.diagnostic strong{font:18px monospace;display:block;margin-top:5px}.diagnostic em{font:9px system-ui;color:var(--muted)}.reliability{padding:9px 14px;background:#fff7e9;color:#8c6225;line-height:1.5;font-size:10px;border-top:1px solid #eadcbd}.reliability.bad{background:#fdeee9;color:#a34735}.field{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:7px 0}.field label{font-size:11px;flex:1}.field input,.field select{max-width:104px;font-size:11px}.field.check label{flex:auto}.field.check input{width:auto}.row{display:flex;gap:6px;margin-top:10px}.row button{flex:1;font-size:10px}.empty{padding:25px 16px;color:var(--muted);line-height:1.7}.config{padding:0 13px 12px}.config details{border-bottom:1px solid var(--line);padding:12px 0}.config summary{cursor:pointer;font-size:11px;font-weight:600}.config p{font-size:10px;line-height:1.6;color:var(--muted)}.sensor{padding:8px;border:1px solid var(--line);margin:6px 0;border-radius:4px;font-size:10px;line-height:1.7}.sensor.on{border-color:#d99b79;background:#fff3eb}.sensor b{font-size:11px}#events{white-space:pre-line;font:10px/1.7 monospace;color:var(--muted);max-height:110px;overflow:auto}footer{height:32px;display:flex;justify-content:space-between;padding:9px 17px;border-top:1px solid var(--line);background:#e8edf0;font:10px monospace;color:#647784}dialog{width:min(880px,95vw);max-height:88vh;padding:30px;border:1px solid #bac9d2;border-radius:8px;color:var(--ink);box-shadow:0 20px 90px #20304044}dialog::backdrop{background:#1e334888}dialog h1{font-size:27px;font-weight:500}dialog h2{font-size:15px;margin-top:26px}dialog p,dialog li{font-size:13px;line-height:1.8;color:#526575}dialog a{color:var(--blue)}dialog table{width:100%;border-collapse:collapse;font-size:12px}dialog td,dialog th{padding:10px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);line-height:1.7}.close{float:right}.eyebrow{color:var(--blue);font:10px monospace;letter-spacing:2px}.pill{display:inline-block;border-radius:3px;background:#fff0df;color:#98632e;font:9px monospace;padding:4px 6px}.file-input{display:none}.plot{width:100%;height:65px;background:#f6f8fa;border:1px solid var(--line);margin-top:7px}.toast{position:fixed;bottom:43px;left:50%;transform:translateX(-50%);background:#29465c;color:white;padding:11px 18px;border-radius:5px;z-index:20;max-width:90%;box-shadow:0 4px 20px #0002}.hidden{display:none}@media(max-width:1100px){.workspace{grid-template-columns:170px minmax(300px,1fr) 235px}.brand small{display:none}.diagnostic{padding:8px}.field input{max-width:85px}.tool{min-width:48px}.ribbon{gap:8px}}@media(max-width:800px){.workspace{height:auto;grid-template-columns:1fr;min-height:0}.left{display:none}.center{height:620px}.right{display:grid;grid-template-columns:1fr 1fr}.right>.panel-title{grid-column:1/-1}.panel-section{min-width:0}.config{min-width:0}header{padding:8px;height:auto;gap:12px}.actions button{font-size:10px;padding:6px}nav{display:none}.ribbon{min-height:85px}.brand{font-size:17px}.stage{min-height:300px}footer{height:auto;gap:10px}.diagnostic strong{font-size:15px}.viewcube{top:40px}.transport{gap:5px}}
+:root
+{
+  --ink:#243648;
+  --muted:#6e7d87;
+  --line:#dbe2e6;
+  --blue:#2777b2;
+  --bluebg:#eaf3fa;
+  --orange:#c86d3e;
+  --bg:#f4f6f7;
+  --white:#fff
+}
+  *
+  {
+    box-sizing:border-box
+  }
+  body{margin:0;font:12px 'Segoe UI',system-ui,sans-serif;
+  color:var(--ink);
+  background:var(--bg)}button,input,select
+  {
+    font:inherit
+  }button
+  {
+    cursor:pointer;border:1px solid var(--line);
+    border-radius:4px;
+    background:#fff;
+    color:var(--ink);
+    padding:7px 10px}
+    button:hover
+    {
+      background:#eef5fb;
+      border-color:#98b7cd
+    }
+    button.active
+    {
+      background:var(--bluebg);
+      border-color:var(--blue);
+      color:var(--blue)
+    }
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible
+    {
+      outline:2px solid 
+      var(--blue);
+      outline-offset:1px
+    }
+      button:disabled
+      {
+        opacity:.45;
+        cursor:default
+      }
+      input:not([type=checkbox]):not([type=range]),select{padding:6px;border:1px solid #ccd5db;
+        border-radius:3px;
+        color:var(--ink);
+        background:#fff;
+        width:100%;
+        min-width:0
+      }
+      input[type=range]
+      {
+        width:100%;accent-color:var(--blue)
+      }
+      input[type=checkbox]
+      {
+        accent-color:var(--blue)
+      }
+      header
+      {
+        height:49px;
+        background:#253a4c;
+        color:#fff;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        padding:0 19px
+      }
+      .brand
+      {
+        font-size:20px;letter-spacing:-.6px
+      }
+      .brand span
+      {
+        color:#88c8e6
+      }
+      .brand small
+      {
+        font:9px monospace;
+        color:#bfd0db;
+        letter-spacing:2px;
+        margin-left:13px
+      }
+      header .actions
+      {
+        display:flex;
+        gap:7px
+      }
+      header button
+      {
+        background:#344d62;
+        border:1px solid #526878;
+        color:white
+      }
+      nav
+      {
+        display:flex;
+        gap:24px;
+        padding:9px 21px 0;
+        border-bottom:1px solid var(--line);
+        background:white;
+        height:35px
+      }
+      .tab
+      {
+        font-size:12px;padding:0 0 7px
+      }
+      .tab.selected
+      {
+        color:var(--blue);
+        border-bottom:3px solid var(--blue)
+      }
+      .ribbon
+      {
+        display:flex;
+        gap:15px;
+        align-items:stretch;
+        background:#fff;
+        border-bottom:1px solid var(--line);
+        padding:9px 15px 6px;
+        min-height:89px;
+        overflow:auto
+      }
+      .rgroup
+      {
+        display:flex;
+        flex-wrap:wrap;
+        gap:5px;
+        align-content:flex-start;
+        border-right:1px solid var(--line);
+        padding-right:15px;
+        position:relative;
+        padding-bottom:19px;
+        flex-shrink:0
+      }
+      .rgroup small
+      {
+        position:absolute;
+        bottom:0;
+        left:0;
+        width:100%;
+        text-align:center;
+        color:var(--muted);
+        font-size:10px
+      }
+      .tool
+      {
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        gap:4px;
+        border-color:transparent;
+        min-width:55px;
+        padding:4px 7px;
+        font-size:11px
+      }
+      .tool b
+      {
+        font:22px system-ui;
+        font-weight:400;
+        color:#537a92
+      }
+      .tool[data-tool=fire] b,.tool[data-tool=fuel] b
+      {
+        color:var(--orange)
+      }
+      .primary{background:var(--blue);
+        border-color:var(--blue);
+        color:#fff
+      }
+      .primary:hover
+      {
+        background:#1c6395;
+        color:#fff
+      }
+      .workspace
+      {
+        height:calc(100vh - 205px);
+        min-height:550px;
+        display:grid;
+        grid-template-columns:210px minmax(330px,1fr) 267px
+      }
+      .panel
+      {
+        background:white;
+        overflow:auto
+      }
+      .left
+      {
+        border-right:1px solid var(--line)
+      }
+      .right
+      {
+        border-left:1px solid var(--line)
+      }
+      .panel-title
+      {
+        padding:11px 14px;
+        font-size:11px;
+        font-weight:600;
+        letter-spacing:.4px;
+        border-bottom:1px solid var(--line);
+        background:#f7f9fa;position:sticky;top:0;z-index:2
+      }
+      .panel-section
+      {
+        padding:13px;
+        border-bottom:1px solid var(--line)
+      }
+      .panel-section h3
+      {
+        font-size:11px;
+        text-transform:uppercase;
+        letter-spacing:1px;
+        margin:0 0 11px;
+        color:#586d7d
+      }
+      .hint
+      {
+        font-size:11px;
+        line-height:1.6;
+        color:var(--muted)
+      }
+      .tree
+      {
+        padding:5px 8px
+      }
+      .tree button
+      {
+        display:flex;
+        width:100%;
+        text-align:left;
+        border:0;
+        background:none;
+        gap:9px;
+        padding:7px 8px;
+        align-items:center
+      }
+      .tree button.active
+      {
+        background:var(--bluebg);
+        color:var(--blue)
+      }
+      .tree i
+      {
+        font-style:normal;
+        color:#748c9a
+      }
+      .tree button.fire i{color:var(--orange)
+      }
+      .tree span
+      {
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis
+      }
+      .tree small
+      {
+        margin-left:auto;
+        color:#8c9aa3;
+        font:9px monospace
+      }
+      .center
+      {
+        min-width:0;
+        display:flex;
+        flex-direction:column;
+        overflow:hidden
+      }
+      .viewport-bar
+      {
+        height:37px;display:flex;
+        align-items:center;
+        justify-content:space-between;
+        padding:5px 15px;
+        background:#fafcfd;
+        border-bottom:1px solid var(--line)
+      }
+      .viewport-bar span
+      {
+        font-size:11px
+      }
+      .viewport-bar select
+      {
+        width:140px;padding:3px
+      }
+      .stage
+      {
+        flex:1;
+        position:relative;
+        min-height:280px;
+        overflow:hidden;
+        background:#eef2f3
+      }
+      canvas
+      {
+        width:100%;
+        height:100%;
+        display:block;
+        touch-action:none;
+        outline:none
+      }
+      .stamp
+      {
+        position:absolute;
+        left:17px;
+        top:16px;
+        pointer-events:none
+      }
+      .stamp b
+      {
+        font-size:10px;
+        font-weight:500;
+        letter-spacing:1.5px;
+        display:block
+      }
+      .stamp span
+      {
+        display:block;
+        color:#7b8c94;
+        font:10px monospace;
+        margin-top:5px
+      }
+      .viewcube
+      {
+        position:absolute;
+        right:13px;
+        top:12px;
+        background:#ffffffd9;
+        border:1px solid #c8d4dd;
+        border-radius:7px;
+        padding:7px;
+        display:grid;
+        grid-template-columns:repeat(2,1fr);
+        gap:4px;
+        box-shadow:0 5px 15px #263f4b0a
+      }
+      .viewcube button
+      {
+        font-size:9px;
+        padding:6px
+      }
+      .viewport-tools
+      {
+        position:absolute;
+        right:14px;
+        bottom:12px;
+        display:flex;
+        gap:5px
+      }
+      .viewport-tools button
+      {
+        background:#fffffff0;
+        font-size:11px
+      }
+      .scale
+      {
+        position:absolute;
+        left:17px;
+        bottom:15px;
+        font:10px monospace;
+        color:#647b88;
+        pointer-events:none
+      }
+      .statusline
+      {
+        padding:8px 14px;
+        min-height:31px;
+        background:#fff;
+        border-top:1px solid var(--line);
+        font-size:10px;color:var(--muted)
+      }
+      .transport
+      {
+        padding:10px 14px;
+        display:flex;gap:9px;
+        align-items:center;
+        background:white;
+        border-top:1px solid var(--line)
+      }
+      .transport select
+      {
+        width:58px
+      }.time
+      {
+        font:21px monospace;
+        letter-spacing:-1px;
+        margin-left:auto
+      }
+      .transport small
+      {
+        font-size:9px;
+        color:var(--muted)
+      }
+      .diagnostics
+      {
+        display:grid;
+        grid-template-columns:repeat(4,1fr)
+        ;gap:1px;
+        background:var(--line);
+        border-top:1px solid var(--line)
+      }
+      .diagnostic
+      {
+        padding:11px 14px;
+        background:#f9fbfc
+      }
+      .diagnostic span
+      {
+        display:block;
+        font-size:9px;
+        letter-spacing:.5px;
+        color:var(--muted);
+        text-transform:uppercase
+      }
+      .diagnostic strong
+      {
+        font:18px monospace;
+        display:block;
+        margin-top:5px
+      }
+      .diagnostic em
+      {
+        font:9px system-ui;
+        color:var(--muted)
+      }
+      .reliability
+      {
+        padding:9px 14px;
+        background:#fff7e9;
+        color:#8c6225;
+        line-height:1.5;
+        font-size:10px;
+        border-top:1px solid #eadcbd
+      }
+      .reliability.bad
+      {
+        background:#fdeee9;
+        color:#a34735
+      }
+      .field
+      {
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:8px;
+        margin:7px 0
+      }
+      .field label
+      {
+        font-size:11px;
+        flex:1
+      }
+      .field input,.field select
+      {
+        max-width:104px;
+        font-size:11px
+      }
+      .field.check label
+      {
+        flex:auto
+      }
+      .field.check input
+      {
+        width:auto
+      }
+      .row
+      {
+        display:flex;
+        gap:6px;
+        margin-top:10px
+      }
+      .row button
+      {
+        flex:1;
+        font-size:10px
+      }
+      .empty
+      {
+        padding:25px 16px;
+        color:var(--muted);
+        line-height:1.7
+      }
+      .config
+      {
+        padding:0 13px 12px
+      }
+      .config details
+      {
+        border-bottom:1px solid var(--line);
+        padding:12px 0
+      }
+      .config summary
+      {
+        cursor:pointer;
+        font-size:11px;
+        font-weight:600
+      }
+      .config p
+      {
+        font-size:10px;
+        line-height:1.6;
+        color:var(--muted)
+      }
+      .sensor
+      {
+        padding:8px;
+        border:1px solid var(--line);
+        margin:6px 0;
+        border-radius:4px;
+        font-size:10px;
+        line-height:1.7
+      }
+      .sensor.on
+      {
+        border-color:#d99b79;
+        background:#fff3eb
+      }
+      .sensor b
+      {
+        font-size:11px
+      }
+      #events
+      {
+        white-space:pre-line;
+        font:10px/1.7 monospace;
+        color:var(--muted);
+        max-height:110px;
+        overflow:auto
+      }
+      footer
+      {
+        height:32px;
+        display:flex;
+        justify-content:space-between;
+        padding:9px 17px;
+        border-top:1px solid var(--line);
+        background:#e8edf0;
+        font:10px monospace;
+        color:#647784
+      }
+      dialog
+      {
+        width:min(880px,95vw);
+        max-height:88vh;
+        padding:30px;
+        border:1px solid #bac9d2;
+        border-radius:8px;
+        color:var(--ink);
+        box-shadow:0 20px 90px #20304044
+      }
+      dialog::backdrop
+      {
+        background:#1e334888
+      }
+      dialog h1
+      {
+        font-size:27px;
+        font-weight:500
+      }
+      dialog h2
+      {
+        font-size:15px;
+        margin-top:26px
+      }
+      dialog p,dialog li
+      {
+        font-size:13px;
+        line-height:1.8;
+        color:#526575
+      }
+      dialog a
+      {
+        color:var(--blue)
+      }
+      dialog table
+      {
+        width:100%;
+        border-collapse:collapse;
+        font-size:12px
+      }
+      dialog td,dialog th
+      {
+        padding:10px;
+        text-align:left;
+        vertical-align:top;
+        border-bottom:1px solid var(--line);
+        line-height:1.7
+      }
+      .close
+      {
+        float:right
+      }
+      .eyebrow
+      {
+        color:var(--blue);
+        font:10px monospace;
+        letter-spacing:2px
+      }
+      .pill
+      {
+        display:inline-block;
+        border-radius:3px;
+        background:#fff0df;
+        color:#98632e;
+        font:9px monospace;
+        padding:4px 6px
+      }
+      .file-input
+      {
+        display:none
+      }
+      .plot
+      {
+        width:100%;
+        height:65px;
+        background:#f6f8fa;
+        border:1px solid var(--line);
+        margin-top:7px
+      }
+      .toast
+      {
+        position:fixed;
+        bottom:43px;
+        left:50%;
+        transform:translateX(-50%);
+        background:#29465c;
+        color:white;
+        padding:11px 18px;
+        border-radius:5px;
+        z-index:20;
+        max-width:90%;
+        box-shadow:0 4px 20px #0002
+      }
+      .hidden
+      {
+        display:none
+      }
+      @media(max-width:1100px)
+      {
+        .workspace
+        {
+          grid-template-columns:170px minmax(300px,1fr) 235px
+        }
+        .brand small
+        {
+          display:none
+        }
+        .diagnostic
+        {
+          padding:8px
+        }
+        .field input
+        {
+          max-width:85px
+        }
+        .tool
+        {
+          min-width:48px
+        }
+        .ribbon
+        {
+          gap:8px
+        }
+      }
+      @media(max-width:800px)
+      {
+        .workspace
+        {
+          height:auto;
+          grid-template-columns:1fr;
+          min-height:0
+        }
+        .left
+        {
+          display:none
+        }
+        .center
+        {
+          height:620px
+        }
+        .right
+        {
+          display:grid;
+          grid-template-columns:1fr 1fr
+        }
+        .right>.panel-title
+        {
+          grid-column:1/-1
+        }
+        .panel-section
+        {        
+          min-width:0
+        }
+        .config
+        {
+          min-width:0
+        }
+        header
+        {
+          padding:8px;
+          height:auto;
+          gap:12px
+        }
+        .actions button
+        {
+          font-size:10px;
+          padding:6px
+        }
+        nav
+        {
+          display:none
+        }
+        ribbon
+        {
+          min-height:85px
+        }
+        .brand
+        {
+          font-size:17px
+        }
+        .stage
+        {
+          min-height:300px
+        }
+        footer
+        {
+          height:auto;gap:10px
+        }
+        .diagnostic strong
+        {
+          font-size:15px
+        }
+        .viewcube
+        {
+          top:40px
+        }
+        .transport
+        {
+          gap:5px
+        }
+      }
 
 .help-btn{border:0;border-radius:50%;background:#e7f0f6;color:#387797;padding:0;flex:0 0 17px;width:17px;height:17px;font-size:11px;cursor:help}.field .help-btn{margin-left:-3px}.help-tooltip{position:fixed;z-index:1000;width:min(395px,calc(100vw - 24px));max-height:min(470px,75vh);overflow:auto;background:#fff;color:#30495a;border:1px solid #b6cbd9;border-radius:8px;box-shadow:0 12px 40px #17374b35;padding:17px;font-size:12px;line-height:1.7}.help-tooltip strong{display:block;font-size:13px;color:#1e648c;margin-bottom:8px}.help-tooltip p{margin:8px 0}.help-tooltip .example{background:#eef5fa;padding:9px;border-radius:5px}.help-tooltip small{display:block;color:#687f8d;margin-top:9px}.sensor .alarm-at{font:600 12px monospace;color:#ba5030;margin:5px 0}.sensor button{margin-top:5px;font-size:10px}.section-active{background:#e4f2ff!important;border-color:#398bd0!important}.viewcube button:nth-last-child(-n+2){font-size:8px}.viewcube{max-width:166px}.field label{min-width:0}
 
@@ -21,9 +770,46 @@ body{height:100vh;display:flex;flex-direction:column;overflow:hidden}.workspace{
 #furniture-dialog p,dialog .hint{color:var(--muted)}
 </style>
 </head><body>
-<header><div class="brand"><medium>MOONLIGHT</medium> ◌ Smoke3<span>DLab</span></div><div class="actions"><select id="theme" aria-label="Tema de presentación" title="Cambia colores de interfaz y fondo del modelo. No cambia la simulación."><option value="light">Light</option><option value="dark">Dark</option><option value="soft">Soft dark</option><option value="blueprint">Blueprint</option></select><button id="manual">Modelo y fiabilidad</button><button id="fds-open">Motor FDS</button><button id="download" hidden>Descargar HTML ↓</button></div></header>
-<nav><span class="tab selected">Arquitectura y simulación</span><span class="tab">Vista 3D · unidades SI</span><span class="pill">EXPERIMENTAL / NO VALIDADO</span></nav>
-<div class="ribbon"><div class="rgroup" id="build-tools"><small>Crear / modificar</small></div><div class="rgroup"><button class="tool" id="fit"><b>⌖</b>Ajustar</button><button class="tool" id="ghost"><b>▧</b>Rayos X</button><button class="tool" id="resize-faces" title="Activa Estirar y arrastra una cara. Ctrl: paso fino. Shift quita elementos de la selección."><b>↔</b>Estirar caras</button><button id="show-hidden" disabled="">Mostrar ocultos</button><button class="tool" id="undo"><b>↶</b>Deshacer</button><small>Vista y edición</small></div><div class="rgroup"><button class="tool" id="export"><b>⇩</b>Guardar</button><button class="tool" id="import"><b>⇧</b>Abrir</button><button class="tool" id="csv"><b>≋</b>Datos CSV</button><small>Escenario y resultados</small></div></div>
+<header>
+  <div class="brand">
+    <medium>Moonlight</medium> ◌ Smoke3<span>DLab</span>
+  </div>
+  <div class="actions">
+    <select id="theme" aria-label="Tema de presentación" title="Cambia colores de interfaz y fondo del modelo. No cambia la simulación.">
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+      <option value="soft">Soft dark</option>
+      <option value="blueprint">Blueprint</option>
+    </select>
+    <button id="manual">Modelo y fiabilidad</button>
+    <button id="fds-open">Motor FDS</button>
+    <button id="download" hidden>Descargar HTML ↓</button>
+  </div>
+</header>
+<nav>
+  <span class="tab selected">Arquitectura y simulación</span>
+  <span class="tab">Vista 3D · unidades SI</span>
+  <span class="pill">EXPERIMENTAL / NO VALIDADO</span>
+</nav>
+<div class="ribbon">
+  <div class="rgroup" id="build-tools">
+    <small>Crear / modificar</small>
+  </div>
+  <div class="rgroup">
+    <button class="tool" id="fit"><b>⌖</b>Ajustar</button>
+    <button class="tool" id="ghost"><b>▧</b>Rayos X</button>
+    <button class="tool" id="resize-faces" title="Activa Estirar y arrastra una cara. Ctrl: paso fino. Shift quita elementos de la selección."><b>↔</b>Estirar caras</button>
+    <button id="show-hidden" disabled="">Mostrar ocultos</button>
+    <button class="tool" id="undo"><b>↶</b>Deshacer</button>
+    <small>Vista y edición</small>
+  </div>
+  <div class="rgroup">
+    <button class="tool" id="export"><b>⇩</b>Guardar</button>
+    <button class="tool" id="import"><b>⇧</b>Abrir</button>
+    <button class="tool" id="csv"><b>≋</b>Datos CSV</button>
+    <small>Escenario y resultados</small>
+  </div>
+</div>
 <div class="workspace"><aside class="panel left"><div class="panel-title">Navegador del proyecto</div><div class="panel-section"><h3>Escenarios</h3><select id="preset" aria-label="Escenario"><option value="stairs">Escalera y entrepiso</option><option value="room">Recinto y puerta</option><option value="plume">Pluma libre interior</option><option value="empty">Proyecto vacío</option></select><p class="hint" id="scene-note"></p><details><summary>Dimensiones del dominio</summary><label>X · m<input id="domain-x" type="number" min="4" max="200" step="0.5" title="Longitud del volumen cerrado de cálculo; no escala el modelo existente."></label><label>Y · m<input id="domain-y" type="number" min="4" max="80" step="0.5" title="Ancho del volumen cerrado de cálculo."></label><label>Z · m<input id="domain-z" type="number" min="4" max="40" step="0.5" title="Altura del volumen cerrado de cálculo."></label><button id="domain-apply">Aplicar dimensiones</button></details></div><div class="panel-title">Modelo <span id="count"></span></div><div class="tree" id="tree"></div><div class="panel-section"><h3>Navegación</h3><p class="hint">Rueda: zoom<br>Botón central: encuadre<br>Shift + central: órbita<br>Alt + izquierdo: órbita libre<br>Tab / Shift+Tab: recorrer bajo cursor<br>Clic: confirmar preselección<br>Clic derecho: menú del elemento<br>Flechas X/Y/Z: mover en un eje<br>Ventana →: contiene completos<br>Cruce ←: toca o contiene<br>Ctrl + clic/ventana: añadir<br>Shift + clic/ventana: quitar<br>Ctrl+A: seleccionar visibles<br>Ctrl+D: duplicar selección<br>M: mover · R: rotar<br>Botón Estirar: editar caras<br>Ctrl al estirar: paso de 0.01 m<br>Esc al arrastrar: cancelar<br>Supr: eliminar · Esc: seleccionar<br>Home: ajustar · Ctrl+Z: deshacer</p><p class="hint">Controles inspirados en Revit. No es una integración con Autodesk.</p></div></aside>
 <main class="center"><div class="viewport-bar"><select id="sim-mode" aria-label="Modo de simulación" style="max-width:190px"><option value="physical">Físico aproximado</option><option value="creative">Creativo · rutas de humo</option></select><span id="engine-label">Prototipo Boussinesq · no validado</span><select id="display" aria-label="Visualización"><option value="smoke">Humo</option><option value="heat">Temperatura</option><option value="velocity">Velocidad del aire</option></select></div><div class="model-toolbar"><button id="gizmo-move" class="active" title="Mover selección por sus flechas. Atajo M.">✥ Mover</button><button id="gizmo-rotate" title="Rotar selección con anillos X/Y/Z. Atajo R.">⟳ Rotar</button><label for="angle-snap">Paso angular</label><select id="angle-snap" aria-label="Ajuste angular" title="Paso de giro al arrastrar un anillo. Ctrl reduce el paso a 1°."><option value="1">1°</option><option value="5">5°</option><option value="15" selected="">15°</option><option value="45">45°</option><option value="90">90°</option></select><label for="xray-opacity">Transparencia X</label><input id="xray-opacity" type="range" min="0" max="98" value="82" aria-label="Transparencia de Rayos X" title="0%: sólido; 98%: casi transparente. Se aplica al activar Rayos X y no modifica el cálculo."><output id="xray-value">82 %</output><span class="selection-count" id="selection-count">0 seleccionados</span></div><div class="stage" id="stage"><canvas id="scene" tabindex="0" aria-label="Modelo arquitectónico tridimensional interactivo"></canvas><div class="stamp"><b>HUMO ILUSTRATIVO · NO ES VISIBILIDAD REAL</b><span id="mesh-label">Malla cartesiana · Δ 0.50 m</span></div><div class="viewcube"><button data-view="iso">{3D}</button><button data-view="top">Planta</button><button data-view="front">Frente</button><button data-view="side">Derecha</button><button data-view="bottom">Inferior</button><button id="section-toggle" aria-pressed="false">Section Box</button><button id="section-reset">Restablecer caja</button><button id="section-fit">Caja a selección</button><button id="section-edit">Editar límites de caja</button></div><div class="viewport-tools"><button id="orbit">⟳ Orbitar</button><button id="pan">✥ Encuadre</button></div><div id="pick-label" class="hidden" role="status"></div><div class="scale" id="scale">X / Y / Z · m</div></div><div class="statusline" id="status" role="status">Selecciona un elemento o añade uno desde la cinta.</div><div id="fds-timeline" class="transport hidden"><label for="fds-frame">Fotograma FDS</label><input id="fds-frame" type="range" min="0" max="1" step="1" value="0"><span id="fds-frame-label">0 s</span><button id="fds-exit">Volver al prototipo</button></div><div id="creative-controls" class="transport hidden"><label for="creative-strength">Emisión creativa</label><input id="creative-strength" aria-label="Emisión creativa" type="range" min="1" max="5" step="1" value="2"><span>Intensidad visual · sin kW</span></div><div class="transport"><button class="primary" id="play">▶ Iniciar</button><button id="reset">↺ Reiniciar</button><select id="speed" aria-label="Velocidad de reproducción"><option value="1">1×</option><option value="2">2×</option><option value="4">4×</option></select><span class="time" id="time">0.00 s</span><small id="rate">tiempo calculado</small></div><div class="diagnostics"><div class="diagnostic"><span>Temperatura máxima</span><strong id="max-temp">— °C</strong><em>estimación del modelo</em></div><div class="diagnostic"><span>Velocidad máxima</span><strong id="max-speed">— m/s</strong><em>estimación del modelo</em></div><div class="diagnostic"><span>Balance de hollín</span><strong id="mass-error">— %</strong><em>error numérico de masa</em></div><div class="diagnostic"><span>Resolución geométrica</span><strong id="cell-size">0.50 m</strong><em>Δ de celda; no precisión</em></div></div><div id="reliability" class="reliability">Modelo Boussinesq sin validación experimental. Unidades físicas no equivalen a precisión certificada.</div></main>
 <aside class="panel right"><div class="panel-title">Propiedades</div><div class="panel-section" id="inspector"><div class="empty">Selecciona un elemento para editar sus dimensiones y coordenadas.</div></div><div class="panel-title">Condiciones del experimento</div><div class="config"><details open=""><summary>Ambiente y malla</summary><div id="ambient-fields"></div><p>La velocidad inicial se proyecta para respetar sólidos y paredes. En un recinto cerrado recircula y decae; no representa viento exterior continuo.</p><button id="apply" style="width:100%">Aplicar condiciones y reiniciar</button></details><details><summary>Transporte y fuentes</summary><div id="physics-fields"></div><p>Coeficientes editables de aproximación; no son propiedades verificadas de un material. Aplica los cambios con el botón anterior.</p></details><details><summary>Visualización y corte</summary><label class="field"><span>Arquitectura transparente</span><input type="checkbox" id="transparent" checked=""></label><label class="field"><span>Mostrar malla sólida</span><input type="checkbox" id="voxel"></label><p>Activa <b>Section Box</b> en la esquina de la vista. Arrastra las flechas de sus seis caras para recortar o extender. El recorte solo afecta la visualización.</p><label class="field"><span>Ajuste de movimiento</span><select id="snap"><option value="0.25">0.25 m</option><option value="0.1">0.10 m</option><option value="0.01">0.01 m</option></select></label><label for="opacity">Opacidad de visualización</label><input type="range" id="opacity" min="0.25" max="3" step="0.05" value="1"><p>El corte y la opacidad no cambian la física. Humo representado por muestras del campo 3D; no por partículas físicas.</p></details><details open=""><summary>Detectores y alarmas</summary><p id="detector-model-note"><b>Detectores virtuales · sin calibración NFPA.</b> Perfil FSP-951 aproximado: 1.5 %/pie nominal, retardo supuesto. La alarma depende de la concentración local, no de cuánto humo parece haber en pantalla.</p><div id="sensors"></div><div id="events">Sin eventos.</div></details></div></aside></div>
@@ -823,7 +1609,7 @@ let resizeFaces=false,hoverFace=null;
 let handles=[],section={enabled:false,min:[0,0,0],max:[20,12,12]};
 const canvas=$('scene'),ctx=canvas.getContext('2d');let cw=800,ch=600,unit=30;
 const domain=()=>cfg.domain||[20,12,12];
-const types={select:['↖','Seleccionar'],wall:['▥','Muro'],floor:['▱','Losa'],stairs:['▰','Escalera'],fire:['♨','Fuego'],fuel:['▧','Combustible'],sensor:['⊙','Detector'],fan:['✣','Ventilador'],furniture:['▦','Mobiliario'],imager:['◉','Receptor OSID'],emitter:['◈','Emisor OSID']};
+const types={select:['↖','Seleccionar'],wall:['▥','Muro'],floor:['▱','Losa'],stairs:['▰','Escalera'],fire:['♨','Fuego'],fuel:['▧','Combustible'],sensor:['⊙','Detector'],fan:['✣','Ventilador'],furniture:['▦','Mobiliario'],imager:['◉','OSID Receptor'],emitter:['◈','OSID Emisor']};
 const fieldDefs={
   ambient:[['ambient','Temperatura base','°C',-20,50,1],['gradient','Gradiente vertical','K/m',0,5,.1],['airX','Velocidad inicial X','m/s',-2,2,.1],['airY','Velocidad inicial Y','m/s',-2,2,.1]],
   physics:[['diffusion','Difusión efectiva','m²/s',0,.15,.005],['wallH','Intercambio en pared','W/m²K',0,30,1],['convective','Fracción convectiva','',.1,1,.05],['sootYield','Rendimiento de hollín','kg/kg',.001,.2,.005],['heatCombustion','Calor de combustión','MJ/kg',10,50,1],['iterations','Iteraciones de presión','',20,150,10]]
